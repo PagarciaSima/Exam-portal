@@ -1,19 +1,24 @@
 package com.exam.examserver.service.impl;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+import com.exam.examserver.model.Role;
 import com.exam.examserver.model.User;
 import com.exam.examserver.model.UserRole;
 import com.exam.examserver.repository.RoleRepository;
 import com.exam.examserver.repository.UserRepository;
 import com.exam.examserver.service.IUserService;
 
+@Service
 public class UserServiceImpl implements IUserService{
 
+	private static final String NORMAL_ROLE_NAME = "NORMAL";
 	private UserRepository userRepository;
 	private RoleRepository roleRepository;
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -25,9 +30,9 @@ public class UserServiceImpl implements IUserService{
 	}
 
 	/**
-	 * Creates a new user with the specified roles.
+	 * Creates a new user and assigns the specified roles.
 	 * First, it checks if a user with the same username already exists.
-	 * Then, it saves the roles and associates them with the user before persisting the user.
+	 * Then, it manages the roles and persists the user in the database.
 	 *
 	 * @param user the user to be created
 	 * @param userRoles the set of roles to assign to the user
@@ -36,16 +41,54 @@ public class UserServiceImpl implements IUserService{
 	 */
 	@Override
 	public User createUser(User user, Set<UserRole> userRoles) throws Exception {
-	    LOGGER.info("Creating user '{}'", user.getUsername());
+	    LOGGER.info("Starting creation of user '{}'", user.getUsername());
 
+	    // Check if the username is already taken
 	    checkExistingUserByUserName(user);
+
+	    // Assign and persist roles
 	    manageRoles(user, userRoles);
 
+	    // Save the user
 	    User savedUser = this.userRepository.save(user);
-	    LOGGER.info("User '{}' created successfully with {} roles", user.getUsername(),
-	            userRoles != null ? userRoles.size() : 0);
+	    LOGGER.info("User '{}' created successfully with {} roles", 
+	                user.getUsername(), 
+	                userRoles != null ? userRoles.size() : 0);
 
 	    return savedUser;
+	}
+	
+	/**
+	 * Assigns the default role ("NORMAL") to the given user.
+	 * If the role does not exist in the database, it will be created.
+	 *
+	 * @param user the user to which the default role will be assigned
+	 * @return a set containing the UserRole association for the default role
+	 */
+	@Override
+	public Set<UserRole> asignDefaultRole(User user) {
+	    Set<UserRole> userRoles = new HashSet<>();
+
+	    // Search for the NORMAL role in the database
+	    Role role = roleRepository.findByRoleName(NORMAL_ROLE_NAME)
+	            .orElseGet(() -> {
+	                LOGGER.info("Default role 'NORMAL' not found, creating it...");
+	                Role newRole = new Role();
+	                newRole.setRoleName(NORMAL_ROLE_NAME);
+	                Role savedRole = roleRepository.save(newRole);
+	                LOGGER.info("Default role 'NORMAL' created with ID {}", savedRole.getRoleId());
+	                return savedRole;
+	            });
+
+	    UserRole userRole = new UserRole();
+	    userRole.setUser(user);
+	    userRole.setRole(role);
+
+	    userRoles.add(userRole);
+
+	    LOGGER.info("Assigned default role 'NORMAL' to user '{}'", user.getUsername());
+
+	    return userRoles;
 	}
 	
 	/**
@@ -95,4 +138,40 @@ public class UserServiceImpl implements IUserService{
 	    LOGGER.info("Username '{}' is available", username);
 	}
 
+	/**
+	 * Retrieves a user by their username.
+	 * Logs the attempt to fetch the user and whether the user was found.
+	 *
+	 * @param username the username of the user to retrieve
+	 * @return the User entity if found, otherwise null
+	 */
+	@Override
+	public User getUser(String username) {
+	    LOGGER.info("Fetching user with username '{}'", username);
+
+	    User user = this.userRepository.findByUsername(username);
+
+	    if (user != null) {
+	        LOGGER.info("User '{}' found", username);
+	    } else {
+	        LOGGER.warn("User '{}' not found", username);
+	    }
+
+	    return user;
+	}
+
+	/**
+	 * Deletes a user by their ID.
+	 * Logs the attempt to delete the user and confirms deletion.
+	 *
+	 * @param userId the ID of the user to delete
+	 */
+	@Override
+	public void deleteUser(Long userId) {
+	    LOGGER.info("Attempting to delete user with ID '{}'", userId);
+
+	    this.userRepository.deleteById(userId);
+
+	    LOGGER.info("User with ID '{}' has been deleted", userId);
+	}
 }

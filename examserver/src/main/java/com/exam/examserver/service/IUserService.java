@@ -7,6 +7,12 @@ import com.exam.examserver.model.UserRole;
 
 public interface IUserService {
 	
-	// Create user
-	public User createUser(User user, Set<UserRole> userRoles) throws Exception;
+	User createUser(User user, Set<UserRole> userRoles) throws Exception;
+
+	Set<UserRole> asignDefaultRole(User user);
+	
+	User getUser(String username);
+	
+	void deleteUser(Long userId);
+
 }
