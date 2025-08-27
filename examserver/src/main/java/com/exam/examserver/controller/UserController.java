@@ -2,6 +2,7 @@ package com.exam.examserver.controller;
 
 import java.util.Set;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import com.exam.examserver.service.IUserService;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin("*")
 public class UserController {
 	
 	private IUserService userService;

@@ -1,5 +1,6 @@
 package com.exam.examserver.model;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,36 +13,38 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String username;
+	private String password;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String phone;
 	private boolean enabled = true;
 	private String profile;
-	
+
 	// user -> Many roles
-	
-	@OneToMany(
-		cascade = CascadeType.ALL,
-		fetch = FetchType.EAGER,
-		mappedBy = "user"
-	)
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
 	@JsonIgnore
 	private Set<UserRole> userRoles = new HashSet<>();
-	
+
 	public User() {
 		super();
-	}	
+	}
 
 	public User(Long id, String username, String firstName, String lastName, String email, String phone,
 			boolean enabled, String profile) {
@@ -127,5 +130,40 @@ public class User {
 	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
-	
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Set<Authority> set=new HashSet<>();
+        this.userRoles.forEach(
+    		userRole -> {
+    			set.add(new Authority(userRole.getRole().getRoleName()));
+			}
+		);
+        return  set;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
 }
