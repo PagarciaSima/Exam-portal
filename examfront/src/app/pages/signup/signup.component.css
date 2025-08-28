@@ -1,0 +1,8 @@
+.signup-img {
+  width: 120px;     
+  height: 120px;   
+  border-radius: 50%; 
+  object-fit: cover;  /* Recorta si no es exactamente cuadrada */
+  display: block;
+  margin: 0 auto 20px auto; /* Centrado horizontal y margen inferior */
+}
