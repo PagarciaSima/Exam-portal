@@ -9,42 +9,124 @@
                 </div>
                 <h1 class="text-center">Register here !</h1>
                 
-                <form (ngSubmit)="formSubmit()">
-                    <!-- Username field -->
+                <form #signupForm="ngForm" (ngSubmit)="formSubmit()">
+
+                    <!-- Username -->
                     <mat-form-field appearance="outline" class="full-width required-field">
                         <mat-label>Username</mat-label>
-                        <input [(ngModel)]="user.username" name="username" matInput placeholder="Enter your username">
+                        <input
+                            [(ngModel)]="user.username"
+                            name="username"
+                            matInput
+                            placeholder="Enter your username"
+                            required
+                            minlength="3"
+                            #username="ngModel"
+                        />
                         <mat-hint>User name must be unique</mat-hint>
-                    </mat-form-field>
-                    <!-- Password field -->
-                    <mat-form-field appearance="outline" class="full-width required-field">
-                        <mat-label>Password</mat-label>
-                        <input [(ngModel)]="user.password" name="password" type="password" matInput placeholder="Enter your password">
-                    </mat-form-field>
-                    <!-- First name field -->
-                    <mat-form-field appearance="outline" class="full-width required-field">
-                        <mat-label>First name</mat-label>
-                        <input [(ngModel)]="user.firstName" name="firstName" matInput placeholder="Enter your first name">
-                    </mat-form-field>
-                    <!-- Last name field -->
-                    <mat-form-field appearance="outline" class="full-width required-field">
-                        <mat-label>Last name</mat-label>
-                        <input [(ngModel)]="user.lastName" name="lastName" matInput placeholder="Enter your last name">
-                    </mat-form-field>
-                    <!-- E-mail field -->
-                    <mat-form-field appearance="outline" class="full-width required-field">
-                        <mat-label>E-mail</mat-label>
-                        <input [(ngModel)]="user.email" name="email" type="email" matInput placeholder="Enter your e-mail">
-                    </mat-form-field>
-                    <!-- Phone number field -->
-                    <mat-form-field appearance="outline" class="full-width required-field">
-                        <mat-label>Phone number</mat-label>
-                        <input [(ngModel)]="user.phone" name="phone" type="number" matInput placeholder="Enter your phone number">
+                        <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
+                            <span *ngIf="username.errors?.required">Username is required</span>
+                            <span *ngIf="username.errors?.minlength">Must be at least 3 characters</span>
+                        </mat-error>
                     </mat-form-field>
 
+                    <!-- Password -->
+                    <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-label>Password</mat-label>
+                        <input
+                            [(ngModel)]="user.password"
+                            name="password"
+                            type="password"
+                            matInput
+                            placeholder="Enter your password"
+                            required
+                            minlength="6"
+                            #password="ngModel"
+                        />
+                        <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+                            <span *ngIf="password.errors?.required">Password is required</span>
+                            <span *ngIf="password.errors?.minlength">At least 6 characters</span>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- First name -->
+                    <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-label>First name</mat-label>
+                        <input
+                            [(ngModel)]="user.firstName"
+                            name="firstName"
+                            matInput
+                            placeholder="Enter your first name"
+                            required
+                            #firstName="ngModel"
+                        />
+                        <mat-error *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+                            <span *ngIf="firstName.errors?.required">First name is required</span>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- Last name -->
+                    <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-label>Last name</mat-label>
+                        <input
+                            [(ngModel)]="user.lastName"
+                            name="lastName"
+                            matInput
+                            placeholder="Enter your last name"
+                            required
+                            #lastName="ngModel"
+                        />
+                        <mat-error *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+                            <span *ngIf="lastName.errors?.required">Last name is required</span>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- E-mail -->
+                    <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-label>E-mail</mat-label>
+                        <input
+                            [(ngModel)]="user.email"
+                            name="email"
+                            type="email"
+                            matInput
+                            placeholder="Enter your e-mail"
+                            required
+                            email
+                            #email="ngModel"
+                        />
+                        <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+                            <span *ngIf="email.errors?.required">E-mail is required</span>
+                            <span *ngIf="email.errors?.email">Enter a valid e-mail</span>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- Phone -->
+                    <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-label>Phone number</mat-label>
+                        <input
+                            [(ngModel)]="user.phone"
+                            name="phone"
+                            type="tel"
+                            matInput
+                            placeholder="Enter your phone number"
+                            required
+                            minlength="9"
+                            #phone="ngModel"
+                        />
+                        <mat-error *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+                            <span *ngIf="phone.errors?.required">Phone number is required</span>
+                            <span *ngIf="phone.errors?.minlength">Must be at least 9 digits</span>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- Buttons -->
                     <div class="container text-center">
-                        <button type="submit" mat-raised-button color="primary">Register</button>
-                        <button style="margin-left: 20px" mat-raised-button color="accent">Clear</button>
+                        <button type="submit" [disabled]="signupForm.invalid" mat-raised-button color="primary">
+                            Register
+                        </button>
+                        <button type="reset" style="margin-left: 20px" mat-raised-button color="accent">
+                            Clear
+                        </button>
                     </div>
                 </form>
 

@@ -7,12 +7,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-align: center;
 }
 
-.required-field mat-label::after {
-  content: "*";      
-  color: red;        
-  margin-left: 4px;
-}
-
 .img-hover-zoom {
   display: inline-block;       
   transition: transform 0.3s ease; 

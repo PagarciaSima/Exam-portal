@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/model/User';
+import { NotificationService } from 'src/app/services/notification.service';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +22,8 @@ export class SignupComponent implements OnInit {
   }
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -27,15 +31,15 @@ export class SignupComponent implements OnInit {
 
   formSubmit() {
     if (this.user.username == '' || this.user.username == null) {
-      alert('User is required');
+      this.notificationService.snackMessage('Username is required', 3000);
       return;
     }
 
     this.userService.addUser(this.user).subscribe({
       next: () => {
-        
+        this.notificationService.success('User registered successfully')
       }, error: () => {
-
+        this.notificationService.error('Something went wrong');
       }
     });
 
