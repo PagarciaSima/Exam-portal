@@ -37,12 +37,16 @@ public class UserServiceImpl implements IUserService{
 	 * @param user the user to be created
 	 * @param userRoles the set of roles to assign to the user
 	 * @return the saved User entity
-	 * @throws Exception if a user with the same username already exists
+	 * @throws RuntimeException if a user with the same username already exists
 	 */
 	@Override
-	public User createUser(User user, Set<UserRole> userRoles) throws Exception {
+	public User createUser(User user, Set<UserRole> userRoles) throws RuntimeException {
 	    LOGGER.info("Starting creation of user '{}'", user.getUsername());
-
+	    
+	    if(user != null && user.getProfile() == null) {
+	    	user.setProfile("default.png");
+	    }
+	    
 	    // Check if the username is already taken
 	    checkExistingUserByUserName(user);
 
@@ -123,16 +127,16 @@ public class UserServiceImpl implements IUserService{
 	 * If such a user exists, an exception is thrown.
 	 *
 	 * @param user the user to check for existing username
-	 * @throws Exception if a user with the same username already exists
+	 * @throws RuntimeException if a user with the same username already exists
 	 */
-	private void checkExistingUserByUserName(User user) throws Exception {
+	private void checkExistingUserByUserName(User user) throws RuntimeException {
 	    String username = user.getUsername();
 	    LOGGER.info("Checking if user '{}' already exists...", username);
 
 	    User existingUser = this.userRepository.findByUsername(username);
 	    if (Objects.nonNull(existingUser)) {
 	        LOGGER.warn("User with username '{}' already exists!", username);
-	        throw new Exception("User already present");
+	        throw new RuntimeException("User already present");
 	    }
 
 	    LOGGER.info("Username '{}' is available", username);

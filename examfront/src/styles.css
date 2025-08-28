@@ -12,3 +12,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   color: red;        
   margin-left: 4px;
 }
+
+.img-hover-zoom {
+  display: inline-block;       
+  transition: transform 0.3s ease; 
+  cursor: pointer;            
+}
+
+.img-hover-zoom img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease; 
+}
+
+.img-hover-zoom:hover img {
+  transform: scale(1.2);        
+}
