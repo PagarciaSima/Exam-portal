@@ -6,3 +6,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .text-center {
     text-align: center;
 }
+
+.required-field mat-label::after {
+  content: "*";      
+  color: red;        
+  margin-left: 4px;
+}
