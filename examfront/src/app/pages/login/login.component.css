@@ -1,0 +1,18 @@
+.signup-img {
+  width: 120px;     
+  height: 120px;   
+  border-radius: 50%; 
+  object-fit: cover;  /* Recorta si no es exactamente cuadrada */
+  display: block;
+  margin: 0 auto 20px auto; /* Centrado horizontal y margen inferior */
+}
+
+.full-width {
+    width: 100%;
+}
+
+.signup-link {
+  margin-left: 5px;
+  text-decoration: none;
+  color: #3f51b5;
+}

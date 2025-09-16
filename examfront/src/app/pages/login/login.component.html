@@ -1,1 +1,71 @@
-<p>login works!</p>
+<div class="bootstrap-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <mat-card @fadeInUp>
+                    <div class="container img-hover-zoom" >
+                        <img src="../../../assets/exam-portal.png" alt="exam-portal" class="signup-img"
+                            routerLink="/"
+                        >
+                    </div>
+                    <h1 class="text-center">Login Form</h1>
+                    
+                    <form #loginForm="ngForm" (ngSubmit)="formSubmit()">
+
+                        <!-- Username -->
+                        <mat-form-field appearance="outline" class="full-width required-field">
+                            <mat-label>Username</mat-label>
+                            <input
+                                [(ngModel)]="user.username"
+                                name="username"
+                                matInput
+                                placeholder="Enter your username"
+                                required
+                                #username="ngModel"
+                            />
+                            <mat-hint>Valid username</mat-hint>
+                            <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
+                                <span *ngIf="username.errors?.required">Username is required</span>
+                            </mat-error>
+                        </mat-form-field>
+
+                        <!-- Password -->
+                        <mat-form-field appearance="outline" class="full-width required-field">
+                            <mat-label>Password</mat-label>
+                            <input
+                                [(ngModel)]="user.password"
+                                name="password"
+                                type="password"
+                                matInput
+                                placeholder="Enter your password"
+                                required
+                                #password="ngModel"
+                            />
+                            <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+                                <span *ngIf="password.errors?.required">Password is required</span>
+                            </mat-error>
+                        </mat-form-field>
+                
+                        <!-- Buttons -->
+                        <div class="container text-center">
+                            <button type="submit" [disabled]="loginForm.invalid" mat-raised-button color="primary">
+                                Login
+                            </button>
+                            <button type="reset" class="ml20" mat-raised-button color="accent">
+                                Clear
+                            </button>
+                        </div>
+
+                        <div class="container text-center" style="margin-top: 15px;">
+                            <span> Don't have an account?</span>
+                            <a routerLink="/signup" class="signup-link">
+                                Sign up
+                            </a>
+                        </div>
+                    </form>
+                </mat-card>
+
+            </div>
+        </div>
+    </div>
+</div>

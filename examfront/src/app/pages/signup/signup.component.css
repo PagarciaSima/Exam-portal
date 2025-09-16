@@ -10,3 +10,9 @@
 .full-width {
     width: 100%;
 }
+
+.login-link {
+  margin-left: 5px;
+  text-decoration: none;
+  color: #3f51b5;
+}
