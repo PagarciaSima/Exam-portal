@@ -1,1 +1,16 @@
-<p>navbar works!</p>
+<mat-toolbar color="primary">
+    <button mat-icon-button (click)="redirectHome()">
+        <mat-icon>menu_book</mat-icon>
+        <span class="ml10 fs20">Exam Portal</span>
+    </button>
+     
+    <span class="spacer"></span>
+    <a routerLink="/login" class="login-link">
+        Login
+    </a>
+
+    <a routerLink="/signup" class="mr20 ml20 login-link">
+        Register
+    </a>
+
+</mat-toolbar>

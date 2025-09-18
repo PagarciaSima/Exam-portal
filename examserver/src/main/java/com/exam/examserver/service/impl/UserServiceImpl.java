@@ -6,6 +6,9 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.exam.examserver.model.Role;
@@ -16,18 +19,18 @@ import com.exam.examserver.repository.UserRepository;
 import com.exam.examserver.service.IUserService;
 
 @Service
+@Primary
 public class UserServiceImpl implements IUserService{
 
 	private static final String NORMAL_ROLE_NAME = "NORMAL";
+	@Autowired
 	private UserRepository userRepository;
+	@Autowired
 	private RoleRepository roleRepository;
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
-	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
-		super();
-		this.userRepository = userRepository;
-		this.roleRepository = roleRepository;
-	}
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
 	/**
 	 * Creates a new user and assigns the specified roles.
@@ -45,6 +48,11 @@ public class UserServiceImpl implements IUserService{
 	    
 	    if(user != null && user.getProfile() == null) {
 	    	user.setProfile("default.png");
+	    }
+	    
+	    // Cifrar la contraseña
+	    if (user.getPassword() != null) {
+	        user.setPassword(passwordEncoder.encode(user.getPassword()));
 	    }
 	    
 	    // Check if the username is already taken

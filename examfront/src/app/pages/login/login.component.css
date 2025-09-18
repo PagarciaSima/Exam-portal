@@ -16,3 +16,15 @@
   text-decoration: none;
   color: #3f51b5;
 }
+
+.login-wrapper {
+  display: flex;
+  justify-content: center; /* centra horizontalmente */
+  align-items: center;     /* centra verticalmente */
+  height:  calc(100vh - 65px);;           /* ocupa toda la altura de la ventana */
+}
+
+mat-card {
+  width: 500px;     /* ajusta el ancho */
+  padding: 20px;    /* espacio interno */
+}

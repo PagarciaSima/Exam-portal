@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,11 +18,9 @@ public class UserDetailServiceImpl implements UserDetailsService{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailServiceImpl.class);
 
+	@Autowired
 	private UserRepository userRepository;
 	
-	public UserDetailServiceImpl() {
-		super();
-	}
 
 	/**
 	 * Loads a user by username for authentication.

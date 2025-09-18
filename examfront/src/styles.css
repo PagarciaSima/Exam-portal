@@ -1,7 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  background-color: #FFF8E1;
+}
 
 .text-center {
     text-align: center;
@@ -48,4 +52,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 .mb10 {
   margin-bottom: 10px !important;
+}
+
+.fs20 {
+  font-size: 20px;
 }

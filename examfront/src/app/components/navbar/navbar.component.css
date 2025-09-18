@@ -1,0 +1,8 @@
+.spacer {
+    flex: 1 1 auto;
+}
+
+.login-link {
+    text-decoration: none;
+    color: white;
+}
