@@ -20,6 +20,7 @@ import Swal from 'sweetalert2';
     ]
 })
 export class SignupComponent implements OnInit {
+  public repeatPassword: string = '';
 
   public user: User = {
     password: '',
@@ -47,11 +48,17 @@ export class SignupComponent implements OnInit {
     this.userService.addUser(this.user).subscribe({
       next: () => {
         this.notificationService.success('User registered successfully')
-      }, error: () => {
-        this.notificationService.error('Something went wrong');
+      },  error: (err) => {
+        console.error(err);
+        if (err.status === 409) {
+          this.notificationService.error(err.error?.message || 'Username already exists');
+        } else if (err.status === 400) {
+          this.notificationService.error('Invalid input data');
+        } else {
+          this.notificationService.error('Something went wrong');
+        }
       }
     });
-
   }
 
 }

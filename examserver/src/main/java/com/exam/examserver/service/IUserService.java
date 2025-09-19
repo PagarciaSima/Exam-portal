@@ -7,7 +7,7 @@ import com.exam.examserver.model.UserRole;
 
 public interface IUserService {
 	
-	User createUser(User user, Set<UserRole> userRoles) throws Exception;
+	User createUser(User user, Set<UserRole> userRoles);
 
 	Set<UserRole> asignDefaultRole(User user);
 	

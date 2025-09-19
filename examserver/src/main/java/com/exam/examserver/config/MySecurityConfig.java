@@ -57,7 +57,6 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter{
                     .antMatchers("/generate-token", "/user/").permitAll()
                     .antMatchers(HttpMethod.OPTIONS).permitAll()
                     .anyRequest().authenticated())
-            .exceptionHandling(handling -> handling.authenticationEntryPoint(unAuthorizedHandler))
             .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		

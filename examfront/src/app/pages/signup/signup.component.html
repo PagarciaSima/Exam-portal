@@ -23,6 +23,7 @@
                                 required
                                 minlength="3"
                                 #username="ngModel"
+                                autocomplete="username"
                             />
                             <mat-hint>User name must be unique</mat-hint>
                             <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
@@ -43,12 +44,38 @@
                                 required
                                 minlength="6"
                                 #password="ngModel"
+                                 autocomplete="new-password"
                             />
                             <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
                                 <span *ngIf="password.errors?.required">Password is required</span>
                                 <span *ngIf="password.errors?.minlength">At least 6 characters</span>
                             </mat-error>
                         </mat-form-field>
+
+                        <!-- Repeat Password -->
+                        <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-label>Repeat Password</mat-label>
+                        <input
+                            [(ngModel)]="repeatPassword"
+                            name="repeatPassword"
+                            type="password"
+                            matInput
+                            placeholder="Repeat your password"
+                            required
+                            minlength="6"
+                            #repeatPasswordInput="ngModel"
+                            autocomplete="new-password"
+                        />
+                        <mat-error *ngIf="repeatPasswordInput.invalid && (repeatPasswordInput.dirty || repeatPasswordInput.touched)">
+                            <span *ngIf="repeatPasswordInput.errors?.required">Repeat password is required</span>
+                            <span *ngIf="repeatPasswordInput.errors?.minlength">At least 6 characters</span>
+                        </mat-error>
+                        </mat-form-field>
+
+                        <!-- Password mismatch -->
+                        <div *ngIf="user.password && repeatPassword && user.password !== repeatPassword" class="pass-mismatch ml10" style="margin-bottom: 12px;">
+                            Passwords do not match
+                        </div>
 
                         <!-- First name -->
                         <mat-form-field appearance="outline" class="full-width required-field">

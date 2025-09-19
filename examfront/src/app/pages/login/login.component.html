@@ -16,12 +16,13 @@
                         <mat-form-field appearance="outline" class="full-width required-field">
                             <mat-label>Username</mat-label>
                             <input
-                                [(ngModel)]="user.username"
+                                [(ngModel)]="loginData.username"
                                 name="username"
                                 matInput
                                 placeholder="Enter your username"
                                 required
                                 #username="ngModel"
+                                autocomplete="username"
                             />
                             <mat-hint>Valid username</mat-hint>
                             <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
@@ -33,13 +34,14 @@
                         <mat-form-field appearance="outline" class="full-width required-field">
                             <mat-label>Password</mat-label>
                             <input
-                                [(ngModel)]="user.password"
+                                [(ngModel)]="loginData.password"
                                 name="password"
                                 type="password"
                                 matInput
                                 placeholder="Enter your password"
                                 required
                                 #password="ngModel"
+                                 autocomplete="current-password"
                             />
                             <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
                                 <span *ngIf="password.errors?.required">Password is required</span>

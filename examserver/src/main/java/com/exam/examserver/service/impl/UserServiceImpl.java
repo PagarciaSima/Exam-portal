@@ -1,15 +1,16 @@
 package com.exam.examserver.service.impl;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.exam.examserver.model.Role;
 import com.exam.examserver.model.User;
@@ -33,17 +34,24 @@ public class UserServiceImpl implements IUserService{
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
 	/**
-	 * Creates a new user and assigns the specified roles.
-	 * First, it checks if a user with the same username already exists.
-	 * Then, it manages the roles and persists the user in the database.
+	 * Creates a new user in the system and assigns the specified roles.
+	 * <p>
+	 * This method performs the following steps:
+	 * <ol>
+	 *   <li>Sets a default profile image if none is provided.</li>
+	 *   <li>Encrypts the user's password using {@link BCryptPasswordEncoder}.</li>
+	 *   <li>Checks if the username is already taken by calling {@link #checkExistingUserByUserName(User)}.</li>
+	 *   <li>Assigns and persists the specified roles using {@link #manageRoles(User, Set)}.</li>
+	 *   <li>Saves the user in the database via {@link UserRepository}.</li>
+	 * </ol>
 	 *
-	 * @param user the user to be created
-	 * @param userRoles the set of roles to assign to the user
-	 * @return the saved User entity
-	 * @throws RuntimeException if a user with the same username already exists
+	 * @param user the {@link User} object to be created
+	 * @param userRoles the set of {@link UserRole} objects to assign to the user
+	 * @return the saved {@link User} entity with roles assigned
+	 * @throws ResponseStatusException if a user with the same username already exists (HTTP 409 Conflict)
 	 */
 	@Override
-	public User createUser(User user, Set<UserRole> userRoles) throws RuntimeException {
+	public User createUser(User user, Set<UserRole> userRoles) throws ResponseStatusException {
 	    LOGGER.info("Starting creation of user '{}'", user.getUsername());
 	    
 	    if(user != null && user.getProfile() == null) {
@@ -131,23 +139,23 @@ public class UserServiceImpl implements IUserService{
 	}
 
 	/**
-	 * Checks if a user with the same username already exists in the database.
-	 * If such a user exists, an exception is thrown.
+	 * Checks if a user with the given username already exists in the database.
+	 * <p>
+	 * This method queries the UserRepository for a user with the same username.
+	 * If such a user is found, it throws a {@link ResponseStatusException} 
+	 * with HTTP status 409 (Conflict) and a message indicating that the username already exists.
 	 *
-	 * @param user the user to check for existing username
-	 * @throws RuntimeException if a user with the same username already exists
+	 * @param user the {@link User} object whose username is to be checked
+	 * @throws ResponseStatusException if a user with the same username already exists
 	 */
-	private void checkExistingUserByUserName(User user) throws RuntimeException {
+	private void checkExistingUserByUserName(User user) {
 	    String username = user.getUsername();
-	    LOGGER.info("Checking if user '{}' already exists...", username);
-
 	    User existingUser = this.userRepository.findByUsername(username);
-	    if (Objects.nonNull(existingUser)) {
-	        LOGGER.warn("User with username '{}' already exists!", username);
-	        throw new RuntimeException("User already present");
+	    if (existingUser != null) {
+	        throw new ResponseStatusException(
+	            HttpStatus.CONFLICT, "Username already exists"
+	        );
 	    }
-
-	    LOGGER.info("Username '{}' is available", username);
 	}
 
 	/**

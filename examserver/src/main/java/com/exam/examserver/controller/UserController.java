@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.exam.examserver.model.User;
+import com.exam.examserver.model.UserDto;
 import com.exam.examserver.model.UserRole;
 import com.exam.examserver.service.IUserService;
 
@@ -27,14 +28,15 @@ public class UserController {
 	}
 
 	@PostMapping("/")
-	public User createUSer(@RequestBody User user) throws Exception {
-		Set<UserRole> userRoles = this.userService.asignDefaultRole(user);
-		return this.userService.createUser(user, userRoles);
+	public User createUser(@RequestBody User user) {
+	    Set<UserRole> userRoles = this.userService.asignDefaultRole(user);
+	    return this.userService.createUser(user, userRoles);
 	}
 	
 	@GetMapping("/{username}")
-	public User getUser(@PathVariable ("username") String username) {
-		return this.userService.getUser(username);
+	public UserDto getUser(@PathVariable("username") String username) {
+	    User user = this.userService.getUser(username);
+	    return new UserDto(user);
 	}
 	
 	@DeleteMapping("/{userId}")

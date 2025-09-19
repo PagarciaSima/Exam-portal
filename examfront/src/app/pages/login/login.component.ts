@@ -1,6 +1,9 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/model/User';
+import { Router } from '@angular/router';
+import { JwtRequest } from 'src/app/model/JwtRequest';
+import { LoginService } from 'src/app/services/login.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -17,22 +20,35 @@ import { User } from 'src/app/model/User';
 })
 export class LoginComponent implements OnInit {
 
-  public user: User = {
-    password: '',
+  loginData: JwtRequest = {
     username: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
+    password: ''
   }
   
-  constructor() { }
+  constructor(
+    private loginService: LoginService,
+    private notificationService: NotificationService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
 
   formSubmit() {
-    
+    this.loginService.generateToken(this.loginData).subscribe({
+      next: (jwtResponse) => {
+        this.notificationService.success('Login successful');
+        console.log(jwtResponse.token);
+        this.router.navigate(['home']);
+      }, error: (err) => {
+        let errorMessage = 'Login failed. Please try again.';
+        if (err.status === 401) {
+          errorMessage = err.error?.error || 'Invalid credentials';
+        }
+        this.notificationService.error(errorMessage);
+        }
+    });
   }
+  
 
 }

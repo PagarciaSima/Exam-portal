@@ -16,3 +16,8 @@
   text-decoration: none;
   color: #3f51b5;
 }
+
+.pass-mismatch {
+  color: #f44336;
+  font-size: 11px;
+}
