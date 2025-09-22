@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { User } from 'src/app/model/User';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UserService } from 'src/app/services/user.service';
@@ -33,7 +34,8 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +49,8 @@ export class SignupComponent implements OnInit {
 
     this.userService.addUser(this.user).subscribe({
       next: () => {
-        this.notificationService.success('User registered successfully')
+        this.notificationService.success('User registered successfully');
+        this.router.navigate(['login']);
       },  error: (err) => {
         console.error(err);
         if (err.status === 409) {

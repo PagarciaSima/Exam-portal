@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtRequest } from '../model/JwtRequest';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { JwtResponse } from '../model/JwtResponse';
 import { Router } from '@angular/router';
 import { User } from '../model/User';
@@ -11,6 +11,9 @@ import { User } from '../model/User';
   providedIn: 'root'
 })
 export class LoginService {
+
+  private userSubject = new BehaviorSubject<User | null>(this.getUser());
+  public user$: Observable<User | null> = this.userSubject.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -35,32 +38,37 @@ export class LoginService {
     }
   }
 
-  public logout(): void {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    this.router.navigate(['/login']);
-  }
-
   public getToken(): string {
     return localStorage.getItem("token");
   }
 
-  public setUser(user): void {
-    localStorage.setItem("user", JSON.stringify(user))
+  public setUser(user: User): void {
+    localStorage.setItem("user", JSON.stringify(user));
+    this.userSubject.next(user); 
   }
 
-  public getUSer(): User | null {
-    let userStr = localStorage.getItem("user");
-    if (userStr != null) {
-      return JSON.parse(userStr);
-    } else {
-      this.logout();
-      return null
-    }
+  public logout(): void {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    this.userSubject.next(null); 
+    this.router.navigate(['/login']);
   }
 
-  public getUserRole() {
-    let user = this.getUSer();
+public getUser(): User | null {
+  let userStr = localStorage.getItem("user");
+  if (userStr != null) {
+    return JSON.parse(userStr);
+  } else {
+    return null; 
+  }
+}
+
+  public getUserRole(): string {
+    let user = this.getUser();
     return user.authorities[0].authority;
+  }
+
+  public getCurrentUser(): Observable<User> {
+    return this.http.get<User>(`${environment.apiUrl}/current-user`);
   }
 }

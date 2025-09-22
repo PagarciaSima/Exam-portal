@@ -1,5 +1,7 @@
 package com.exam.examserver.controller;
 
+import java.security.Principal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +23,7 @@ import com.exam.examserver.config.JwtUtil;
 import com.exam.examserver.model.ErrorResponse;
 import com.exam.examserver.model.JwtRequest;
 import com.exam.examserver.model.JwtResponse;
+import com.exam.examserver.model.User;
 
 /**
  * Controller responsible for handling user authentication
@@ -91,8 +95,22 @@ public class AuthenticationController {
 	                .body(new ErrorResponse("Internal server error"));
 	    }
 	}
-
 	
+    /**
+     * Retrieves the currently authenticated user.
+     *
+     * <p>This endpoint uses the {@link Principal} object provided by Spring Security
+     * to obtain the username of the logged-in user. It then loads the user details
+     * from the {@link UserDetailsService} and returns the corresponding {@link User} object.</p>
+     *
+     * @param principal the security principal representing the authenticated user
+     * @return the {@link User} entity corresponding to the authenticated username
+     */
+	@GetMapping("/current-user")
+	public User getCurrentUser(Principal principal) {
+		return ((User)this.userDetailService.loadUserByUsername(principal.getName()));
+	}
+
     /**
      * Authenticates the user using provided username and password.
      *
