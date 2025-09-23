@@ -23,6 +23,8 @@ import { authInterceptorProvider } from './interceptors/AuthInterceptor';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { MatListModule } from '@angular/material/list';
+import { SidebarComponent } from './pages/admin/sidebar/sidebar.component';
 
 
 @NgModule({
@@ -35,7 +37,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     HomeComponent,
     DashboardComponent,
     UserDashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     MatSnackBarModule,
     MatCardModule,
     BrowserAnimationsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatListModule
   ],
   providers: [authInterceptorProvider],
   bootstrap: [AppComponent]
