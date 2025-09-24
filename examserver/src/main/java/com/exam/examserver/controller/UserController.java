@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.exam.examserver.model.User;
-import com.exam.examserver.model.UserDto;
-import com.exam.examserver.model.UserRole;
+import com.exam.examserver.model.dto.UserDto;
+import com.exam.examserver.model.user.User;
+import com.exam.examserver.model.userrole.UserRole;
 import com.exam.examserver.service.IUserService;
 
 @RestController

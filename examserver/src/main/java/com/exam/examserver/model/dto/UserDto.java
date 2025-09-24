@@ -1,8 +1,10 @@
-package com.exam.examserver.model;
+package com.exam.examserver.model.dto;
 
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
+
+import com.exam.examserver.model.user.User;
 
 public class UserDto {
     private String username;

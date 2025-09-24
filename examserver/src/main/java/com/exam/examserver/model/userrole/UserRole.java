@@ -1,4 +1,4 @@
-package com.exam.examserver.model;
+package com.exam.examserver.model.userrole;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.exam.examserver.model.role.Role;
+import com.exam.examserver.model.user.User;
 
 @Entity
 public class UserRole {

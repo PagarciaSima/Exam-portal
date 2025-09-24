@@ -1,4 +1,4 @@
-package com.exam.examserver.model;
+package com.exam.examserver.model.role;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.exam.examserver.model.userrole.UserRole;
 
 @Entity
 @Table(name = "roles")

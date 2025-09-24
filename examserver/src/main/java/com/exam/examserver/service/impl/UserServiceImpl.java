@@ -12,9 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.exam.examserver.model.Role;
-import com.exam.examserver.model.User;
-import com.exam.examserver.model.UserRole;
+import com.exam.examserver.model.role.Role;
+import com.exam.examserver.model.user.User;
+import com.exam.examserver.model.userrole.UserRole;
 import com.exam.examserver.repository.RoleRepository;
 import com.exam.examserver.repository.UserRepository;
 import com.exam.examserver.service.IUserService;

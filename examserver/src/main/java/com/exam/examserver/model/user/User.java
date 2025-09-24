@@ -1,4 +1,4 @@
-package com.exam.examserver.model;
+package com.exam.examserver.model.user;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.exam.examserver.model.authority.Authority;
+import com.exam.examserver.model.userrole.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity

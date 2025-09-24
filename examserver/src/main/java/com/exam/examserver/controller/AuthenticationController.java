@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.exam.examserver.config.JwtUtil;
-import com.exam.examserver.model.ErrorResponse;
-import com.exam.examserver.model.JwtRequest;
-import com.exam.examserver.model.JwtResponse;
-import com.exam.examserver.model.User;
+import com.exam.examserver.model.dto.ErrorResponse;
+import com.exam.examserver.model.jwt.JwtRequest;
+import com.exam.examserver.model.jwt.JwtResponse;
+import com.exam.examserver.model.user.User;
 
 /**
  * Controller responsible for handling user authentication
