@@ -5,6 +5,22 @@ import { LoginService } from "../services/login.service";
 
 const TOKEN_HEADER = 'Authorization';
 
+/**
+ * An HTTP interceptor that adds an authorization token to outgoing HTTP requests.
+ *
+ * This interceptor retrieves the authentication token from the `LoginService` and, if present,
+ * attaches it as a Bearer token in the request headers under the key specified by `TOKEN_HEADER`.
+ * If no token is available, the request is sent without modification.
+ *
+ * @example
+ * // Automatically attaches the token to all HTTP requests
+ * providers: [
+ *   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+ * ]
+ *
+ * @see HttpInterceptor
+ * @see LoginService
+ */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     

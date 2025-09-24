@@ -5,6 +5,16 @@ import { User } from 'src/app/model/User';
 import { LoginService } from 'src/app/services/login.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
+/**
+ * Component responsible for displaying the profile of the currently logged-in user.
+ * 
+ * @remarks
+ * Fetches the current user data on initialization and handles errors by showing notifications.
+ * 
+ * @component
+ * @example
+ * <app-profile></app-profile>
+ */
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -26,7 +36,13 @@ export class ProfileComponent implements OnInit {
     this.getCurrentUser();
   }
 
-
+  /**
+   * Fetches the current user's data from the server using the login service.
+   * On success, assigns the retrieved user data to the `user` property.
+   * On error, displays a notification and logs the error to the console.
+   *
+   * @private
+   */
   private getCurrentUser() {
     this.loginService.getCurrentUser().subscribe({
       next: (user) => {

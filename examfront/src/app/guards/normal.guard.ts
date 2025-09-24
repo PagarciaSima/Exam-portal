@@ -3,6 +3,23 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { Observable } from 'rxjs';
 import { LoginService } from '../services/login.service';
 
+/**
+ * Guard to protect routes for users with the 'NORMAL' role.
+ * 
+ * This guard checks if the user is logged in and has the 'NORMAL' role.
+ * If the user does not meet these criteria, they are redirected to the login page.
+ *
+ * @remarks
+ * Implements Angular's `CanActivate` interface to control route activation.
+ *
+ * @example
+ * // Usage in routing module
+ * {
+ *   path: 'normal-dashboard',
+ *   component: NormalDashboardComponent,
+ *   canActivate: [NormalGuard]
+ * }
+ */
 @Injectable({
   providedIn: 'root'
 })

@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card [@slideIn]>
     <mat-action-list>
         <div mat-subheader>Menu</div>
         <!-- Home -->
@@ -11,5 +11,31 @@
             <mat-icon matListIcon>account_circle</mat-icon>
             <span matLine>Profile</span>
         </button>
+        <!-- Categories -->
+        <button mat-list-item routerLink="/admin/profile">
+            <mat-icon matListIcon>category</mat-icon>
+            <span matLine>Categories</span>
+        </button>
+        <!-- Add category -->
+        <button mat-list-item routerLink="/admin/add-category">
+            <mat-icon matListIcon>add</mat-icon>
+            <span matLine>Add Category</span>
+        </button>
+        <!-- Quizzes -->
+        <button mat-list-item routerLink="/admin/quizzes">
+            <mat-icon matListIcon>quiz</mat-icon>
+            <span matLine>Quizzes</span>
+        </button>
+        <!-- Add quizz -->
+        <button mat-list-item routerLink="/admin/add-quiz">
+            <mat-icon matListIcon>add</mat-icon>
+            <span matLine>Add Quiz</span>
+        </button>
+        <!-- Logout -->
+        <button mat-list-item (click)="logout()">
+            <mat-icon matListIcon>logout</mat-icon>
+            <span matLine>Log Out</span>
+        </button>
+
     </mat-action-list>
 </mat-card>

@@ -1,46 +1,46 @@
-<mat-card [@slideIn] *ngIf="user">
-    <h1 class="text-center mt20">Welcome to your profile!</h1>
+<mat-card [@slideIn] *ngIf="user" aria-label="User Profile Card">
+    <h1 class="text-center mt20" tabindex="0">Welcome to your profile!</h1>
     <mat-card-content>
         <div class="bootstrap-wrapper">
             <div class="container">
                 <div class="container text-center">
-                    <img src="assets/img/default.png" alt="profile image" class="profile-image">
-                    <h1 class="mt20">{{ user.firstName }} {{ user.lastName }}</h1>
+                    <img src="assets/img/default.png" alt="Profile image of {{ user.firstName }} {{ user.lastName }}" class="profile-image" width="120" height="120" aria-label="Profile Image">
+                    <h1 class="mt20" tabindex="0">{{ user.firstName }} {{ user.lastName }}</h1>
                 </div>
-                <div class="row">
+                <div class="row mt20">
                     <div class="col-md-10 offset-md-1">
-                        <table class="table text-center">
+                        <table class="table text-center" aria-label="User Details">
                             <tr>
-                                <th class="font-bold">Username</th>
-                                <td>{{ user.username }}</td>
+                                <th scope="row" class="font-bold">Username</th>
+                                <td tabindex="0">{{ user.username }}</td>
                             </tr>
                             <tr>
-                                <th class="font-bold">User Id</th>
-                                <td>Exam{{ user.id }}</td>
+                                <th scope="row" class="font-bold">User Id</th>
+                                <td tabindex="0">Exam{{ user.id }}</td>
                             </tr>
                             <tr>
-                                <th class="font-bold">Phone</th>
-                                <td>{{ user.phone }}</td>
+                                <th scope="row" class="font-bold">Phone</th>
+                                <td tabindex="0">{{ user.phone }}</td>
                             </tr>
                             <tr>
-                                <th class="font-bold">Role</th>
+                                <th scope="row" class="font-bold">Role</th>
                                 <td>
                                     <span style="display: inline-flex; align-items: center; gap: 5px;">
-                                    <mat-icon [style.color]="user.authorities[0].authority === 'ADMIN' ? 'orange' : 'blue'">
-                                        {{ user.authorities[0].authority === 'ADMIN' ? 'admin_panel_settings' : 'person' }}
-                                    </mat-icon>
-                                    {{ user.authorities[0].authority }}
+                                        <mat-icon [style.color]="user.authorities[0].authority === 'ADMIN' ? 'orange' : 'blue'" aria-label="{{ user.authorities[0].authority === 'ADMIN' ? 'Admin' : 'User' }} icon">
+                                            {{ user.authorities[0].authority === 'ADMIN' ? 'admin_panel_settings' : 'person' }}
+                                        </mat-icon>
+                                        <span tabindex="0">{{ user.authorities[0].authority }}</span>
                                     </span>
                                 </td>
                             </tr>
                             <tr>
-                                <th class="font-bold">Status</th>
+                                <th scope="row" class="font-bold">Status</th>
                                 <td>
                                     <span style="display: inline-flex; align-items: center; gap: 5px;">
-                                        <mat-icon [style.color]="user.enabled ? 'green' : 'red'">
+                                        <mat-icon [style.color]="user.enabled ? 'green' : 'red'" aria-label="{{ user.enabled ? 'Enabled' : 'Disabled' }} status icon">
                                             {{ user.enabled ? 'check_circle' : 'cancel' }}
                                         </mat-icon>
-                                        {{ user.enabled ? 'Enabled' : 'Disabled' }}
+                                        <span tabindex="0">{{ user.enabled ? 'Enabled' : 'Disabled' }}</span>
                                     </span>
                                 </td>
                             </tr>
@@ -50,8 +50,8 @@
             </div>
         </div>
         <mat-card-actions class="text-center mt20">
-            <button mat-raised-button color="primary">UPDATE</button>
-            <button mat-raised-button color="accent">SHARE</button>
+            <button mat-raised-button color="primary" aria-label="Update Profile">UPDATE</button>
+            <button mat-raised-button color="accent" aria-label="Share Profile">SHARE</button>
         </mat-card-actions>
     </mat-card-content>
 </mat-card>
