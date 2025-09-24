@@ -13,12 +13,15 @@
         Register
     </a>
 
-    <a (click)="logout()" *ngIf="isLoggedIn" routerLink="/login" class="login-link mr20">
+    <a *ngIf="isLoggedIn"
+        [routerLink]="user.authorities[0]?.authority === 'ADMIN' ? '/admin/profile' : '/user-dashboard'"
+        class="login-link mr20">
         <mat-icon class="mr10 vertical-align-middle">account_circle</mat-icon>
         {{user.username}}
     </a>
 
     <a (click)="logout()" *ngIf="isLoggedIn" routerLink="/login" class="login-link ml20">
+        <mat-icon class="mr10 vertical-align-middle">logout</mat-icon>
         Logout
     </a>
 

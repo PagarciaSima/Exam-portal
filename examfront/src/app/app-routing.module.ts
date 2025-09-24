@@ -8,6 +8,7 @@ import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboa
 import { AdminGuard } from './guards/admin.guard';
 import { NormalGuard } from './guards/normal.guard';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { WelcomeComponent } from './pages/admin/welcome/welcome.component';
 
 const routes: Routes = [
   {
@@ -31,8 +32,14 @@ const routes: Routes = [
     canActivate: [AdminGuard],
     children: [
       {
+        path: '',
+        component: WelcomeComponent,
+         data: { animation: 'WelcomePage' }
+      },
+      {
         path: 'profile',
-        component: ProfileComponent
+        component: ProfileComponent,
+         data: { animation: 'ProfilePage' }
       }
     ]
   },

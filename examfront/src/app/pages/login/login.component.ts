@@ -6,19 +6,14 @@ import { JwtResponse } from 'src/app/model/JwtResponse';
 import { User } from 'src/app/model/User';
 import { LoginService } from 'src/app/services/login.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { switchMap, tap } from 'rxjs/operators';
+import { fadeInUp } from 'src/app/animations/animations';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   animations: [
-    trigger('fadeInUp', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(20px)' }),
-        animate('500ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
-      ])
-    ])
+    fadeInUp
   ]
 })
 export class LoginComponent implements OnInit {

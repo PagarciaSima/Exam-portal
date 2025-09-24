@@ -1,24 +1,18 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { fadeInUp } from 'src/app/animations/animations';
 import { User } from 'src/app/model/User';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UserService } from 'src/app/services/user.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
   animations: [
-      trigger('fadeInUp', [
-        transition(':enter', [
-          style({ opacity: 0, transform: 'translateY(20px)' }),
-          animate('500ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
-        ])
-      ])
-    ]
+      fadeInUp
+  ]
 })
 export class SignupComponent implements OnInit {
   public repeatPassword: string = '';

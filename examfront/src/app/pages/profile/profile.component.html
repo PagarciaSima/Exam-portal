@@ -1,1 +1,57 @@
-hello
+<mat-card [@slideIn] *ngIf="user">
+    <h1 class="text-center mt20">Welcome to your profile!</h1>
+    <mat-card-content>
+        <div class="bootstrap-wrapper">
+            <div class="container">
+                <div class="container text-center">
+                    <img src="assets/img/default.png" alt="profile image" class="profile-image">
+                    <h1 class="mt20">{{ user.firstName }} {{ user.lastName }}</h1>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        <table class="table text-center">
+                            <tr>
+                                <th class="font-bold">Username</th>
+                                <td>{{ user.username }}</td>
+                            </tr>
+                            <tr>
+                                <th class="font-bold">User Id</th>
+                                <td>Exam{{ user.id }}</td>
+                            </tr>
+                            <tr>
+                                <th class="font-bold">Phone</th>
+                                <td>{{ user.phone }}</td>
+                            </tr>
+                            <tr>
+                                <th class="font-bold">Role</th>
+                                <td>
+                                    <span style="display: inline-flex; align-items: center; gap: 5px;">
+                                    <mat-icon [style.color]="user.authorities[0].authority === 'ADMIN' ? 'orange' : 'blue'">
+                                        {{ user.authorities[0].authority === 'ADMIN' ? 'admin_panel_settings' : 'person' }}
+                                    </mat-icon>
+                                    {{ user.authorities[0].authority }}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="font-bold">Status</th>
+                                <td>
+                                    <span style="display: inline-flex; align-items: center; gap: 5px;">
+                                        <mat-icon [style.color]="user.enabled ? 'green' : 'red'">
+                                            {{ user.enabled ? 'check_circle' : 'cancel' }}
+                                        </mat-icon>
+                                        {{ user.enabled ? 'Enabled' : 'Disabled' }}
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <mat-card-actions class="text-center mt20">
+            <button mat-raised-button color="primary">UPDATE</button>
+            <button mat-raised-button color="accent">SHARE</button>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>

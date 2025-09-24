@@ -20,8 +20,10 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.loginService.user$.subscribe(user => {
       this.user = user;
+      console.log(this.user)
       this.isLoggedIn = !!user;
     });
+    
   }
 
   redirectHome() {

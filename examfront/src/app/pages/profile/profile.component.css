@@ -1,0 +1,40 @@
+.profile-image {
+    max-width: 200px;
+    max-height: 200px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* sombra ligera */
+    border-radius: 10px; 
+    overflow: hidden; /* redondeo aplicado correctamente */
+}
+
+.table th {
+    background-color: #E91E63;  /* cabecera llamativa */
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    padding: 15px;
+}
+
+.table td {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f9f9f9; /* filas alternas */
+}
+
+.table tr:hover {
+    background-color: #14080890; /* efecto hover */
+    transition: background-color 0.3s ease;
+    color: white;
+}
