@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @EnableWebSecurity
 @Configuration
@@ -23,9 +24,9 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private UserDetailsService userDetailsService;
 	@Autowired
-	private JwtAuthenticationEntryPoint unAuthorizedHandler;
-	@Autowired
 	private JwtAuthenticationFilter jwtAuthenticationFilter;
+	@Autowired
+	private CorsConfigurationSource corsConfigurationSource;
 	
 	@Bean
 	BCryptPasswordEncoder passwordEncoder() {
@@ -51,8 +52,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter{
         http
             .csrf(csrf -> csrf
                     .disable())
-            .cors(cors -> cors
-                    .disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource))
             .authorizeRequests(requests -> requests
                     .antMatchers("/generate-token", "/user/").permitAll()
                     .antMatchers(HttpMethod.OPTIONS).permitAll()
@@ -61,7 +61,5 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter{
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		
 	}
-
-	
     
 }
