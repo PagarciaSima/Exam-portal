@@ -27,6 +27,8 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter{
 	private JwtAuthenticationFilter jwtAuthenticationFilter;
 	@Autowired
 	private CorsConfigurationSource corsConfigurationSource;
+	@Autowired
+	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	
 	@Bean
 	BCryptPasswordEncoder passwordEncoder() {
@@ -49,17 +51,22 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf
-                    .disable())
-            .cors(cors -> cors.configurationSource(corsConfigurationSource))
-            .authorizeRequests(requests -> requests
-                    .antMatchers("/generate-token", "/user/").permitAll()
-                    .antMatchers(HttpMethod.OPTIONS).permitAll()
-                    .anyRequest().authenticated())
-            .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-		
+	    http
+	        .csrf(csrf -> csrf.disable())
+	        .cors(cors -> cors.configurationSource(corsConfigurationSource))
+	        .authorizeRequests(requests -> requests
+	            .antMatchers("/generate-token", "/user/").permitAll()
+	            .antMatchers(HttpMethod.OPTIONS).permitAll()
+	            .anyRequest().authenticated()
+	        )
+	        .exceptionHandling(handling -> handling
+	            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+	        )
+	        .sessionManagement(management -> management
+	            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	        );
+
+	    http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 	}
     
 }

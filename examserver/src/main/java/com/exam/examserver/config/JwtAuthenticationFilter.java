@@ -57,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
 	    String jwtToken = extractJwtFromHeader(request, endpoint, clientIp);
 	    if (jwtToken != null) {
-	        String username = getUsernameFromToken(jwtToken, endpoint, clientIp);
+	        String username = getUsernameFromToken(jwtToken,request, endpoint, clientIp);
 	        if (username != null) {
 	            authenticateUser(jwtToken, username, request, endpoint, clientIp);
 	        }
@@ -84,11 +84,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	/**
 	 * Extracts username from JWT token and handles exceptions.
 	 */
-	private String getUsernameFromToken(String token, String endpoint, String clientIp) {
+	private String getUsernameFromToken(String token,HttpServletRequest request, String endpoint, String clientIp) {
 	    try {
 	        return this.jwtUtil.extractUsername(token);
 	    } catch (ExpiredJwtException e) {
 	        LOGGER.warn("JWT token has expired for request [{}] from IP [{}]", endpoint, clientIp, e);
+	        request.setAttribute("exception", e);
 	    } catch (Exception e) {
 	        LOGGER.error("Error parsing JWT token for request [{}] from IP [{}]", endpoint, clientIp, e);
 	    }

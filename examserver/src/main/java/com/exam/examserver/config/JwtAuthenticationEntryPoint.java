@@ -9,15 +9,33 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
+import io.jsonwebtoken.ExpiredJwtException;
+
+
 @Component
-public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint{
+public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response,
+    public void commence(HttpServletRequest request,
+                         HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
-        response.setContentType("application/json");
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().write("{\"error\": \"Unauthorized. Please login again.\"}");
-    }
+        
+        final Exception exception = (Exception) request.getAttribute("exception");
 
+        String message = "Unauthorized";
+
+        if (exception != null) {
+            if (exception instanceof ExpiredJwtException) {
+                message = "JWT Token has expired";
+            } else {
+                message = exception.getMessage();
+            }
+        } else if (authException.getCause() instanceof ExpiredJwtException) {
+            message = "JWT Token has expired";
+        }
+
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
+        response.getWriter().write("{\"error\":\"" + message + "\"}");
+    }
 }
