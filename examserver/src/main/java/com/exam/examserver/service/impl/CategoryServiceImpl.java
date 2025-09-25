@@ -1,13 +1,14 @@
 package com.exam.examserver.service.impl;
 
 import java.util.LinkedHashSet;
-import java.util.Set;
 import java.util.Optional;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.exam.examserver.model.exam.category.Category;
 import com.exam.examserver.repository.CategoryRepository;
@@ -32,6 +33,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @return the saved category
      */
     @Override
+    @Transactional()
     public Category addCategory(Category category) {
         LOGGER.info("Adding new category: {}", category.getTitle());
         return categoryRepository.save(category);
@@ -44,6 +46,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @return the updated category
      */
     @Override
+    @Transactional()
     public Category updateCategory(Category category) {
         LOGGER.info("Updating category with ID: {}", category.getCid());
         if (!categoryRepository.existsById(category.getCid())) {
@@ -59,6 +62,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @return a set of all categories
      */
     @Override
+    @Transactional(readOnly = true)
     public Set<Category> getCategories() {
         LOGGER.info("Fetching all categories");
         return new LinkedHashSet<>(categoryRepository.findAll());
@@ -72,6 +76,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @throws IllegalArgumentException if category is not found
      */
     @Override
+    @Transactional(readOnly = true)
     public Category getCategory(Long categoryId) {
         LOGGER.info("Fetching category with ID: {}", categoryId);
         Optional<Category> categoryOpt = categoryRepository.findById(categoryId);
@@ -89,6 +94,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @throws IllegalArgumentException if category is not found
      */
     @Override
+    @Transactional()
     public void deleteCategory(Long categoryId) {
         LOGGER.info("Deleting category with ID: {}", categoryId);
         if (!categoryRepository.existsById(categoryId)) {

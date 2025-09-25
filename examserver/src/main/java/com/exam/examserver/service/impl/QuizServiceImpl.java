@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.exam.examserver.model.exam.quiz.Quiz;
 import com.exam.examserver.repository.QuizRepository;
@@ -32,6 +33,7 @@ public class QuizServiceImpl implements IQuizService {
      * @return the saved quiz
      */
     @Override
+    @Transactional
     public Quiz addQuiz(Quiz quiz) {
         LOGGER.info("Adding new quiz: {}", quiz.getTitle());
         return quizRepository.save(quiz);
@@ -44,6 +46,7 @@ public class QuizServiceImpl implements IQuizService {
      * @return the updated quiz
      */
     @Override
+    @Transactional
     public Quiz updateQuiz(Quiz quiz) {
         LOGGER.info("Updating quiz with ID: {}", quiz.getqId());
         if (!quizRepository.existsById(quiz.getqId())) {
@@ -59,6 +62,7 @@ public class QuizServiceImpl implements IQuizService {
      * @return a set of all quizzes
      */
     @Override
+    @Transactional(readOnly = true)
     public Set<Quiz> getQuizzes() {
         LOGGER.info("Fetching all quizzes");
         return new LinkedHashSet<>(quizRepository.findAll());
@@ -72,14 +76,19 @@ public class QuizServiceImpl implements IQuizService {
      * @throws IllegalArgumentException if quiz is not found
      */
     @Override
+    @Transactional (readOnly = true)
     public Quiz getQuiz(Long quizId) {
         LOGGER.info("Fetching quiz with ID: {}", quizId);
         Optional<Quiz> quizOpt = quizRepository.findById(quizId);
+
         if (quizOpt.isEmpty()) {
             LOGGER.warn("Quiz with ID {} not found", quizId);
             throw new IllegalArgumentException("Quiz not found with ID: " + quizId);
         }
-        return quizOpt.get();
+
+        Quiz quiz = quizOpt.get();
+
+        return quiz;
     }
 
     /**
@@ -89,13 +98,19 @@ public class QuizServiceImpl implements IQuizService {
      * @throws IllegalArgumentException if quiz is not found
      */
     @Override
+    @Transactional
     public void deleteQuiz(Long quizId) {
         LOGGER.info("Deleting quiz with ID: {}", quizId);
-        if (!quizRepository.existsById(quizId)) {
-            LOGGER.warn("Quiz with ID {} does not exist. Cannot delete.", quizId);
-            throw new IllegalArgumentException("Quiz not found with ID: " + quizId);
+        Quiz quiz = quizRepository.findById(quizId)
+                .orElseThrow(() -> new IllegalArgumentException("Quiz not found with ID: " + quizId));
+
+        // Romper la relación con la categoría
+        if (quiz.getCategory() != null) {
+            quiz.getCategory().getQuizzes().remove(quiz);
+            quiz.setCategory(null);
         }
-        quizRepository.deleteById(quizId);
+
+        quizRepository.delete(quiz);
         LOGGER.info("Quiz with ID {} deleted successfully", quizId);
     }
 }

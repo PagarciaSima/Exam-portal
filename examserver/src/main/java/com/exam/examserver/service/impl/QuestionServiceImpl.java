@@ -8,8 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.exam.examserver.model.exam.question.Question;
+import com.exam.examserver.model.exam.quiz.Quiz;
 import com.exam.examserver.repository.QuestionRepository;
 import com.exam.examserver.service.IQuestionService;
 
@@ -32,6 +34,7 @@ public class QuestionServiceImpl implements IQuestionService {
      * @return the saved question
      */
     @Override
+    @Transactional()
     public Question addQuestion(Question question) {
         LOGGER.info("Adding new question: {}", question.getContent());
         return questionRepository.save(question);
@@ -44,6 +47,7 @@ public class QuestionServiceImpl implements IQuestionService {
      * @return the updated question
      */
     @Override
+    @Transactional()
     public Question updateQuestion(Question question) {
         LOGGER.info("Updating question with ID: {}", question.getQuesId());
         if (!questionRepository.existsById(question.getQuesId())) {
@@ -54,14 +58,16 @@ public class QuestionServiceImpl implements IQuestionService {
     }
 
     /**
-     * Retrieves all questions.
+     * Retrieves all questions associated with a specific quiz.
      *
-     * @return a set of all questions
+     * @param quiz the quiz whose questions are to be fetched
+     * @return a set of questions belonging to the given quiz
      */
     @Override
-    public Set<Question> getQuestions() {
-        LOGGER.info("Fetching all questions");
-        return new LinkedHashSet<>(questionRepository.findAll());
+    @Transactional(readOnly = true)
+    public Set<Question> getQuestions(Quiz quiz) {
+        LOGGER.info("Fetching all questions for Quiz ID {} with title '{}'", quiz.getqId(), quiz.getTitle());
+        return new LinkedHashSet<>(questionRepository.findByQuiz(quiz));
     }
 
     /**
@@ -72,6 +78,7 @@ public class QuestionServiceImpl implements IQuestionService {
      * @throws IllegalArgumentException if question is not found
      */
     @Override
+    @Transactional(readOnly = true)
     public Question getQuestion(Long questionId) {
         LOGGER.info("Fetching question with ID: {}", questionId);
         Optional<Question> questionOpt = questionRepository.findById(questionId);
@@ -89,6 +96,7 @@ public class QuestionServiceImpl implements IQuestionService {
      * @throws IllegalArgumentException if question is not found
      */
     @Override
+    @Transactional()
     public void deleteQuestion(Long questionId) {
         LOGGER.info("Deleting question with ID: {}", questionId);
         if (!questionRepository.existsById(questionId)) {

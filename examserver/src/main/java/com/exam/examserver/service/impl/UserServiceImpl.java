@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.exam.examserver.model.role.Role;
@@ -51,6 +52,7 @@ public class UserServiceImpl implements IUserService{
 	 * @throws ResponseStatusException if a user with the same username already exists (HTTP 409 Conflict)
 	 */
 	@Override
+	@Transactional()
 	public User createUser(User user, Set<UserRole> userRoles) throws ResponseStatusException {
 	    LOGGER.info("Starting creation of user '{}'", user.getUsername());
 	    
@@ -166,6 +168,7 @@ public class UserServiceImpl implements IUserService{
 	 * @return the User entity if found, otherwise null
 	 */
 	@Override
+	@Transactional(readOnly = true)
 	public User getUser(String username) {
 	    LOGGER.info("Fetching user with username '{}'", username);
 
@@ -187,6 +190,7 @@ public class UserServiceImpl implements IUserService{
 	 * @param userId the ID of the user to delete
 	 */
 	@Override
+	@Transactional()
 	public void deleteUser(Long userId) {
 	    LOGGER.info("Attempting to delete user with ID '{}'", userId);
 
