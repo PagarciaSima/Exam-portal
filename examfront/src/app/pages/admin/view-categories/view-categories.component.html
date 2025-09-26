@@ -1,0 +1,29 @@
+<mat-card>
+    <mat-list [@slideIn] role="list" aria-label="All Categories">
+        <h1 class="text-center" tabindex="0">{{ 'CATEGORIES' | translate }}</h1>
+        <mat-list-item *ngFor="let category of categories" role="listitem">
+            <mat-icon matListIcon color="primary" aria-hidden="true" class="responsive-icon">category</mat-icon>
+            <h3 matLine id="cat-title-{{category.id}}" tabindex="0">{{ category.title }}</h3>
+            <p matLine id="cat-desc-{{category.id}}" tabindex="0" class="responsive-desc">{{ category.description }}</p>
+            <button mat-icon-button color="warn"
+                aria-label="{{ 'DELETE' | translate }} category {{ category.title }}"
+                matTooltip="{{ 'DELETE' | translate }}"
+                [attr.aria-describedby]="'cat-title-' + category.id">
+                <mat-icon aria-hidden="true">delete</mat-icon>
+            </button>
+            <button mat-icon-button color="primary"
+                aria-label="{{ 'EDIT' | translate }} category {{ category.title }}"
+                matTooltip="{{ 'EDIT' | translate }}"
+                [attr.aria-describedby]="'cat-title-' + category.id">
+                <mat-icon aria-hidden="true">edit</mat-icon>
+            </button>
+            <button mat-icon-button color="accent"
+                aria-label="{{ 'CATEGORY_DETAIL' | translate }} {{ category.title }}"
+                matTooltip="{{ 'CATEGORY_DETAIL' | translate }}"
+                [attr.aria-describedby]="'cat-title-' + category.id">
+                <mat-icon aria-hidden="true">visibility</mat-icon>
+            </button>
+            <mat-divider></mat-divider>
+        </mat-list-item>
+    </mat-list>
+</mat-card>
