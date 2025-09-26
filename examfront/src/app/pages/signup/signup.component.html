@@ -3,170 +3,182 @@
         <div class="row">
             <div class="col-md-6 offset-md-3 mt20">
                 <mat-card @fadeInUp>
-                    <div class="container img-hover-zoom" >
-                        <img src="../../../assets/exam-portal.png" alt="exam-portal" class="signup-img"
-                            routerLink="/"
-                        >
+                    <div class="container img-hover-zoom">
+                        <a routerLink="/" aria-label="Ir a la página principal">
+                            <img src="../../../assets/exam-portal.png" alt="Exam Portal Logo" class="signup-img">
+                        </a>
                     </div>
-                    <h1 class="text-center">Sign up Form</h1>
+                    <h1 class="text-center" tabindex="0">{{ 'SIGNUP_FORM' | translate }}</h1>
                     
-                    <form #signupForm="ngForm" (ngSubmit)="formSubmit()">
-
+                    <form #signupForm="ngForm" (ngSubmit)="formSubmit()" aria-labelledby="signupFormTitle">
                         <!-- Username -->
                         <mat-form-field appearance="outline" class="full-width required-field">
-                            <mat-label>Username</mat-label>
+                            <mat-label id="usernameLabel">{{ 'USERNAME_LABEL' | translate }}</mat-label>
                             <input
                                 [(ngModel)]="user.username"
                                 name="username"
                                 matInput
-                                placeholder="Enter your username"
+                                [placeholder]="'USERNAME_PLACEHOLDER' | translate"
                                 required
                                 minlength="3"
                                 #username="ngModel"
                                 autocomplete="username"
+                                aria-required="true"
+                                aria-describedby="usernameHint"
+                                aria-labelledby="usernameLabel"
                             />
-                            <mat-hint>User name must be unique</mat-hint>
+                            <mat-hint id="usernameHint">{{ 'USERNAME_HINT' | translate }}</mat-hint>
                             <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
-                                <span *ngIf="username.errors?.required">Username is required</span>
-                                <span *ngIf="username.errors?.minlength">Must be at least 3 characters</span>
+                                <span *ngIf="username.errors?.required">{{ 'USERNAME_REQUIRED' | translate }}</span>
+                                <span *ngIf="username.errors?.minlength">{{ 'USERNAME_MINLENGTH' | translate }}</span>
                             </mat-error>
                         </mat-form-field>
 
                         <!-- Password -->
                         <mat-form-field appearance="outline" class="full-width required-field">
-                            <mat-label>Password</mat-label>
+                            <mat-label id="passwordLabel">{{ 'PASSWORD_LABEL' | translate }}</mat-label>
                             <input
                                 [(ngModel)]="user.password"
                                 name="password"
                                 type="password"
                                 matInput
-                                placeholder="Enter your password"
+                                [placeholder]="'PASSWORD_PLACEHOLDER' | translate"
                                 required
                                 minlength="6"
                                 #password="ngModel"
-                                 autocomplete="new-password"
+                                autocomplete="new-password"
+                                aria-required="true"
+                                aria-labelledby="passwordLabel"
                             />
                             <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
-                                <span *ngIf="password.errors?.required">Password is required</span>
-                                <span *ngIf="password.errors?.minlength">At least 6 characters</span>
+                                <span *ngIf="password.errors?.required">{{ 'PASSWORD_REQUIRED' | translate }}</span>
+                                <span *ngIf="password.errors?.minlength">{{ 'PASSWORD_MINLENGTH' | translate }}</span>
                             </mat-error>
                         </mat-form-field>
 
                         <!-- Repeat Password -->
                         <mat-form-field appearance="outline" class="full-width required-field">
-                        <mat-label>Repeat Password</mat-label>
-                        <input
-                            [(ngModel)]="repeatPassword"
-                            name="repeatPassword"
-                            type="password"
-                            matInput
-                            placeholder="Repeat your password"
-                            required
-                            minlength="6"
-                            #repeatPasswordInput="ngModel"
-                            autocomplete="new-password"
-                        />
-                        <mat-error *ngIf="repeatPasswordInput.invalid && (repeatPasswordInput.dirty || repeatPasswordInput.touched)">
-                            <span *ngIf="repeatPasswordInput.errors?.required">Repeat password is required</span>
-                            <span *ngIf="repeatPasswordInput.errors?.minlength">At least 6 characters</span>
-                        </mat-error>
+                            <mat-label id="repeatPasswordLabel">{{ 'REPEAT_PASSWORD_LABEL' | translate }}</mat-label>
+                            <input
+                                [(ngModel)]="repeatPassword"
+                                name="repeatPassword"
+                                type="password"
+                                matInput
+                                [placeholder]="'REPEAT_PASSWORD_PLACEHOLDER' | translate"
+                                required
+                                minlength="6"
+                                #repeatPasswordInput="ngModel"
+                                autocomplete="new-password"
+                                aria-required="true"
+                                aria-labelledby="repeatPasswordLabel"
+                            />
+                            <mat-error *ngIf="repeatPasswordInput.invalid && (repeatPasswordInput.dirty || repeatPasswordInput.touched)">
+                                <span *ngIf="repeatPasswordInput.errors?.required">{{ 'REPEAT_PASSWORD_REQUIRED' | translate }}</span>
+                                <span *ngIf="repeatPasswordInput.errors?.minlength">{{ 'REPEAT_PASSWORD_MINLENGTH' | translate }}</span>
+                            </mat-error>
                         </mat-form-field>
 
                         <!-- Password mismatch -->
-                        <div *ngIf="user.password && repeatPassword && user.password !== repeatPassword" class="pass-mismatch ml10" style="margin-bottom: 12px;">
-                            Passwords do not match
+                        <div *ngIf="user.password && repeatPassword && user.password !== repeatPassword" class="pass-mismatch ml10" style="margin-bottom: 12px;" role="alert" aria-live="assertive">
+                            {{ 'PASSWORD_MISMATCH' | translate }}
                         </div>
 
                         <!-- First name -->
                         <mat-form-field appearance="outline" class="full-width required-field">
-                            <mat-label>First name</mat-label>
+                            <mat-label id="firstNameLabel">{{ 'FIRSTNAME_LABEL' | translate }}</mat-label>
                             <input
                                 [(ngModel)]="user.firstName"
                                 name="firstName"
                                 matInput
-                                placeholder="Enter your first name"
+                                [placeholder]="'FIRSTNAME_PLACEHOLDER' | translate"
                                 required
                                 #firstName="ngModel"
+                                aria-required="true"
+                                aria-labelledby="firstNameLabel"
                             />
                             <mat-error *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
-                                <span *ngIf="firstName.errors?.required">First name is required</span>
+                                <span *ngIf="firstName.errors?.required">{{ 'FIRSTNAME_REQUIRED' | translate }}</span>
                             </mat-error>
                         </mat-form-field>
 
                         <!-- Last name -->
                         <mat-form-field appearance="outline" class="full-width required-field">
-                            <mat-label>Last name</mat-label>
+                            <mat-label id="lastNameLabel">{{ 'LASTNAME_LABEL' | translate }}</mat-label>
                             <input
                                 [(ngModel)]="user.lastName"
                                 name="lastName"
                                 matInput
-                                placeholder="Enter your last name"
+                                [placeholder]="'LASTNAME_PLACEHOLDER' | translate"
                                 required
                                 #lastName="ngModel"
+                                aria-required="true"
+                                aria-labelledby="lastNameLabel"
                             />
                             <mat-error *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
-                                <span *ngIf="lastName.errors?.required">Last name is required</span>
+                                <span *ngIf="lastName.errors?.required">{{ 'LASTNAME_REQUIRED' | translate }}</span>
                             </mat-error>
                         </mat-form-field>
 
                         <!-- E-mail -->
                         <mat-form-field appearance="outline" class="full-width required-field">
-                            <mat-label>E-mail</mat-label>
+                            <mat-label id="emailLabel">{{ 'EMAIL_LABEL' | translate }}</mat-label>
                             <input
                                 [(ngModel)]="user.email"
                                 name="email"
                                 type="email"
                                 matInput
-                                placeholder="Enter your e-mail"
+                                [placeholder]="'EMAIL_PLACEHOLDER' | translate"
                                 required
                                 email
                                 #email="ngModel"
+                                aria-required="true"
+                                aria-labelledby="emailLabel"
                             />
                             <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
-                                <span *ngIf="email.errors?.required">E-mail is required</span>
-                                <span *ngIf="email.errors?.email">Enter a valid e-mail</span>
+                                <span *ngIf="email.errors?.required">{{ 'EMAIL_REQUIRED' | translate }}</span>
+                                <span *ngIf="email.errors?.email">{{ 'EMAIL_INVALID' | translate }}</span>
                             </mat-error>
                         </mat-form-field>
 
                         <!-- Phone -->
                         <mat-form-field appearance="outline" class="full-width required-field">
-                            <mat-label>Phone number</mat-label>
+                            <mat-label id="phoneLabel">{{ 'PHONE_LABEL' | translate }}</mat-label>
                             <input
                                 [(ngModel)]="user.phone"
                                 name="phone"
                                 type="tel"
                                 matInput
-                                placeholder="Enter your phone number"
+                                [placeholder]="'PHONE_PLACEHOLDER' | translate"
                                 required
                                 minlength="9"
                                 #phone="ngModel"
+                                aria-required="true"
+                                aria-labelledby="phoneLabel"
                             />
                             <mat-error *ngIf="phone.invalid && (phone.dirty || phone.touched)">
-                                <span *ngIf="phone.errors?.required">Phone number is required</span>
-                                <span *ngIf="phone.errors?.minlength">Must be at least 9 digits</span>
+                                <span *ngIf="phone.errors?.required">{{ 'PHONE_REQUIRED' | translate }}</span>
+                                <span *ngIf="phone.errors?.minlength">{{ 'PHONE_MINLENGTH' | translate }}</span>
                             </mat-error>
                         </mat-form-field>
 
                         <!-- Buttons -->
                         <div class="container text-center">
                             <button type="submit" [disabled]="signupForm.invalid" mat-raised-button color="primary">
-                                Register
+                                {{ 'REGISTER_BUTTON' | translate }}
                             </button>
                             <button type="reset" style="margin-left: 20px" mat-raised-button color="accent">
-                                Clear
+                                {{ 'CLEAR_BUTTON' | translate }}
                             </button>
                         </div>
 
                         <div class="container text-center" style="margin-top: 15px;">
-                            <span>Already have an account?</span>
+                            <span>{{ 'ALREADY_ACCOUNT' | translate }}</span>
                             <a routerLink="/login" class="login-link">
-                                Login here
+                                {{ 'LOGIN_HERE' | translate }}
                             </a>
                         </div>
-
                     </form>
                 </mat-card>
-
             </div>
         </div>
     </div>

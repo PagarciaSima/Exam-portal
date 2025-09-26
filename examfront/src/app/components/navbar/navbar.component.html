@@ -1,28 +1,43 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button (click)="redirectHome()">
-        <mat-icon>menu_book</mat-icon>
-        <span class="ml10 fs20">Exam Portal</span>
-    </button>
-     
-    <span class="spacer"></span>
-    <a *ngIf="!isLoggedIn" routerLink="/login" class="login-link">
-        Login
-    </a>
-
-    <a *ngIf="!isLoggedIn" routerLink="/signup" class="mr20 ml20 login-link">
-        Register
-    </a>
-
-    <a *ngIf="isLoggedIn"
-        [routerLink]="user.authorities[0]?.authority === 'ADMIN' ? '/admin/profile' : '/user-dashboard'"
-        class="login-link mr20">
-        <mat-icon class="mr10 vertical-align-middle">account_circle</mat-icon>
-        {{user.username}}
-    </a>
-
-    <a (click)="logout()" *ngIf="isLoggedIn" routerLink="/login" class="login-link ml20">
-        <mat-icon class="mr10 vertical-align-middle">logout</mat-icon>
-        Logout
-    </a>
-
+<mat-toolbar color="primary" class="navbar-toolbar" role="navigation" aria-label="Main navigation">
+    <div class="brand">
+        <button mat-icon-button (click)="redirectHome()" aria-label="Go to home page">
+            <mat-icon aria-hidden="true">menu_book</mat-icon>
+        </button>
+        <span class="ml10 fs20 brand-text" aria-label="Exam Portal">{{ 'EXAM_PORTAL' | translate }}</span>
+        <!-- Lenguage selector -->
+        <button mat-icon-button [matMenuTriggerFor]="langMenu" class="ml10 lang-btn" aria-label="Select language">
+            <mat-icon aria-hidden="true">language</mat-icon>
+        </button>
+        <mat-menu #langMenu="matMenu" aria-label="Language menu">
+            <button mat-menu-item (click)="selectLanguage('en')" aria-label="Switch to English">
+                <mat-icon aria-hidden="true">language</mat-icon>
+                {{ 'ENGLISH' | translate }}
+            </button>
+            <button mat-menu-item (click)="selectLanguage('es')" aria-label="Switch to Spanish">
+                <mat-icon aria-hidden="true">language</mat-icon>
+                {{ 'SPANISH' | translate }}
+            </button>
+        </mat-menu>
+    </div>
+    <span class="spacer" aria-hidden="true"></span>
+    <div class="user-links d-flex flex-row flex-md-row flex-wrap align-items-center">
+        <ng-container *ngIf="!isLoggedIn">
+            <a routerLink="/login" class="login-link" aria-label="Login">{{ 'LOGIN' | translate }}</a>
+            <a routerLink="/signup" class="mr20 ml20 login-link" aria-label="Register">{{ 'REGISTER' | translate }}</a>
+        </ng-container>
+        <ng-container *ngIf="isLoggedIn">
+            <div class="user-row d-flex align-items-center w-100">
+                <a [routerLink]="user.authorities[0]?.authority === 'ADMIN' ? '/admin/profile' : '/user-dashboard'"
+                   class="login-link mr20"
+                   aria-label="User profile">
+                    <mat-icon class="mr10 vertical-align-middle" aria-hidden="true">account_circle</mat-icon>
+                    {{user.username}}
+                </a>
+                <a (click)="logout()" routerLink="/login" class="login-link ml20" aria-label="Logout">
+                    <mat-icon class="mr10 vertical-align-middle" aria-hidden="true">logout</mat-icon>
+                    {{ 'LOGOUT' | translate }}
+                </a>
+            </div>
+        </ng-container>
+    </div>
 </mat-toolbar>

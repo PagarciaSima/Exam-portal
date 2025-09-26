@@ -6,3 +6,63 @@
     text-decoration: none;
     color: white;
 }
+
+.brand {
+    display: flex;
+    align-items: center;
+}
+
+.brand-text {
+    margin-right: 24px;
+}
+
+.lang-btn {
+    margin-left: 8px;
+}
+
+@media (max-width: 600px) {
+  .navbar-toolbar {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 16px 12px !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .brand {
+    width: 100%;
+    justify-content: flex-start;
+    margin-bottom: 12px;
+    padding: 0 4px;
+  }
+  .lang-btn {
+    margin-left: 0;
+    margin-bottom: 8px;
+  }
+  .spacer {
+    display: none;
+  }
+  .user-links {
+    width: 100%;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    margin-top: 12px;
+    padding: 0 4px;
+  }
+  .user-row {
+    width: 100%;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .login-link,
+  .mr20,
+  .ml20 {
+    width: auto;
+    display: inline-block;
+    margin: 4px 0 !important;
+    text-align: left;
+    font-size: 1rem;
+  }
+}

@@ -3,70 +3,74 @@
         <div class="row login-wrapper">
             <div>
                 <mat-card @fadeInUp>
-                    <div class="container img-hover-zoom" >
-                        <img src="../../../assets/exam-portal.png" alt="exam-portal" class="signup-img"
-                            routerLink="/"
-                        >
+                    <div class="container img-hover-zoom">
+                        <a routerLink="/" aria-label="Ir a la página principal">
+                            <img src="../../../assets/exam-portal.png" alt="Exam Portal Logo" class="signup-img">
+                        </a>
                     </div>
-                    <h1 class="text-center">Login Form</h1>
+                    <h1 class="text-center" id="login-title">{{ 'LOGIN_FORM' | translate }}</h1>
                     
-                    <form #loginForm="ngForm" (ngSubmit)="formSubmit()">
-
+                    <form #loginForm="ngForm" (ngSubmit)="formSubmit()" aria-labelledby="login-title" autocomplete="on">
                         <!-- Username -->
                         <mat-form-field appearance="outline" class="full-width required-field">
-                            <mat-label>Username</mat-label>
+                            <mat-label for="username-input">{{ 'USERNAME_LABEL' | translate }}</mat-label>
                             <input
+                                id="username-input"
                                 [(ngModel)]="loginData.username"
                                 name="username"
                                 matInput
-                                placeholder="Enter your username"
+                                [placeholder]="'USERNAME_PLACEHOLDER' | translate"
                                 required
                                 #username="ngModel"
                                 autocomplete="username"
+                                aria-required="true"
+                                aria-describedby="username-hint username-error"
                             />
-                            <mat-hint>Valid username</mat-hint>
-                            <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
-                                <span *ngIf="username.errors?.required">Username is required</span>
+                            <mat-hint id="username-hint">{{ 'USERNAME_HINT' | translate }}</mat-hint>
+                            <mat-error id="username-error" *ngIf="username.invalid && (username.dirty || username.touched)">
+                                <span *ngIf="username.errors?.required">{{ 'USERNAME_REQUIRED' | translate }}</span>
                             </mat-error>
                         </mat-form-field>
 
                         <!-- Password -->
                         <mat-form-field appearance="outline" class="full-width required-field">
-                            <mat-label>Password</mat-label>
+                            <mat-label for="password-input">{{ 'PASSWORD_LABEL' | translate }}</mat-label>
                             <input
+                                id="password-input"
                                 [(ngModel)]="loginData.password"
                                 name="password"
                                 type="password"
                                 matInput
-                                placeholder="Enter your password"
+                                [placeholder]="'PASSWORD_PLACEHOLDER' | translate"
                                 required
                                 #password="ngModel"
-                                 autocomplete="current-password"
+                                autocomplete="current-password"
+                                aria-required="true"
+                                aria-describedby="password-error"
                             />
-                            <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
-                                <span *ngIf="password.errors?.required">Password is required</span>
+                            <mat-error id="password-error" *ngIf="password.invalid && (password.dirty || password.touched)">
+                                <span *ngIf="password.errors?.required">{{ 'PASSWORD_REQUIRED' | translate }}</span>
                             </mat-error>
                         </mat-form-field>
                 
                         <!-- Buttons -->
-                        <div class="container text-center">
+                        <div class="container text-center m-t-20">
                             <button type="submit" [disabled]="loginForm.invalid" mat-raised-button color="primary">
-                                Login
+                                {{ 'LOGIN_BUTTON' | translate }}
                             </button>
                             <button type="reset" class="ml20" mat-raised-button color="accent">
-                                Clear
+                                {{ 'CLEAR_BUTTON' | translate }}
                             </button>
                         </div>
 
                         <div class="container text-center" style="margin-top: 15px;">
-                            <span> Don't have an account?</span>
-                            <a routerLink="/signup" class="signup-link">
-                                Sign up
+                            <span>{{ 'NO_ACCOUNT' | translate }}</span>
+                            <a routerLink="/signup" class="signup-link" aria-label="Registrarse">
+                                {{ 'SIGN_UP' | translate }}
                             </a>
                         </div>
                     </form>
                 </mat-card>
-
             </div>
         </div>
     </div>

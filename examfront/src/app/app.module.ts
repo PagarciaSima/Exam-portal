@@ -2,31 +2,42 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { SignupComponent } from './pages/signup/signup.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './pages/login/login.component';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { SignupComponent } from './pages/signup/signup.component';
 
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon'; 
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { HomeComponent } from './pages/home/home.component'; 
-import { authInterceptorProvider } from './interceptors/AuthInterceptor';
-import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
-import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
-import { ProfileComponent } from './pages/profile/profile.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { authInterceptorProvider } from './interceptors/AuthInterceptor';
+import { AddCategoryComponent } from './pages/admin/add-category/add-category.component';
+import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { SidebarComponent } from './pages/admin/sidebar/sidebar.component';
+import { ViewCategoriesComponent } from './pages/admin/view-categories/view-categories.component';
 import { WelcomeComponent } from './pages/admin/welcome/welcome.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+import { HttpClient } from '@angular/common/http';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -40,7 +51,9 @@ import { WelcomeComponent } from './pages/admin/welcome/welcome.component';
     UserDashboardComponent,
     ProfileComponent,
     SidebarComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    ViewCategoriesComponent,
+    AddCategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +69,16 @@ import { WelcomeComponent } from './pages/admin/welcome/welcome.component';
     MatCardModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatListModule
+    MatListModule,
+    MatMenuModule,
+    MatTooltipModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [authInterceptorProvider],
   bootstrap: [AppComponent]

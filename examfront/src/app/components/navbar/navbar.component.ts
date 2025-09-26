@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
+import { TranslateService } from '@ngx-translate/core';
+import { LanguageService } from 'src/app/services/language.service';
 
 /**
  * NavbarComponent is responsible for displaying the application's navigation bar.
@@ -20,22 +22,25 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
   isLoggedIn = false;
   user = null;
 
   constructor(
     private router: Router,
-    public loginService: LoginService
-  ) { }
+    public loginService: LoginService,
+    private translate: TranslateService,
+    private languageService: LanguageService
+  ) {
+    const lang = this.languageService.getLanguage();
+    this.translate.setDefaultLang(lang);
+    this.translate.use(lang);
+  }
 
   ngOnInit(): void {
     this.loginService.user$.subscribe(user => {
       this.user = user;
-      console.log(this.user)
       this.isLoggedIn = !!user;
     });
-    
   }
 
   redirectHome() {
@@ -55,5 +60,10 @@ export class NavbarComponent implements OnInit {
     this.loginService.logout();
     this.isLoggedIn = false;
     this.user = null;
+  }
+
+  selectLanguage(lang: string) {
+    this.languageService.setLanguage(lang);
+    this.translate.use(lang);
   }
 }
