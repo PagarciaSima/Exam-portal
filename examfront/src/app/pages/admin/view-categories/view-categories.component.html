@@ -1,6 +1,9 @@
 <mat-card>
     <mat-list [@slideIn] role="list" aria-label="All Categories">
-        <h1 class="text-center" tabindex="0">{{ 'CATEGORIES' | translate }}</h1>
+        <h1 tabindex="0" class="text-center" style="display: flex; align-items: center; justify-content: center;">
+            <mat-icon style="margin-right: 8px;">category</mat-icon>
+           {{ 'CATEGORIES' | translate }}
+        </h1>
         <mat-list-item *ngFor="let category of categories" role="listitem">
             <mat-icon matListIcon color="primary" aria-hidden="true" class="responsive-icon">category</mat-icon>
             <h3 matLine id="cat-title-{{category.id}}" tabindex="0">{{ category.title }}</h3>
@@ -26,4 +29,10 @@
             <mat-divider></mat-divider>
         </mat-list-item>
     </mat-list>
+    <div style="display: flex; justify-content: center; margin-top: 16px;">
+        <button mat-raised-button color="primary" (click)="addCategory()">
+            <mat-icon>add</mat-icon>
+            {{ 'ADD_CATEGORY' | translate }}
+        </button>
+    </div>
 </mat-card>

@@ -1,15 +1,53 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { slideIn } from 'src/app/animations/animations';
+import { Category } from 'src/app/model/Category';
+import { CategoryService } from 'src/app/services/category.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-add-category',
   templateUrl: './add-category.component.html',
-  styleUrls: ['./add-category.component.css']
+  styleUrls: ['./add-category.component.css'],
+  animations: [
+    slideIn
+  ]
 })
 export class AddCategoryComponent implements OnInit {
 
-  constructor() { }
+  category: Category = {
+    cid: 0,
+    title: '',
+    description: ''
+  };
+
+  constructor(
+    private router: Router,
+    private notificationService: NotificationService,
+    private categoryService: CategoryService,
+    private translate: TranslateService
+  ) { }
 
   ngOnInit(): void {
+
   }
 
+  formSubmit() {
+    this.categoryService.addCategory(this.category).subscribe({
+      next: () => {
+       this.notificationService.success(
+        this.translate.instant('CATEGORY_ADD_SUCCESS'),
+        this.translate.instant('SUCCESS')
+      );
+        this.router.navigate(['/admin/categories']);
+      },
+      error: () => {
+        this.notificationService.error(
+          this.translate.instant('CATEGORY_ADD_ERROR'),
+          this.translate.instant('ERROR')
+        );
+      }
+    });
+  }
 }

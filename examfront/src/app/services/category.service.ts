@@ -50,4 +50,12 @@ export class CategoryService {
   public deleteCategory(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
+  /**
+   * Create a new category.
+   */
+  public createCategory(category: Category): Observable<Category> {
+    return this.http.post<Category>(`${this.apiUrl}`, category);
+  }
+
 }

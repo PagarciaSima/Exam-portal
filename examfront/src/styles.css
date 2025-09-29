@@ -65,3 +65,13 @@ body {
 .fs20 {
   font-size: 20px;
 }
+
+.w100 {
+  width: 100% !important;
+}
+
+mat-card {
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    padding: 2rem;
+}

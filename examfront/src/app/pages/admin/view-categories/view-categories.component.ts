@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { slideIn } from 'src/app/animations/animations';
 import { Category } from 'src/app/model/Category';
 import { CategoryService } from 'src/app/services/category.service';
@@ -25,7 +26,8 @@ export class ViewCategoriesComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -42,5 +44,9 @@ export class ViewCategoriesComponent implements OnInit {
         this.notificationService.error('Error al cargar las categorías', 'Error');
       }
     });
+  }
+
+  addCategory() {
+    this.router.navigate(['/admin/add-category']);
   }
 }

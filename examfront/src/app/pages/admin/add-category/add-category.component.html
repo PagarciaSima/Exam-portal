@@ -1,0 +1,78 @@
+<mat-card [@slideIn] role="form" aria-labelledby="add-category-title">
+    <h1 class="text-center" style="display: flex; align-items: center; justify-content: center;">
+        <mat-icon aria-hidden="true" style="margin-right: 8px;">category</mat-icon>
+        {{ 'ADD_CATEGORY' | translate }}
+    </h1>
+    <mat-card-content>
+        <div class="bootstrap-wrapper">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <form #categoryForm="ngForm" aria-labelledby="add-category-title"
+                        (ngSubmit)="formSubmit()" autocomplete="on"
+                    >
+                        <!-- Category title -->
+                        <mat-form-field class="w100" appearance="outline">
+                            <mat-label id="category-title-label">{{ 'CATEGORY_TITLE_LABEL' | translate }}</mat-label>
+                            <input
+                                type="text"
+                                name="title"
+                                matInput
+                                [placeholder]="'CATEGORY_TITLE_PLACEHOLDER' | translate"
+                                required
+                                autofocus
+                                ngModel
+                                #title="ngModel"
+                                aria-required="true"
+                                aria-describedby="category-title-error"
+                                aria-labelledby="category-title-label"
+                                [(ngModel)]="category.title"
+                            >
+                            <mat-error
+                                id="category-title-error"
+                                *ngIf="title.invalid && (title.dirty || title.touched)"
+                                role="alert"
+                            >
+                                {{ 'CATEGORY_TITLE_REQUIRED' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+                        <!-- Category Description -->
+                        <mat-form-field class="w100" appearance="outline">
+                            <mat-label id="category-description-label">{{ 'CATEGORY_DESCRIPTION_LABEL' | translate }}</mat-label>
+                            <textarea
+                                name="description"
+                                matInput
+                                rows="15"
+                                [placeholder]="'CATEGORY_DESCRIPTION_PLACEHOLDER' | translate"
+                                required
+                                ngModel
+                                #description="ngModel"
+                                aria-required="true"
+                                aria-describedby="category-description-error"
+                                aria-labelledby="category-description-label"
+                                [(ngModel)]="category.description"
+                            ></textarea>
+                            <mat-error
+                                id="category-description-error"
+                                *ngIf="description.invalid && (description.dirty || description.touched)"
+                                role="alert"
+                            >
+                                {{ 'CATEGORY_DESCRIPTION_REQUIRED' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <div class="container text-center mt15">
+                            <button
+                                mat-raised-button
+                                color="primary"
+                                [disabled]="categoryForm.invalid"
+                                type="submit"
+                            >
+                                {{ 'ADD_CATEGORY_BUTTON' | translate }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

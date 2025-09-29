@@ -54,5 +54,18 @@
   "REGISTER_BUTTON": "Register",
   "CLEAR_BUTTON": "Clear",
   "ALREADY_ACCOUNT": "Already have an account?",
-  "LOGIN_HERE": "Login here"
+  "LOGIN_HERE": "Login here",
+  "ADD_CATEGORY": "Add Category",
+  "CATEGORY_TITLE_LABEL": "Category title",
+  "CATEGORY_TITLE_PLACEHOLDER": "Enter the category title",
+  "CATEGORY_TITLE_REQUIRED": "Category title is required",
+  "CATEGORY_DESCRIPTION_LABEL": "Category description",
+  "CATEGORY_DESCRIPTION_PLACEHOLDER": "Enter the category description",
+  "CATEGORY_DESCRIPTION_REQUIRED": "Category description is required",
+  "ADD_CATEGORY_BUTTON": "Add Category",
+  "CATEGORY_ADD_SUCCESS": "Category added successfully",
+  "CATEGORY_ADD_ERROR": "Error adding category",
+  "SUCCESS": "Success",
+  "ERROR": "Error"
+  
 }
