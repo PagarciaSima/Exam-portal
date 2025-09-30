@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { fadeInUp } from 'src/app/animations/animations';
 import { JwtRequest } from 'src/app/model/JwtRequest';
 import { JwtResponse } from 'src/app/model/JwtResponse';
@@ -45,6 +46,7 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private notificationService: NotificationService,
     private router: Router,
+    private translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -63,7 +65,10 @@ export class LoginComponent implements OnInit {
   formSubmit() {
     this.loginService.generateToken(this.loginData).subscribe({
       next: (jwtResponse: JwtResponse) => {
-        this.notificationService.success('Login successful');
+        this.notificationService.success(
+          this.translate.instant('LOGIN_SUCCESS'),
+          this.translate.instant('SUCCESS')
+        );
         this.loginService.loginUser(jwtResponse.token);
         
         this.loginService.getCurrentUser().subscribe({
@@ -107,11 +112,16 @@ export class LoginComponent implements OnInit {
    *   If the error status is 401, displays a specific message for invalid credentials.
    */
   private handleLoginError(err: any) {
-    let errorMessage = 'Login failed. Please try again.';
+    let errorMessage = this.translate.instant('LOGIN_FAILED');
     if (err.status === 401) {
-      errorMessage = err.error?.error || 'Invalid credentials';
+      errorMessage = err.error?.error
+        ? this.translate.instant('INVALID_CREDENTIALS')
+        : this.translate.instant('INVALID_CREDENTIALS');
     }
-    this.notificationService.error(errorMessage);
+    this.notificationService.error(
+      errorMessage,
+      this.translate.instant('ERROR')
+    );
     this.loginData.password = '';
   }
 }

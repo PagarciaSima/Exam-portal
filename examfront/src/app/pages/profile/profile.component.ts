@@ -1,9 +1,9 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { slideIn } from 'src/app/animations/animations';
 import { User } from 'src/app/model/User';
 import { LoginService } from 'src/app/services/login.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { TranslateService } from '@ngx-translate/core'; 
 
 /**
  * Component responsible for displaying the profile of the currently logged-in user.
@@ -29,7 +29,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translate: TranslateService 
   ) { }
 
   ngOnInit(): void {
@@ -47,8 +48,12 @@ export class ProfileComponent implements OnInit {
     this.loginService.getCurrentUser().subscribe({
       next: (user) => {
         this.user = user;
-      }, error: (err) => {
-        this.notificationService.error('Could not fetch the current user data', 'Error');
+      }, 
+      error: (err) => {
+        this.notificationService.error(
+          this.translate.instant('PROFILE_LOAD_ERROR'),
+          this.translate.instant('ERROR')
+        );
         console.error(err);
       }
     });

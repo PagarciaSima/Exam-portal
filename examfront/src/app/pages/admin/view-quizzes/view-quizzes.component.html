@@ -1,0 +1,48 @@
+<div class="container text-center mt20">
+    <button mat-raised-button color="primary" role="button">
+        {{ 'ADD_QUIZ' | translate }}
+    </button>
+</div>
+<mat-card *ngFor="let q of quizzes" class="mt20 mr20 ml20" role="region" [attr.aria-label]="q.title">
+    <mat-card-header class="header-card">
+        <div mat-card-avatar class="header-image" aria-hidden="true"></div>
+        <mat-card-title>
+            <span id="quiz-title-{{q.id}}">{{ q.title }}</span>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <span id="quiz-category-{{q.id}}">{{ q.category.title }}</span>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="content-card">
+        <p>{{ q.description }}</p>
+        <p>
+            <span class="font-bold">{{ 'MAX_MARKS' | translate }}:</span> {{ q.maxMarks }}
+        </p>
+        <p>
+            <span class="font-bold">{{ 'NUMBER_OF_QUESTIONS' | translate }}:</span> {{ q.numberOfQuestions }}
+        </p>
+        <p>
+            <span class="font-bold">{{ 'ACTIVE' | translate }}:</span>
+            {{ q.active ? ('YES' | translate) : ('NO' | translate) }}
+        </p>
+    </mat-card-content>
+    <mat-card-action>
+  <div class="quiz-actions">
+    <button mat-raised-button color="accent" role="button" class="ml20 mb-2 mr-2">
+        {{ 'QUESTIONS' | translate }}
+    </button>
+    <button mat-stroked-button color="accent" class="ml20 mb-2 mr-2" role="button">
+        {{ 'MAX_MARKS' | translate }} {{ q.maxMarks }}
+    </button>
+    <button mat-stroked-button color="primary" class="ml20 mb-2 mr-2" role="button">
+        {{ 'NUMBER_OF_QUESTIONS' | translate }}: {{ q.numberOfQuestions }}
+    </button>
+    <button mat-raised-button color="accent" class="ml20 mb-2 mr-2" role="button">
+        {{ 'UPDATE' | translate }}
+    </button>
+    <button mat-raised-button color="accent" class="ml20 mb-2" role="button">
+        {{ 'ATTEMPTS' | translate }}
+    </button>
+  </div>
+</mat-card-action>
+</mat-card>

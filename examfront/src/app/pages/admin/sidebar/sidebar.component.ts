@@ -1,20 +1,8 @@
-/**
- * SidebarComponent is responsible for rendering the sidebar section in the admin pages.
- * 
- * @remarks
- * This component uses the `sidebar.component.html` template and `sidebar.component.css` styles.
- * 
- * @example
- * Usage in a template:
- * ```html
- * <app-sidebar></app-sidebar>
- * ```
- * 
- * @implements OnInit
- */
 import { Component, OnInit } from '@angular/core';
 import { slideIn } from 'src/app/animations/animations';
 import { LoginService } from 'src/app/services/login.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,12 +14,19 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor(private loginService: LoginService) { }
+  constructor(
+    private loginService: LoginService,
+    private notificationService: NotificationService,
+    private translateService: TranslateService
+  ) { }
 
   ngOnInit(): void {
   }
 
   logout() {
     this.loginService.logout();
+    const message = this.translateService.instant('LOGOUT.SUCCESS');
+    const title = this.translateService.instant('LOGOUT.TITLE');
+    this.notificationService.success(message, title);
   }
 }

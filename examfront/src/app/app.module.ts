@@ -34,6 +34,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { HttpClient } from '@angular/common/http';
+import { ViewQuizzesComponent } from './pages/admin/view-quizzes/view-quizzes.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -53,7 +54,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SidebarComponent,
     WelcomeComponent,
     ViewCategoriesComponent,
-    AddCategoryComponent
+    AddCategoryComponent,
+    ViewQuizzesComponent
   ],
   imports: [
     BrowserModule,

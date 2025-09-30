@@ -10,7 +10,7 @@ export interface Quiz {
   maxMarks: number;
   numberOfQuestions: number;
   active: boolean;
-  category: Category;
+  category?: Category;
   // questions is optional, as it's usually not sent from backend in list endpoints
   questions?: any[];
 }

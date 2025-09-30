@@ -33,6 +33,15 @@ export class AddCategoryComponent implements OnInit {
 
   }
 
+  /**
+   * Handles the submission of the category form.
+   * 
+   * Sends the current category data to the backend via the CategoryService.
+   * On successful addition, displays a success notification and navigates to the categories list.
+   * On error, displays an error notification.
+   *
+   * @returns void
+   */
   formSubmit() {
     this.categoryService.addCategory(this.category).subscribe({
       next: () => {

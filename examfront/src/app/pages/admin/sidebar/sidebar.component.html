@@ -1,41 +1,75 @@
 <mat-card [@slideIn]>
     <mat-action-list>
-        <div mat-subheader>Menu</div>
+        <div mat-subheader id="sidebar-menu-label">{{ 'MENU' | translate }}</div>
         <!-- Home -->
-        <button mat-list-item routerLink="/admin">
-            <mat-icon matListIcon>home</mat-icon>
-            <span matLine>Home</span>
+        <button
+            mat-list-item
+            routerLink="/admin"
+            aria-labelledby="sidebar-menu-label home-label"
+            role="button"
+        >
+            <mat-icon matListIcon aria-hidden="true">home</mat-icon>
+            <span matLine id="home-label">{{ 'HOME' | translate }}</span>
         </button>
         <!-- Profile -->
-        <button mat-list-item routerLink="/admin/profile">
-            <mat-icon matListIcon>account_circle</mat-icon>
-            <span matLine>Profile</span>
+        <button
+            mat-list-item
+            routerLink="/admin/profile"
+            aria-labelledby="sidebar-menu-label profile-label"
+            role="button"
+        >
+            <mat-icon matListIcon aria-hidden="true">account_circle</mat-icon>
+            <span matLine id="profile-label">{{ 'PROFILE' | translate }}</span>
         </button>
         <!-- Categories -->
-        <button mat-list-item routerLink="/admin/categories">
-            <mat-icon matListIcon>category</mat-icon>
-            <span matLine>Categories</span>
+        <button
+            mat-list-item
+            routerLink="/admin/categories"
+            role="button"
+            aria-labelledby="sidebar-menu-label categories-label"
+        >
+            <mat-icon matListIcon aria-hidden="true">category</mat-icon>
+            <span matLine id="categories-label">{{ 'CATEGORIES' | translate }}</span>
         </button>
         <!-- Add category -->
-        <button mat-list-item routerLink="/admin/add-category">
-            <mat-icon matListIcon>add</mat-icon>
-            <span matLine>Add Category</span>
+        <button
+            mat-list-item
+            routerLink="/admin/add-category"
+            role="button"
+            aria-labelledby="sidebar-menu-label add-category-label"
+        >
+            <mat-icon matListIcon aria-hidden="true">add</mat-icon>
+            <span matLine id="add-category-label">{{ 'ADD_CATEGORY' | translate }}</span>
         </button>
         <!-- Quizzes -->
-        <button mat-list-item routerLink="/admin/quizzes">
-            <mat-icon matListIcon>quiz</mat-icon>
-            <span matLine>Quizzes</span>
+        <button
+            mat-list-item
+            routerLink="/admin/quizzes"
+            role="button"
+            aria-labelledby="sidebar-menu-label quizzes-label"
+        >
+            <mat-icon matListIcon aria-hidden="true">quiz</mat-icon>
+            <span matLine id="quizzes-label">{{ 'QUIZZES' | translate }}</span>
         </button>
-        <!-- Add quizz -->
-        <button mat-list-item routerLink="/admin/add-quiz">
-            <mat-icon matListIcon>add</mat-icon>
-            <span matLine>Add Quiz</span>
+        <!-- Add quiz -->
+        <button
+            mat-list-item
+            routerLink="/admin/add-quiz"
+            aria-labelledby="sidebar-menu-label add-quiz-label"
+            role="button"
+        >
+            <mat-icon matListIcon aria-hidden="true">add</mat-icon>
+            <span matLine id="add-quiz-label">{{ 'ADD_QUIZ' | translate }}</span>
         </button>
         <!-- Logout -->
-        <button mat-list-item (click)="logout()">
-            <mat-icon matListIcon>logout</mat-icon>
-            <span matLine>Log Out</span>
+        <button
+            mat-list-item
+            (click)="logout()"
+            aria-labelledby="sidebar-menu-label logout-label"
+            role="button"
+        >
+            <mat-icon matListIcon aria-hidden="true">logout</mat-icon>
+            <span matLine id="logout-label">{{ 'LOGOUT' | translate }}</span>
         </button>
-
     </mat-action-list>
 </mat-card>

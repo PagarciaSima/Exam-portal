@@ -4,6 +4,7 @@ import { fadeInUp } from 'src/app/animations/animations';
 import { User } from 'src/app/model/User';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UserService } from 'src/app/services/user.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Component responsible for user signup functionality.
@@ -46,7 +47,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private userService: UserService,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -66,22 +68,38 @@ export class SignupComponent implements OnInit {
    */
   formSubmit() {
     if (this.user.username == '' || this.user.username == null) {
-      this.notificationService.snackMessage('Username is required', 3000);
+      this.notificationService.snackMessage(
+        this.translate.instant('USERNAME_REQUIRED'),
+        3000
+      );
       return;
     }
 
     this.userService.addUser(this.user).subscribe({
       next: () => {
-        this.notificationService.success('User registered successfully');
+        this.notificationService.success(
+          this.translate.instant('USER_REGISTERED_SUCCESS'),
+          this.translate.instant('SUCCESS')
+        );
         this.router.navigate(['login']);
-      },  error: (err) => {
+      },
+      error: (err) => {
         console.error(err);
         if (err.status === 409) {
-          this.notificationService.error(err.error?.message || 'Username already exists');
+          this.notificationService.error(
+            err.error?.message || this.translate.instant('USERNAME_EXISTS'),
+            this.translate.instant('ERROR')
+          );
         } else if (err.status === 400) {
-          this.notificationService.error('Invalid input data');
+          this.notificationService.error(
+            this.translate.instant('INVALID_INPUT_DATA'),
+            this.translate.instant('ERROR')
+          );
         } else {
-          this.notificationService.error('Something went wrong');
+          this.notificationService.error(
+            this.translate.instant('SOMETHING_WENT_WRONG'),
+            this.translate.instant('ERROR')
+          );
         }
       }
     });

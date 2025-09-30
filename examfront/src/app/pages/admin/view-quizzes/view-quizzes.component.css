@@ -1,0 +1,66 @@
+.header-image {
+    background-image: url('../../../../assets/img/quiz.gif');
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;     
+    border: 2px solid #3f51b5; 
+    width: 40px;             
+    height: 40px;
+}
+
+.header-card {
+    display: flex;
+    align-items: center;   
+    justify-content: center;
+}
+
+.content-card {
+    padding: 10px 20px;
+}
+
+/* Efecto de hover para la tarjeta */
+mat-card {
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease,
+    background-color 0.25s ease,
+    color 0.25s ease;
+  box-shadow: 0 2px 8px rgba(63,81,181,0.08);
+  cursor: pointer;
+}
+
+mat-card:hover {
+  background-color: #f5f5f5;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  transform: translateY(-4px) scale(1.01);
+  z-index: 1;
+}
+
+mat-card:hover .header-image {
+  border-color: #1976d2;
+  transition: border-color 0.2s;
+}
+
+mat-card:hover mat-card-title,
+mat-card:hover mat-card-content {
+  transition: color 0.2s;
+}
+
+.quiz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px; 
+
+}
+
+@media (max-width: 600px) {
+  .quiz-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .quiz-actions button {
+    width: 100%;
+  }
+}
