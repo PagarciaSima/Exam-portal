@@ -1,0 +1,174 @@
+<mat-card [@slideIn] role="form" aria-labelledby="add-quiz-title">
+    <h1 class="text-center" style="display: flex; align-items: center; justify-content: center;">
+        <mat-icon aria-hidden="true" style="margin-right: 8px;">quiz</mat-icon>
+        {{ 'ADD_QUIZ' | translate }}
+    </h1>
+    <mat-card-content>
+        <div class="bootstrap-wrapper">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <form #quizForm="ngForm" aria-labelledby="add-quiz-title"
+                        (ngSubmit)="formSubmit()" autocomplete="on"
+                    >
+                        <!-- Quiz Title -->
+                        <mat-form-field class="w100" appearance="outline">
+                            <mat-label id="quiz-title-label">{{ 'QUIZ_TITLE_LABEL' | translate }}</mat-label>
+                            <input
+                                type="text"
+                                name="title"
+                                matInput
+                                [placeholder]="'QUIZ_TITLE_PLACEHOLDER' | translate"
+                                required
+                                autofocus
+                                [(ngModel)]="quiz.title"
+                                #title="ngModel"
+                                aria-required="true"
+                                aria-describedby="quiz-title-error"
+                                aria-labelledby="quiz-title-label"
+                            >
+                            <mat-error
+                                id="quiz-title-error"
+                                *ngIf="title.invalid && (title.dirty || title.touched)"
+                                role="alert"
+                            >
+                                {{ 'QUIZ_TITLE_REQUIRED' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+                        
+                        <!-- Quiz Description -->
+                        <mat-form-field class="w100" appearance="outline">
+                            <mat-label id="quiz-description-label">{{ 'QUIZ_DESCRIPTION_LABEL' | translate }}</mat-label>
+                            <textarea
+                                name="description"
+                                matInput
+                                rows="15"
+                                [placeholder]="'QUIZ_DESCRIPTION_PLACEHOLDER' | translate"
+                                required
+                                [(ngModel)]="quiz.description"
+                                #description="ngModel"
+                                aria-required="true"
+                                aria-describedby="quiz-description-error"
+                                aria-labelledby="quiz-description-label"
+                            ></textarea>
+                            <mat-error
+                                id="quiz-description-error"
+                                *ngIf="description.invalid && (description.dirty || description.touched)"
+                                role="alert"
+                            >
+                                {{ 'QUIZ_DESCRIPTION_REQUIRED' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+                        
+                        <!-- Max Marks & Number of Questions -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field class="w100" appearance="outline">
+                                    <mat-label id="quiz-max-marks-label">{{ 'QUIZ_MAX_MARKS_LABEL' | translate }}</mat-label>
+                                    <input
+                                        type="number"
+                                        name="maxMarks"
+                                        matInput
+                                        [placeholder]="'QUIZ_MAX_MARKS_PLACEHOLDER' | translate"
+                                        required
+                                        [(ngModel)]="quiz.maxMarks"
+                                        #maxMarks="ngModel"
+                                        aria-required="true"
+                                        aria-describedby="quiz-max-marks-error"
+                                        aria-labelledby="quiz-max-marks-label"
+                                    >
+                                    <mat-error
+                                        id="quiz-max-marks-error"
+                                        *ngIf="maxMarks.invalid && (maxMarks.dirty || maxMarks.touched)"
+                                        role="alert"
+                                    >
+                                        {{ 'QUIZ_MAX_MARKS_REQUIRED' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field class="w100" appearance="outline">
+                                    <mat-label id="quiz-number-of-questions-label">{{ 'QUIZ_NUMBER_OF_QUESTIONS_LABEL' | translate }}</mat-label>
+                                    <input
+                                        type="number"
+                                        name="numberOfQuestions"
+                                        matInput
+                                        [placeholder]="'QUIZ_NUMBER_OF_QUESTIONS_PLACEHOLDER' | translate"
+                                        required
+                                        [(ngModel)]="quiz.numberOfQuestions"
+                                        #numberOfQuestions="ngModel"
+                                        aria-required="true"
+                                        aria-describedby="quiz-number-of-questions-error"
+                                        aria-labelledby="quiz-number-of-questions-label"
+                                    >
+                                    <mat-error
+                                        id="quiz-number-of-questions-error"
+                                        *ngIf="numberOfQuestions.invalid && (numberOfQuestions.dirty || numberOfQuestions.touched)"
+                                        role="alert"
+                                    >
+                                        {{ 'QUIZ_NUMBER_OF_QUESTIONS_REQUIRED' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <!-- Active Toggle -->
+                        <mat-slide-toggle
+                            name="active"
+                            [(ngModel)]="quiz.active"
+                            aria-label="{{ 'QUIZ_ACTIVE_TOGGLE' | translate }}"
+                            color="primary"
+                            class="mt10 mb10"
+                        >
+                            {{ 'QUIZ_ACTIVE' | translate }}
+                        </mat-slide-toggle>
+
+                        <!-- Category Selection -->
+                        <mat-form-field class="w100" appearance="outline">
+                            <mat-label id="quiz-category-label">{{ 'QUIZ_CATEGORY_LABEL' | translate }}</mat-label>
+                            <mat-select
+                                name="category"
+                                [(ngModel)]="quiz.category"
+                                #category="ngModel"
+                                aria-required="true"
+                                aria-describedby="quiz-category-error"
+                                aria-labelledby="quiz-category-label"
+                            >
+                                <mat-option *ngFor="let category of categories" [value]="category">
+                                    {{ category.title }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error
+                                id="quiz-category-error"
+                                *ngIf="category.invalid && (category.dirty || category.touched)"
+                                role="alert"
+                            >
+                                {{ 'QUIZ_CATEGORY_REQUIRED' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <div class="container text-center">
+                            <button
+                                type="submit"
+                                mat-raised-button
+                                color="primary"
+                                [disabled]="quizForm.invalid"
+                            >
+                                {{ 'SAVE' | translate }}
+                            </button>
+                            <button
+                                type="reset"
+                                mat-raised-button
+                                color="accent"
+                                class="ml10"
+                                (click)="quizForm.resetForm()"
+                            >
+                                {{ 'RESET' | translate }}
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -94,7 +94,21 @@
   "YES": "Sí",
   "NO": "No",
   "QUESTIONS": "Preguntas",
-  "ATTEMPTS": "Intentos"
-
-  
+  "ATTEMPTS": "Intentos",
+  "QUIZ_TITLE_LABEL": "Título del cuestionario",
+  "QUIZ_TITLE_PLACEHOLDER": "Introduce el título del cuestionario",
+  "QUIZ_TITLE_REQUIRED": "El título del cuestionario es obligatorio",
+  "QUIZ_DESCRIPTION_LABEL": "Descripción del cuestionario",
+  "QUIZ_DESCRIPTION_PLACEHOLDER": "Introduce la descripción del cuestionario",
+  "QUIZ_DESCRIPTION_REQUIRED": "La descripción del cuestionario es obligatoria",
+  "QUIZ_MAX_MARKS_LABEL": "Puntuación máxima",
+  "QUIZ_MAX_MARKS_PLACEHOLDER": "Introduce la puntuación máxima",
+  "QUIZ_MAX_MARKS_REQUIRED": "La puntuación máxima es obligatoria",
+  "QUIZ_NUMBER_OF_QUESTIONS_LABEL": "Número de preguntas",
+  "QUIZ_NUMBER_OF_QUESTIONS_PLACEHOLDER": "Introduce el número de preguntas",
+  "QUIZ_NUMBER_OF_QUESTIONS_REQUIRED": "El número de preguntas es obligatorio",
+  "QUIZ_ACTIVE_TOGGLE": "Activar cuestionario",
+  "QUIZ_ACTIVE": "Activo",
+  "QUIZ_CATEGORY_LABEL": "Categoría",
+  "QUIZ_CATEGORY_REQUIRED": "La categoría es obligatoria"
 }

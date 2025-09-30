@@ -64,3 +64,11 @@ mat-card:hover mat-card-content {
     width: 100%;
   }
 }
+
+.quiz-info-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin: 8px 0;
+  align-items: center;
+}

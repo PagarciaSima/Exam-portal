@@ -93,7 +93,21 @@
   "YES": "Yes",
   "NO": "No",
   "QUESTIONS": "Questions",
-  "ATTEMPTS": "Attempts"
-
-
+  "ATTEMPTS": "Attempts",
+  "QUIZ_TITLE_LABEL": "Quiz title",
+  "QUIZ_TITLE_PLACEHOLDER": "Enter the quiz title",
+  "QUIZ_TITLE_REQUIRED": "Quiz title is required",
+  "QUIZ_DESCRIPTION_LABEL": "Quiz description",
+  "QUIZ_DESCRIPTION_PLACEHOLDER": "Enter the quiz description",
+  "QUIZ_DESCRIPTION_REQUIRED": "Quiz description is required",
+  "QUIZ_MAX_MARKS_LABEL": "Max marks",
+  "QUIZ_MAX_MARKS_PLACEHOLDER": "Enter max marks",
+  "QUIZ_MAX_MARKS_REQUIRED": "Max marks is required",
+  "QUIZ_NUMBER_OF_QUESTIONS_LABEL": "Number of questions",
+  "QUIZ_NUMBER_OF_QUESTIONS_PLACEHOLDER": "Enter number of questions",
+  "QUIZ_NUMBER_OF_QUESTIONS_REQUIRED": "Number of questions is required",
+  "QUIZ_ACTIVE_TOGGLE": "Activate quiz",
+  "QUIZ_ACTIVE": "Active",
+  "QUIZ_CATEGORY_LABEL": "Category",
+  "QUIZ_CATEGORY_REQUIRED": "Category is required"
 }

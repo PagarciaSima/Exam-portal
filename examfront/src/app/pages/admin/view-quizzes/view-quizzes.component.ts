@@ -3,11 +3,16 @@ import { Quiz } from 'src/app/model/Quiz';
 import { NotificationService } from 'src/app/services/notification.service';
 import { QuizService } from 'src/app/services/quiz.service';
 import { TranslateService } from '@ngx-translate/core';
+import { slideIn } from 'src/app/animations/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-quizzes',
   templateUrl: './view-quizzes.component.html',
-  styleUrls: ['./view-quizzes.component.css']
+  styleUrls: ['./view-quizzes.component.css'],
+  animations: [
+    slideIn
+  ]
 })
 export class ViewQuizzesComponent implements OnInit {
 
@@ -53,7 +58,8 @@ export class ViewQuizzesComponent implements OnInit {
   constructor(
     private quizService: QuizService,
     private notificacionService: NotificationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -74,6 +80,10 @@ export class ViewQuizzesComponent implements OnInit {
         console.error('Error fetching quizzes:', error);
       }
     });
+  }
+
+  addQuiz() {
+    this.router.navigate(['/admin/add-quiz']);
   }
 
 }

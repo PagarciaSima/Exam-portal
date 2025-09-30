@@ -17,9 +17,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { authInterceptorProvider } from './interceptors/AuthInterceptor';
 import { AddCategoryComponent } from './pages/admin/add-category/add-category.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
@@ -29,11 +34,9 @@ import { WelcomeComponent } from './pages/admin/welcome/welcome.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
-import { MatMenuModule } from '@angular/material/menu';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { HttpClient } from '@angular/common/http';
+import { AddQuizComponent } from './pages/admin/add-quiz/add-quiz.component';
 import { ViewQuizzesComponent } from './pages/admin/view-quizzes/view-quizzes.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -55,7 +58,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     WelcomeComponent,
     ViewCategoriesComponent,
     AddCategoryComponent,
-    ViewQuizzesComponent
+    ViewQuizzesComponent,
+    AddQuizComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +78,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatListModule,
     MatMenuModule,
     MatTooltipModule,
+    MatSelectModule,
+    MatSlideToggleModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

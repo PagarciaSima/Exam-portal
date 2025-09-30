@@ -1,9 +1,13 @@
-<div class="container text-center mt20">
-    <button mat-raised-button color="primary" role="button">
+<div class="container text-center mt20" [@slideIn]>
+    <button mat-raised-button color="primary" role="button"
+        (click)="addQuiz()" aria-label="Add Quiz"
+    >
         {{ 'ADD_QUIZ' | translate }}
     </button>
 </div>
-<mat-card *ngFor="let q of quizzes" class="mt20 mr20 ml20" role="region" [attr.aria-label]="q.title">
+<mat-card *ngFor="let q of quizzes" class="mt20 mr20 ml20" role="region" [attr.aria-label]="q.title"
+  [@slideIn]
+>
     <mat-card-header class="header-card">
         <div mat-card-avatar class="header-image" aria-hidden="true"></div>
         <mat-card-title>
@@ -14,17 +18,23 @@
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content class="content-card">
-        <p>{{ q.description }}</p>
-        <p>
-            <span class="font-bold">{{ 'MAX_MARKS' | translate }}:</span> {{ q.maxMarks }}
-        </p>
-        <p>
-            <span class="font-bold">{{ 'NUMBER_OF_QUESTIONS' | translate }}:</span> {{ q.numberOfQuestions }}
-        </p>
-        <p>
+        <p class="quiz-description">{{ q.description }}</p>
+        
+        <div class="quiz-info-row">
+        <span>
+            <span class="font-bold">{{ 'MAX_MARKS' | translate }}:</span>
+            <span>&nbsp;{{ q.maxMarks }}</span>
+        </span>
+        <span>
+            <span class="font-bold">{{ 'NUMBER_OF_QUESTIONS' | translate }}:</span>
+            <span>&nbsp;{{ q.numberOfQuestions }}</span>
+        </span>
+        <span>
             <span class="font-bold">{{ 'ACTIVE' | translate }}:</span>
-            {{ q.active ? ('YES' | translate) : ('NO' | translate) }}
-        </p>
+            <span>&nbsp;{{ q.active ? ('YES' | translate) : ('NO' | translate) }}</span>
+        </span>
+        </div>
+       
     </mat-card-content>
     <mat-card-action>
   <div class="quiz-actions">
