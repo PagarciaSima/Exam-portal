@@ -109,5 +109,9 @@
   "QUIZ_ACTIVE_TOGGLE": "Activate quiz",
   "QUIZ_ACTIVE": "Active",
   "QUIZ_CATEGORY_LABEL": "Category",
-  "QUIZ_CATEGORY_REQUIRED": "Category is required"
+  "QUIZ_CATEGORY_REQUIRED": "Category is required",
+  "SAVE": "Save",
+  "RESET": "RESET FORM",
+  "QUIZ_ADD_SUCCESS": "Quiz added successfully",
+  "QUIZ_ADD_ERROR": "Error adding quiz"
 }

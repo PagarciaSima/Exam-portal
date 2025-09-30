@@ -33,4 +33,14 @@ export class QuizService {
     return this.http.get<Quiz[]>(`${this.apiUrl}/quiz/`);
   }
 
+  /**
+   * Adds a new quiz by sending a POST request to the backend API.
+   *
+   * @param quiz - The quiz object to be added.
+   * @returns An Observable emitting the created Quiz object as returned by the API.
+   */
+  public addQuiz(quiz: Quiz): Observable<Quiz> {
+    return this.http.post<Quiz>(`${this.apiUrl}/quiz/`, quiz);
+  }
+
 }

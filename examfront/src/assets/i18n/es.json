@@ -110,5 +110,9 @@
   "QUIZ_ACTIVE_TOGGLE": "Activar cuestionario",
   "QUIZ_ACTIVE": "Activo",
   "QUIZ_CATEGORY_LABEL": "Categoría",
-  "QUIZ_CATEGORY_REQUIRED": "La categoría es obligatoria"
+  "QUIZ_CATEGORY_REQUIRED": "La categoría es obligatoria",
+  "SAVE": "Guardar",
+  "RESET": "REINICIAR FORMULARIO",
+  "QUIZ_ADD_SUCCESS": "Cuestionario añadido correctamente",
+  "QUIZ_ADD_ERROR": "Error al añadir el cuestionario"
 }
