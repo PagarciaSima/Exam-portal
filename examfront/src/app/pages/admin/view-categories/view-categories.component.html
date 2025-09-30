@@ -1,9 +1,16 @@
 <mat-card>
+    
     <mat-list [@slideIn] role="list" aria-label="All Categories">
         <h1 tabindex="0" class="text-center" style="display: flex; align-items: center; justify-content: center;">
             <mat-icon style="margin-right: 8px;">category</mat-icon>
            {{ 'CATEGORIES' | translate }}
         </h1>
+        <div style="display: flex; justify-content: center;" class="mt20 mb20">
+            <button mat-raised-button color="primary" (click)="addCategory()">
+                <mat-icon>add</mat-icon>
+                {{ 'ADD_CATEGORY' | translate }}
+            </button>
+        </div>
         <mat-list-item *ngFor="let category of categories" role="listitem">
             <mat-icon matListIcon color="primary" aria-hidden="true" class="responsive-icon">category</mat-icon>
             <h3 matLine id="cat-title-{{category.id}}" tabindex="0">{{ category.title }}</h3>
@@ -11,7 +18,8 @@
             <button mat-icon-button color="warn"
                 aria-label="{{ 'DELETE' | translate }} category {{ category.title }}"
                 matTooltip="{{ 'DELETE' | translate }}"
-                [attr.aria-describedby]="'cat-title-' + category.id">
+                [attr.aria-describedby]="'cat-title-' + category.cid"
+                (click)="deleteCategory(category.cid)">
                 <mat-icon aria-hidden="true">delete</mat-icon>
             </button>
             <button mat-icon-button color="primary"
@@ -20,19 +28,8 @@
                 [attr.aria-describedby]="'cat-title-' + category.id">
                 <mat-icon aria-hidden="true">edit</mat-icon>
             </button>
-            <button mat-icon-button color="accent"
-                aria-label="{{ 'CATEGORY_DETAIL' | translate }} {{ category.title }}"
-                matTooltip="{{ 'CATEGORY_DETAIL' | translate }}"
-                [attr.aria-describedby]="'cat-title-' + category.id">
-                <mat-icon aria-hidden="true">visibility</mat-icon>
-            </button>
             <mat-divider></mat-divider>
         </mat-list-item>
     </mat-list>
-    <div style="display: flex; justify-content: center; margin-top: 16px;">
-        <button mat-raised-button color="primary" (click)="addCategory()">
-            <mat-icon>add</mat-icon>
-            {{ 'ADD_CATEGORY' | translate }}
-        </button>
-    </div>
+    
 </mat-card>

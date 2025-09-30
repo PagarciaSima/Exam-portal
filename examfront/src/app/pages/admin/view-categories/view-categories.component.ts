@@ -65,4 +65,26 @@ export class ViewCategoriesComponent implements OnInit {
   addCategory() {
     this.router.navigate(['/admin/add-category']);
   }
+
+  /**
+   * Deletes a category by its id and updates the local list.
+   * Shows a notification on success or error.
+   */
+  deleteCategory(categoryId: number): void {
+    this.categoryService.deleteCategory(categoryId).subscribe({
+      next: () => {
+        this.categories = this.categories.filter(cat => cat.cid !== categoryId);
+        this.notificationService.success(
+          this.translate.instant('CATEGORY_DELETED_SUCCESS'),
+          this.translate.instant('SUCCESS')
+        );
+      },
+      error: () => {
+        this.notificationService.error(
+          this.translate.instant('CATEGORY_DELETE_ERROR'),
+          this.translate.instant('ERROR')
+        );
+      }
+    });
+  }
 }
