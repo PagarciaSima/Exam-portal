@@ -16,6 +16,14 @@ export class QuizService {
   ) { }
 
   /**
+   * @param quizId The ID of the quiz to retrieve.
+   * @returns An observable emitting the requested `Quiz` object.
+   */
+   getQuiz(quizId: any): Observable<Quiz> {
+    return this.http.get<Quiz>(`${this.apiUrl}/quiz/${quizId}`);
+   }
+  
+  /**
    * Retrieves the list of all quizzes from the backend API.
    *
    * @returns {Observable<Quiz[]>} An observable emitting an array of `Quiz` objects.
@@ -43,4 +51,23 @@ export class QuizService {
     return this.http.post<Quiz>(`${this.apiUrl}/quiz/`, quiz);
   }
 
+  /**
+   * Deletes a quiz by its ID.
+   *
+   * @param qId The ID of the quiz to be deleted.
+   * @returns An Observable emitting void.
+   */
+  public deleteQuiz(qId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/quiz/${qId}`);
+  }
+
+  /**
+   * Updates an existing quiz.
+   *
+   * @param quiz The quiz object containing updated data.
+   * @returns An Observable emitting the updated Quiz object.
+   */
+  public updateQuiz(quiz: Quiz): Observable<Quiz> {
+    return this.http.put<Quiz>(`${this.apiUrl}/quiz/`, quiz);
+  }
 }

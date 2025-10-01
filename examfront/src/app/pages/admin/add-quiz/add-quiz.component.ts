@@ -7,7 +7,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { TranslateService } from '@ngx-translate/core';
 import { QuizService } from 'src/app/services/quiz.service';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-quiz',
@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 export class AddQuizComponent implements OnInit {
 
   quiz: Quiz = this.setQuizDefaultValue();
+  isEditMode: boolean = false;
   categories: Category[] = [];
   @ViewChild('quizForm') quizForm: NgForm;
 
@@ -28,11 +29,38 @@ export class AddQuizComponent implements OnInit {
     private notificationService: NotificationService,
     private quizService: QuizService,
     private translate: TranslateService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.loadCategories();
+    this.activatedRoute.params.subscribe(params => {
+      const quizId = params['qid'];
+      if (quizId) {
+        this.loadQuiz(quizId);
+        this.isEditMode = true;
+      }
+    });
+  }
+
+  /**
+   * Loads a quiz by its ID and assigns it to the local `quiz` property.
+   * Displays an error notification if the request fails.    
+   * @param quizId The ID of the quiz to load.
+   */
+  loadQuiz(quizId: any) {
+    this.quizService.getQuiz(quizId).subscribe({
+      next: (data) => {
+        this.quiz = data;
+      },
+      error: (error) => {
+        this.translate.get('QUIZ_LOAD_ERROR').subscribe((msg: string) => {
+          this.notificationService.error(msg, this.translate.instant('ERROR'));
+        });
+        console.error('Error loading quiz', error);
+      }
+    });
   }
 
   /**
@@ -59,31 +87,49 @@ export class AddQuizComponent implements OnInit {
   }
 
   /**
-   * Handles the form submission for adding a new quiz.
+   * Handles the submission of the quiz form.
    * 
-   * This method sends the quiz data to the backend using the `quizService.addQuiz` method.
-   * On successful addition, it displays a success notification using a translated message,
-   * resets the form, and reinitializes the quiz object to its default values.
-   * If an error occurs during the process, it displays an error notification with a translated message
-   * and logs the error to the console.
+   * If in edit mode, updates the existing quiz; otherwise, adds a new quiz.
+   * Displays success or error notifications based on the outcome of the operation.
+   * Resets the form and navigates to the quizzes list upon successful addition of a new quiz.
+   *
+   * @returns void 
    */
   formSubmit() {
-    this.quizService.addQuiz(this.quiz).subscribe({
-      next: () => {
-        this.translate.get('QUIZ_ADD_SUCCESS').subscribe((msg: string) => {
-          this.notificationService.success(msg, this.translate.instant('SUCCESS'));
-        });
-        this.quizForm.resetForm();
-        this.quiz = this.setQuizDefaultValue();
-        this.router.navigate(['/admin/quizzes']);
-      },
-      error: (error) => {
-        this.translate.get('QUIZ_ADD_ERROR').subscribe((msg: string) => {
-          this.notificationService.error(msg, this.translate.instant('ERROR'));
-        });
-        console.error('Error adding quiz', error);
-      }
-    });
+    if (this.isEditMode) {
+      this.quizService.updateQuiz(this.quiz).subscribe({
+        next: () => {
+          this.translate.get('QUIZ_UPDATE_SUCCESS').subscribe((msg: string) => {
+            this.notificationService.success(msg, this.translate.instant('SUCCESS'));
+          });
+          this.router.navigate(['/admin/quizzes']);
+        },
+        error: (error) => {
+          this.translate.get('QUIZ_UPDATE_ERROR').subscribe((msg: string) => {
+            this.notificationService.error(msg, this.translate.instant('ERROR'));
+          });
+          console.error('Error updating quiz', error);
+        }
+      });
+      
+    } else {
+      this.quizService.addQuiz(this.quiz).subscribe({
+        next: () => {
+          this.translate.get('QUIZ_ADD_SUCCESS').subscribe((msg: string) => {
+            this.notificationService.success(msg, this.translate.instant('SUCCESS'));
+          });
+          this.quizForm.resetForm();
+          this.quiz = this.setQuizDefaultValue();
+          this.router.navigate(['/admin/quizzes']);
+        },
+        error: (error) => {
+          this.translate.get('QUIZ_ADD_ERROR').subscribe((msg: string) => {
+            this.notificationService.error(msg, this.translate.instant('ERROR'));
+          });
+          console.error('Error adding quiz', error);
+        }
+      });
+    }
   }
 
   /**

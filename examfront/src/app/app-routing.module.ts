@@ -56,6 +56,11 @@ const routes: Routes = [
         data: { animation: 'AddCategoryPage' }
       },
       {
+        path: 'add-category/:cid', // Edit category route
+        component: AddCategoryComponent,
+        data: { animation: 'EditCategoryPage' }
+      },
+      {
         path: 'quizzes',
         component: ViewQuizzesComponent,
         data: { animation: 'QuizzesPage' }
@@ -64,6 +69,11 @@ const routes: Routes = [
         path: 'add-quiz',
         component: AddQuizComponent,
         data: { animation: 'AddQuizPage' }
+      },
+      {
+        path: 'add-quiz/:qid', // Edit quiz route
+        component: AddQuizComponent,
+        data: { animation: 'EditQuizPage' }
       }
     ]
   },

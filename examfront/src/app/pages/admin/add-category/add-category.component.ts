@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { slideIn } from 'src/app/animations/animations';
 import { Category } from 'src/app/model/Category';
@@ -16,6 +16,8 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class AddCategoryComponent implements OnInit {
 
+  public isEditMode: boolean = false;
+
   category: Category = {
     cid: 0,
     title: '',
@@ -26,11 +28,41 @@ export class AddCategoryComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private categoryService: CategoryService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-
+    this.route.paramMap.subscribe(params => {
+    const cid = params.get('cid');
+    if (cid) {
+      this.isEditMode = true;
+      this.loadCategory(+cid); 
+    } else {
+      this.isEditMode = false;
+      this.category = { cid: 0, title: '', description: '' };
+    }
+  });
+  }
+  /**
+   * Loads a category by its ID and assigns it to the local `category` property.
+   * Displays an error notification if the request fails.
+   *
+   * @param {number} cId - The ID of the category to load.
+   * @returns {void}
+   */
+  private loadCategory(cId: number) {
+    this.categoryService.getCategory(cId).subscribe({
+      next: (category) => {
+        this.category = category;
+      },
+      error: () => {
+        this.notificationService.error(
+          this.translate.instant('CATEGORY_LOAD_ERROR'),
+          this.translate.instant('ERROR')
+        );
+      }
+    });
   }
 
   /**
@@ -43,20 +75,40 @@ export class AddCategoryComponent implements OnInit {
    * @returns void
    */
   formSubmit() {
-    this.categoryService.addCategory(this.category).subscribe({
-      next: () => {
-       this.notificationService.success(
-        this.translate.instant('CATEGORY_ADD_SUCCESS'),
-        this.translate.instant('SUCCESS')
-      );
-        this.router.navigate(['/admin/categories']);
-      },
-      error: () => {
-        this.notificationService.error(
-          this.translate.instant('CATEGORY_ADD_ERROR'),
-          this.translate.instant('ERROR')
-        );
-      }
-    });
+    if (this.isEditMode) {
+      this.categoryService.updateCategory(this.category).subscribe({
+        next: () => {
+          this.notificationService.success(
+            this.translate.instant('CATEGORY_UPDATE_SUCCESS'),
+            this.translate.instant('SUCCESS')
+          );
+          this.router.navigate(['/admin/categories']);
+        },
+        error: () => {
+          this.notificationService.error(
+            this.translate.instant('CATEGORY_UPDATE_ERROR'),
+            this.translate.instant('ERROR')
+          );
+        }
+      });
+    } else {
+      this.categoryService.addCategory(this.category).subscribe({
+        next: () => {
+          this.notificationService.success(
+            this.translate.instant('CATEGORY_ADD_SUCCESS'),
+            this.translate.instant('SUCCESS')
+          );
+          this.router.navigate(['/admin/categories']);
+        },
+        error: () => {
+          this.notificationService.error(
+            this.translate.instant('CATEGORY_ADD_ERROR'),
+            this.translate.instant('ERROR')
+          );
+        }
+      });
+    }
   }
+
+
 }

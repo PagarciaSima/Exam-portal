@@ -26,7 +26,12 @@ mat-card {
     background-color 0.25s ease,
     color 0.25s ease;
   box-shadow: 0 2px 8px rgba(63,81,181,0.08);
-  cursor: pointer;
+}
+
+.card-icon {
+  position: absolute;
+  top: 8px;
+  right: 48px;
 }
 
 mat-card:hover {
@@ -55,6 +60,37 @@ mat-card:hover mat-card-content {
 }
 
 @media (max-width: 600px) {
+  .header-card {
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    padding-bottom: 40px;
+  }
+  .header-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    position: static !important;
+    justify-content: center; 
+    width: 100%;             
+  }
+  .header-actions button[mat-icon-button] {
+    position: static !important;
+    margin-top: 0;
+    margin-right: 0;
+  }
+  .header-card .header-image {
+    margin-bottom: 8px;
+  }
+  .header-card-title,
+  .header-card-subtitle {
+    width: 100%;
+  }
+  .header-card {
+    min-height: 100px;
+  }
   .quiz-actions {
     flex-direction: column;
     align-items: stretch;

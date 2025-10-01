@@ -16,44 +16,7 @@ import { Router } from '@angular/router';
 })
 export class ViewQuizzesComponent implements OnInit {
 
-  quizzes: Quiz[] = [
-    {
-      qId: 1,
-      title: 'Quiz 1',
-      description: 'Description for Quiz 1',
-      maxMarks: 100,
-      numberOfQuestions: 10,
-      active: true,
-      category: { cid: 1, title: 'Category 1', description: 'Description for Category 1' }
-    },
-    {
-      qId: 2,
-      title: 'Quiz 2',
-      description: 'Description for Quiz 2',
-      maxMarks: 100,
-      numberOfQuestions: 10,
-      active: true,
-      category: { cid: 2, title: 'Category 2', description: 'Description for Category 2' }
-    },
-    {
-      qId: 3,
-      title: 'Quiz 3',
-      description: 'Description for Quiz 3',
-      maxMarks: 100,
-      numberOfQuestions: 10,
-      active: true,
-      category: { cid: 3, title: 'Category 3', description: 'Description for Category 3' }
-    },
-    {
-      qId: 4,
-      title: 'Quiz 4',
-      description: 'Description for Quiz 4',
-      maxMarks: 100,
-      numberOfQuestions: 10,
-      active: true,
-      category: { cid: 4, title: 'Category 4', description: 'Description for Category 4' }
-    }
-  ];
+  quizzes: Quiz[] = [];
 
   constructor(
     private quizService: QuizService,
@@ -66,6 +29,10 @@ export class ViewQuizzesComponent implements OnInit {
     this.loadQuizzes();
   }
 
+  /**
+   * Fetches all quizzes from the backend service and assigns them to the local `quizzes` property.
+   * Displays an error notification if the request fails.
+   */
   private loadQuizzes(): void {
     this.quizService.getQuizzes().subscribe({
       next: (data: any) => {
@@ -74,7 +41,7 @@ export class ViewQuizzesComponent implements OnInit {
       },
       error: (error) => {
         this.notificacionService.error(
-          this.translate.instant('CATEGORY_LOAD_ERROR'),
+          this.translate.instant('QUIZZES_LOAD_ERROR'),
           this.translate.instant('ERROR')
         );
         console.error('Error fetching quizzes:', error);
@@ -82,8 +49,51 @@ export class ViewQuizzesComponent implements OnInit {
     });
   }
 
+  /**
+   *  Navigates the user to the "Add Quiz" page within the admin section.
+   */
   addQuiz() {
     this.router.navigate(['/admin/add-quiz']);
   }
 
+  /**
+   * 
+   * @param qId The ID of the quiz to be deleted.
+   * Deletes a quiz by its ID after user confirmation.
+   * Displays success or error notifications based on the outcome of the delete operation.
+   * 
+   * @returns void
+   * 
+   * @example
+   * this.deleteQuiz(1);
+   */
+  deleteQuiz(qId: number) {
+    this.notificacionService.confirm(
+      this.translate.instant('QUIZ_DELETE_CONFIRM'),
+      this.translate.instant('CONFIRM')
+    ).then(confirmed => {
+      if (confirmed) {
+        this.quizService.deleteQuiz(qId).subscribe({
+          next: () => {
+            this.notificacionService.success(
+              this.translate.instant('QUIZ_DELETED_SUCCESS'),
+              this.translate.instant('SUCCESS')
+            );
+            this.quizzes = this.quizzes.filter(q => q.qId !== qId);
+          },
+          error: (error) => {
+            this.notificacionService.error(
+              this.translate.instant('QUIZ_DELETE_ERROR'),
+              this.translate.instant('ERROR')
+            );
+            console.error('Error deleting quiz:', error);
+          }
+        });
+      }
+    });
+  }
+
+  editQuiz(qId: number) {
+    this.router.navigate(['/admin/add-quiz', qId]);
+  }
 }

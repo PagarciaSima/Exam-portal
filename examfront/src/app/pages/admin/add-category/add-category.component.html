@@ -1,15 +1,14 @@
 <mat-card [@slideIn] role="form" aria-labelledby="add-category-title">
     <h1 class="text-center" style="display: flex; align-items: center; justify-content: center;">
         <mat-icon aria-hidden="true" style="margin-right: 8px;">category</mat-icon>
-        {{ 'ADD_CATEGORY' | translate }}
+        {{ isEditMode ? ('EDIT_CATEGORY' | translate) : ('ADD_CATEGORY' | translate) }}
     </h1>
     <mat-card-content>
         <div class="bootstrap-wrapper">
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <form #categoryForm="ngForm" aria-labelledby="add-category-title"
-                        (ngSubmit)="formSubmit()" autocomplete="on"
-                    >
+                        (ngSubmit)="formSubmit()" autocomplete="on" novalidate>
                         <!-- Category title -->
                         <mat-form-field class="w100" appearance="outline">
                             <mat-label id="category-title-label">{{ 'CATEGORY_TITLE_LABEL' | translate }}</mat-label>
@@ -65,7 +64,7 @@
                                 [disabled]="categoryForm.invalid"
                                 type="submit"
                             >
-                                {{ 'ADD_CATEGORY_BUTTON' | translate }}
+                                {{ isEditMode ? ('UPDATE_CATEGORY_BUTTON' | translate) : ('ADD_CATEGORY_BUTTON' | translate) }}
                             </button>
                         </div>
                     </form>

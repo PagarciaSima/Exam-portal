@@ -60,4 +60,27 @@ export class NotificationService {
       verticalPosition: 'top',
     });
   }
+
+  /**
+   * Muestra un modal de confirmación usando SweetAlert2.
+   * @param message Mensaje a mostrar en el modal.
+   * @param title Título del modal. Por defecto '¿Estás seguro?'.
+   * @returns Promise<boolean> Resuelve true si el usuario confirma, false si cancela.
+   */
+  confirm(message: string, title: string = '¿Estás seguro?'): Promise<boolean> {
+    return Swal.fire({
+      title,
+      text: message,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No',
+      customClass: {
+        confirmButton: 'mat-raised-button mat-primary swal2-confirm mr20', 
+        cancelButton: 'mat-raised-button mat-warn swal2-cancel'
+      },
+      buttonsStyling: false 
+    }).then(result => result.isConfirmed);
+  }
+
 }

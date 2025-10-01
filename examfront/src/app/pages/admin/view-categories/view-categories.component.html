@@ -25,7 +25,8 @@
             <button mat-icon-button color="primary"
                 aria-label="{{ 'EDIT' | translate }} category {{ category.title }}"
                 matTooltip="{{ 'EDIT' | translate }}"
-                [attr.aria-describedby]="'cat-title-' + category.id">
+                [attr.aria-describedby]="'cat-title-' + category.cid"
+                (click)="editCategory(category.cid)">
                 <mat-icon aria-hidden="true">edit</mat-icon>
             </button>
             <mat-divider></mat-divider>
