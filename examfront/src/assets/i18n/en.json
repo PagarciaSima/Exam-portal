@@ -125,5 +125,9 @@
   "QUIZ_ADD_SUCCESS": "Quiz added successfully",
   "QUIZ_ADD_ERROR": "Error adding quiz",
   "QUIZ_UPDATE_SUCCESS": "Quiz updated successfully",
-  "QUIZ_UPDATE_ERROR": "Error updating quiz"
+  "QUIZ_UPDATE_ERROR": "Error updating quiz",
+  "QUESTION": "Question",
+  "ANSWER_OPTIONS": "Answer options",
+  "OPTION": "Option",
+  "CORRECT_ANSWER": "Correct Answer"
 }

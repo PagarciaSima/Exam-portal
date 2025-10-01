@@ -1,0 +1,69 @@
+<h1 class="mt20" tabindex="0">{{ 'QUESTIONS' | translate }} {{ qTitle }}</h1>
+
+<div class="bootstrap-wrapper" role="main">
+    <div class="row">
+        <div class="col-md-12">
+            <mat-card *ngFor="let q of questions; let i = index" class="mb20" [@slideIn] aria-labelledby="question-{{i}}">
+                <mat-card-content>
+                  <p class="question-content" id="question-{{i}}" tabindex="0">
+                    <b>{{ 'QUESTION' | translate }} {{ i + 1 }}</b> - 
+                    <span>&nbsp;{{q.content}} </span>
+                    <mat-divider class="mt10" aria-hidden="true"></mat-divider>
+                  </p>
+                  <div class="container-fluid">
+                    <div class="row answer-options pt10" role="group" aria-label="{{ 'ANSWER_OPTIONS' | translate }}">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button 
+                                    class="option-btn" 
+                                    type="button" 
+                                    aria-label="{{ 'OPTION' | translate }} 1: {{ q.option1 }}"
+                                    tabindex="0">
+                                    <b>1 )</b> {{ q.option1 }}
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button 
+                                    class="option-btn" 
+                                    type="button" 
+                                    aria-label="{{ 'OPTION' | translate }} 2: {{ q.option2 }}"
+                                    tabindex="0">
+                                    <b>2 )</b> {{ q.option2 }}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">  
+                                <button 
+                                    class="option-btn" 
+                                    type="button" 
+                                    aria-label="{{ 'OPTION' | translate }} 3: {{ q.option3 }}"
+                                    tabindex="0">
+                                    <b>3 )</b> {{ q.option3 }}
+                                </button>
+                            </div>
+                            <div class="col-md-6">  
+                                <button 
+                                    class="option-btn" 
+                                    type="button" 
+                                    aria-label="{{ 'OPTION' | translate }} 4: {{ q.option4 }}"
+                                    tabindex="0">
+                                    <b>4 )</b> {{ q.option4 }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <mat-divider class="mt10" aria-hidden="true"></mat-divider>
+                    <div class="pt10 answer-block" role="status" aria-live="polite">
+                        <p class="mt10">
+                            <mat-icon class="answer-icon" aria-hidden="true">check_circle</mat-icon>
+                            <b>{{ 'CORRECT_ANSWER' | translate }}:</b>           
+                            {{ q.answer }}
+                        </p>
+                    </div>
+                  </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

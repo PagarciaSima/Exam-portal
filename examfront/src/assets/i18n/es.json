@@ -126,5 +126,9 @@
   "QUIZ_ADD_SUCCESS": "Cuestionario añadido correctamente",
   "QUIZ_ADD_ERROR": "Error al añadir el cuestionario",
   "QUIZ_UPDATE_SUCCESS": "Cuestionario actualizado correctamente",
-  "QUIZ_UPDATE_ERROR": "Error al actualizar el cuestionario"
+  "QUIZ_UPDATE_ERROR": "Error al actualizar el cuestionario",
+  "QUESTION": "Pregunta",
+  "ANSWER_OPTIONS": "Opciones de respuesta",
+  "OPTION": "Opción",
+  "CORRECT_ANSWER": "Respuesta correcta"
 }

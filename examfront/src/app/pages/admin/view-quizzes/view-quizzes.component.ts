@@ -93,7 +93,19 @@ export class ViewQuizzesComponent implements OnInit {
     });
   }
 
+  /**
+   * @param qId The ID of the quiz to be edited.
+   * Navigates to the edit quiz page for the specified quiz ID.
+   */
   editQuiz(qId: number) {
     this.router.navigate(['/admin/add-quiz', qId]);
+  }
+
+  /**
+   * @param qId The ID of the quiz whose questions are to be viewed.
+   * @param title The title of the quiz whose questions are to be viewed.
+   */
+  public viewQuestions(qId: number, title: string): void {
+    this.router.navigate(['/admin/view-questions', qId, title]);
   }
 }

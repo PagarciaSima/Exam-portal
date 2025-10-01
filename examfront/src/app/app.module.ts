@@ -38,6 +38,7 @@ import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboa
 import { HttpClient } from '@angular/common/http';
 import { AddQuizComponent } from './pages/admin/add-quiz/add-quiz.component';
 import { ViewQuizzesComponent } from './pages/admin/view-quizzes/view-quizzes.component';
+import { ViewQuizQuestionsComponent } from './pages/admin/view-quiz-questions/view-quiz-questions.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -59,7 +60,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ViewCategoriesComponent,
     AddCategoryComponent,
     ViewQuizzesComponent,
-    AddQuizComponent
+    AddQuizComponent,
+    ViewQuizQuestionsComponent
   ],
   imports: [
     BrowserModule,

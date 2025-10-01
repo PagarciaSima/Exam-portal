@@ -18,7 +18,6 @@
     padding: 10px 20px;
 }
 
-/* Efecto de hover para la tarjeta */
 mat-card {
   transition:
     box-shadow 0.3s ease,
@@ -62,9 +61,21 @@ mat-card:hover mat-card-content {
 @media (max-width: 600px) {
   .header-card {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center; 
     position: relative;
     padding-bottom: 40px;
+  }
+  .header-image {
+    display: none;
+  }
+  mat-card-title,
+  mat-card-subtitle {
+    width: 100%;
+    text-align: center; 
+    display: block;
+  }
+  .quiz-description {
+    text-align: center; 
   }
   .header-actions {
     display: flex;
@@ -73,23 +84,13 @@ mat-card:hover mat-card-content {
     margin-top: 8px;
     margin-bottom: 8px;
     position: static !important;
-    justify-content: center; 
-    width: 100%;             
+    justify-content: center;
+    width: 100%;
   }
   .header-actions button[mat-icon-button] {
     position: static !important;
     margin-top: 0;
     margin-right: 0;
-  }
-  .header-card .header-image {
-    margin-bottom: 8px;
-  }
-  .header-card-title,
-  .header-card-subtitle {
-    width: 100%;
-  }
-  .header-card {
-    min-height: 100px;
   }
   .quiz-actions {
     flex-direction: column;
@@ -98,6 +99,9 @@ mat-card:hover mat-card-content {
   }
   .quiz-actions button {
     width: 100%;
+  }
+  .header-card {
+    min-height: 100px;
   }
 }
 

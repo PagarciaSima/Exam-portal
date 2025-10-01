@@ -1,0 +1,68 @@
+/* Centrar solo el título y la respuesta */
+h1 {
+    text-align: center;
+}
+
+/* Centrar solo la respuesta */
+.answer-block p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Eliminar centrado de preguntas y opciones */
+mat-card-content {
+    display: block;
+}
+
+.container-fluid,
+.row.answer-options {
+    display: block;
+    flex-direction: unset;
+    align-items: unset;
+    justify-content: unset;
+}
+
+.row.answer-options > div {
+    width: 100%;
+    text-align: left;
+}
+
+.answer-icon {
+    color: green;
+    vertical-align: middle;
+    margin-right: 3px;
+}
+
+.answer-options b {
+    color: #3f51b5
+}
+
+.question-content {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.option-btn {
+    width: 100%;
+    background: #f5f5f5;
+    border: 2px solid #3f51b5;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 16px;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.option-btn:hover {
+    background: #e3e3fa;
+    box-shadow: 0 2px 8px rgba(63,81,181,0.15);
+}
+
+.option-btn.selected {
+    background: #c5cae9;
+    border-color: #1a237e;
+}

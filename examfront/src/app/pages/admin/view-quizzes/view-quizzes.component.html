@@ -61,7 +61,9 @@
     </mat-card-content>
     <mat-card-action>
   <div class="quiz-actions">
-    <button mat-raised-button color="accent" role="button" class="ml20 mb-2 mr-2">
+    <button mat-raised-button color="accent" role="button" class="ml20 mb-2 mr-2"
+        (click)="viewQuestions(q.qId, q.title)"
+    >
         {{ 'QUESTIONS' | translate }}
     </button>
     <button mat-stroked-button color="accent" class="ml20 mb-2 mr-2" role="button">
