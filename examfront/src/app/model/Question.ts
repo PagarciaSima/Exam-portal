@@ -1,9 +1,9 @@
 import { Quiz } from './Quiz';
 
 export interface Question {
-  quesId: number;
+  quesId?: number;
   content: string;
-  image: string;
+  image?: string;
   option1: string;
   option2: string;
   option3: string;

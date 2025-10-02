@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { slideIn } from 'src/app/animations/animations';
 import { Question } from 'src/app/model/Question';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -14,22 +14,20 @@ import { QuestionService } from 'src/app/services/question.service';
   ]
 })
 export class ViewQuizQuestionsComponent implements OnInit {
-addQuestion() {
-throw new Error('Method not implemented.');
-}
 
   qId: number;
   qTitle: string;
   questions: Question[] = [];
 
   constructor(
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private questionService: QuestionService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.activatedRoute.params.subscribe(params => {
       this.qId = params['id'];
       this.qTitle = params['title'];
     });
@@ -37,6 +35,10 @@ throw new Error('Method not implemented.');
     this.getQuestionsOfQuiz(this.qId);
   }
 
+  /**
+   * @param quizId ID of the quiz to fetch questions for
+   * Fetches the questions for the specified quiz and handles success and error scenarios.
+   */
   private getQuestionsOfQuiz(quizId: number): void {
     this.questionService.getQuestionsOfQuiz(quizId).subscribe({
       next: (data: any) => {
@@ -48,6 +50,10 @@ throw new Error('Method not implemented.');
         console.error('Error fetching questions:', error);
       }
     });
+  }
+  
+  addQuestion() {
+    this.router.navigate(['/admin/add-question', this.qId, this.qTitle]);
   }
 
 }

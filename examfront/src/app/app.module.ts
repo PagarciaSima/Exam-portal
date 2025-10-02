@@ -39,6 +39,7 @@ import { HttpClient } from '@angular/common/http';
 import { AddQuizComponent } from './pages/admin/add-quiz/add-quiz.component';
 import { ViewQuizzesComponent } from './pages/admin/view-quizzes/view-quizzes.component';
 import { ViewQuizQuestionsComponent } from './pages/admin/view-quiz-questions/view-quiz-questions.component';
+import { AddQuestionComponent } from './pages/admin/add-question/add-question.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -61,7 +62,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddCategoryComponent,
     ViewQuizzesComponent,
     AddQuizComponent,
-    ViewQuizQuestionsComponent
+    ViewQuizQuestionsComponent,
+    AddQuestionComponent
   ],
   imports: [
     BrowserModule,

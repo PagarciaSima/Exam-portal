@@ -2,7 +2,7 @@
   "ADD_CATEGORY": "Añadir categoría",
   "EDIT_CATEGORY": "Editar categoría",
   "ADD_CATEGORY_BUTTON": "Añadir categoría",
-  "UPDATE_CATEGORY_BUTTON": "Actualizar categoría",
+  "UPDATE_CATEGORY_BUTTON": "Editar categoría",
   "ADMIN": "Administrador",
   "ALREADY_ACCOUNT": "¿Ya tienes cuenta?",
   "CATEGORY_ADD_ERROR": "Error al añadir la categoría",
@@ -130,5 +130,11 @@
   "QUESTION": "Pregunta",
   "ANSWER_OPTIONS": "Opciones de respuesta",
   "OPTION": "Opción",
-  "CORRECT_ANSWER": "Respuesta correcta"
+  "CORRECT_ANSWER": "Respuesta correcta",
+  "EDIT_QUIZ": "Editar cuestionario",
+  "ADD_QUESTION": "Añadir pregunta",
+  "IS_REQUIRED": "es obligatorio",
+  "QUESTION_ADD_SUCCESS": "Pregunta añadida correctamente",
+  "QUESTION_ADD_ERROR": "Error al añadir la pregunta",
+  "BACK_TO_QUIZ": "Volver al cuestionario"
 }

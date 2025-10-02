@@ -80,11 +80,12 @@ public class QuestionController {
         Quiz quiz = quizService.getQuiz(qid);
         Set<Question> questionsOfQuiz = quiz.getQuestions();
         List<Question> list = new ArrayList<>(questionsOfQuiz);
-
-        if (list.size() > quiz.getNumberOfQuestions()) {
-            list = list.subList(0, quiz.getNumberOfQuestions() + 1);
-        }
+        
         Collections.shuffle(list);
+        
+        if (list.size() > quiz.getNumberOfQuestions()) {
+            list = list.subList(0, quiz.getNumberOfQuestions());
+        }
 
         LOGGER.info("Fetched {} questions for Quiz ID {}: '{}'", list.size(), quiz.getqId(), quiz.getTitle());
         return ResponseEntity.ok(list);

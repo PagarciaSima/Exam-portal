@@ -1,5 +1,11 @@
 <h1 class="mt20" tabindex="0">{{ 'QUESTIONS' | translate }} {{ qTitle }}</h1>
-
+<div class="container text-center mt20 mb20" [@slideIn]>
+    <button mat-raised-button color="primary" role="button"
+        (click)="addQuestion()" aria-label="Add Question"
+    >
+        {{ 'ADD_QUESTION' | translate }}
+    </button>
+</div>
 <div class="bootstrap-wrapper" role="main">
     <div class="row">
         <div class="col-md-12">

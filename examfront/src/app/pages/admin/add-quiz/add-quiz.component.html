@@ -1,7 +1,7 @@
 <mat-card [@slideIn] role="form" aria-labelledby="add-quiz-title">
     <h1 class="text-center" style="display: flex; align-items: center; justify-content: center;">
         <mat-icon aria-hidden="true" style="margin-right: 8px;">quiz</mat-icon>
-        {{ 'ADD_QUIZ' | translate }}
+        {{ isEditMode ? ('EDIT_QUIZ' | translate) : ('ADD_QUIZ' | translate) }}
     </h1>
     <mat-card-content>
         <div class="bootstrap-wrapper">
@@ -145,7 +145,7 @@
                                 {{ 'QUIZ_CATEGORY_REQUIRED' | translate }}
                             </mat-error>
                         </mat-form-field>
-                        
+
                         <!-- Form Buttons -->
                         <div class="container text-center">
                             <button
@@ -154,7 +154,7 @@
                                 color="primary"
                                 [disabled]="quizForm.invalid"
                             >
-                                {{ 'SAVE' | translate }}
+                                {{ isEditMode ? ('EDIT_QUIZ' | translate) : ('ADD_QUIZ' | translate) }}
                             </button>
                             <button
                                 type="reset"

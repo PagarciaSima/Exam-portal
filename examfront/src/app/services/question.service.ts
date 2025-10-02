@@ -33,5 +33,9 @@ export class QuestionService {
   public getQuestionsOfQuiz(quizId: number): Observable<Question[]> {
     return this.http.get<Question[]>(`${this.apiUrl}/question/quiz/${quizId}`);
   }
+
+  public addQuestion(question: Question): Observable<Question> {
+    return this.http.post<Question>(`${this.apiUrl}/question/`, question);
+  }
     
 }

@@ -129,5 +129,11 @@
   "QUESTION": "Question",
   "ANSWER_OPTIONS": "Answer options",
   "OPTION": "Option",
-  "CORRECT_ANSWER": "Correct Answer"
+  "CORRECT_ANSWER": "Correct Answer",
+  "EDIT_QUIZ": "Edit Quiz",
+  "ADD_QUESTION": "Add Question",
+  "IS_REQUIRED": "is required",
+  "QUESTION_ADD_SUCCESS": "Question added successfully",
+  "QUESTION_ADD_ERROR": "Error adding question",
+  "BACK_TO_QUIZ": "Back to Quiz"
 }
