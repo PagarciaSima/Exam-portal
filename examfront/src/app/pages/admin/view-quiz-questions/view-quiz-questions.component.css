@@ -66,3 +66,23 @@ mat-card-content {
     background: #c5cae9;
     border-color: #1a237e;
 }
+
+.question-actions {
+    display: flex;
+    gap: 2px;
+    margin-left: auto;
+}
+.mat-icon-button {
+    margin-left: 0;
+}
+
+.row.answer-options .col-md-6 {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    padding-top: 16px;
+}
+
+.row.answer-options .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}

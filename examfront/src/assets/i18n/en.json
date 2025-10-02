@@ -135,5 +135,9 @@
   "IS_REQUIRED": "is required",
   "QUESTION_ADD_SUCCESS": "Question added successfully",
   "QUESTION_ADD_ERROR": "Error adding question",
-  "BACK_TO_QUIZ": "Back to Quiz"
+  "BACK_TO_QUIZ": "Back to Quiz",
+  "QUESTION_LOAD_ERROR": "Error loading questions",
+  "QUESTION_DELETED_SUCCESS": "Question deleted successfully",
+  "QUESTION_DELETE_ERROR": "Error deleting question",
+  "QUESTION_DELETE_CONFIRM": "Are you sure you want to delete this question?"
 }

@@ -75,6 +75,12 @@ app-footer, .footer {
   margin-bottom: 10px !important;
 }
 
+.pl10 {
+  padding-left: 10px !important;
+}
+.pr10 {
+  padding-right: 10px !important;
+}
 .pt10 {
   padding-top: 10px !important;
 }

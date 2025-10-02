@@ -4,6 +4,8 @@ import { slideIn } from 'src/app/animations/animations';
 import { Question } from 'src/app/model/Question';
 import { NotificationService } from 'src/app/services/notification.service';
 import { QuestionService } from 'src/app/services/question.service';
+import { TranslateService } from '@ngx-translate/core'; // Importa TranslateService
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-view-quiz-questions',
@@ -23,7 +25,8 @@ export class ViewQuizQuestionsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private questionService: QuestionService,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService // Inyecta TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -46,14 +49,56 @@ export class ViewQuizQuestionsComponent implements OnInit {
         console.log(this.questions);
       },
       error: (error) => {
-        this.notificationService.error('Error loading questions', 'Error');
+        this.notificationService.error(
+          this.translate.instant('QUESTION_LOAD_ERROR'),
+          this.translate.instant('ERROR')
+        );
         console.error('Error fetching questions:', error);
       }
     });
   }
   
+  /**
+   * Navigates to the Add Question page for the current quiz.
+   */
   addQuestion() {
     this.router.navigate(['/admin/add-question', this.qId, this.qTitle]);
   }
 
+  /**
+   * Deletes a question by its ID.
+   * @param quesId The ID of the question to be deleted.
+   */
+  deleteQuestion(quesId: number): void {
+    this.notificationService.confirm(
+      this.translate.instant('QUESTION_DELETE_CONFIRM'),
+      this.translate.instant('CONFIRM')
+    ).then(confirmed => {
+      if (confirmed) {
+        this.questionService.deleteQuestion(quesId).pipe(
+          switchMap(() => this.questionService.getQuestionsOfQuiz(this.qId))
+        ).subscribe({
+          next: (questions) => {
+            this.questions = questions;
+            this.notificationService.success(
+              this.translate.instant('QUESTION_DELETED_SUCCESS'),
+              this.translate.instant('SUCCESS')
+            );
+          },
+          error: (error) => {
+            this.notificationService.error(
+              this.translate.instant('QUESTION_DELETE_ERROR'),
+              this.translate.instant('ERROR')
+            );
+            console.error('Error deleting question:', error);
+          }
+        });
+      }
+    });
+  }
+
+  editQuestion(): void {
+    alert('Edit question');
+  }
+  
 }
