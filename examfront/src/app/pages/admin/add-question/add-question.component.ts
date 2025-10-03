@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { slideIn } from 'src/app/animations/animations';
 import { Question } from 'src/app/model/Question';
 import { Quiz } from 'src/app/model/Quiz';
@@ -20,6 +20,9 @@ export class AddQuestionComponent implements OnInit {
   
   qId: number;
   qTitle: string;
+  quesId: number;
+  isEditMode: boolean = false;
+
   question: Question = {
     content: '',
     option1: '',
@@ -34,36 +37,72 @@ export class AddQuestionComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private questionService: QuestionService,
     private notificationService: NotificationService,
-    private translate: TranslateService // Inyecta el servicio de traducción
+    private translate: TranslateService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.qId = this.activatedRoute.snapshot.params['qid'];
     this.qTitle = this.activatedRoute.snapshot.params['title'];
+    this.quesId = this.activatedRoute.snapshot.params['quesId'];
     this.question.quiz.qId = this.qId;
+    if (this.quesId) {
+      this.isEditMode = true;
+      this.loadQuestion(this.quesId);
+      console.log('Edit mode for question ID:', this.quesId);
+    }
   }
 
   /**
-   * Handles the form submission to add a new question.
-   * On success, it resets the form and shows a success notification.
-   * On error, it shows an error notification.
+   * Loads a question by its ID and assigns it to the local `question` property.
+   * Displays an error notification if the request fails.
+   * @param quesId The ID of the question to load.
+   */
+  private loadQuestion(quesId: number) {
+    this.questionService.getQuestion(quesId).subscribe({
+      next: (data) => {
+        this.question = data;
+      },
+      error: (error) => {
+        const errorMsg = this.translate.instant('QUESTION_LOAD_ERROR');
+        const errorTitle = this.translate.instant('ERROR');
+        this.notificationService.error(errorMsg, errorTitle);
+        console.error('Error loading question:', error);
+      }
+    });
+  }
+
+  /**
+   * Handles the form submission for adding or updating a question.
+   * Calls the appropriate method based on the current mode (add or edit).
    */
   formSubmit() {
+    // Trim all string inputs before submit
+    this.question.content = this.question.content.trim();
+    this.question.option1 = this.question.option1.trim();
+    this.question.option2 = this.question.option2.trim();
+    this.question.option3 = this.question.option3.trim();
+    this.question.option4 = this.question.option4.trim();
+    this.question.answer = this.question.answer.trim();
+
+    if(this.isEditMode) {
+      this.updateQuestion();
+    } else {
+      this.addNewQuestion();
+    }
+  }
+
+  /** 
+   * Adds a new question using the QuestionService.
+   * Displays success or error notifications based on the outcome of the operation.
+   */
+  private addNewQuestion() {
     this.questionService.addQuestion(this.question).subscribe({
       next: () => {
         const successMsg = this.translate.instant('QUESTION_ADD_SUCCESS');
         const successTitle = this.translate.instant('SUCCESS');
         this.notificationService.success(successMsg, successTitle);
-        this.questionForm.resetForm();
-        this.question = {
-          content: '',
-          option1: '',
-          option2: '',
-          option3: '',
-          option4: '',
-          answer: '',
-          quiz: { qId: this.qId } as Quiz
-        };
+        this.resetState();
       },
       error: (error) => {
         const errorMsg = this.translate.instant('QUESTION_ADD_ERROR');
@@ -73,4 +112,43 @@ export class AddQuestionComponent implements OnInit {
       }
     });
   }
+
+  /** 
+   * Updates an existing question using the QuestionService.
+   * Displays success or error notifications based on the outcome of the operation.
+   */
+  private updateQuestion() {
+    console.log('Updating question:', this.question);
+    this.questionService.updateQuestion(this.question).subscribe({
+      next: () => {
+        const successMsg = this.translate.instant('QUESTION_UPDATE_SUCCESS');
+        const successTitle = this.translate.instant('SUCCESS');
+        this.notificationService.success(successMsg, successTitle);
+        this.router.navigate(['/admin/view-questions', this.qId, this.qTitle]);
+      },
+      error: (error) => {
+        const errorMsg = this.translate.instant('QUESTION_UPDATE_ERROR');
+        const errorTitle = this.translate.instant('ERROR');
+        this.notificationService.error(errorMsg, errorTitle);
+        console.error('Error updating question:', error);
+      }
+    });
+  }
+
+ /** 
+  * Resets the form and question state to initial values.
+  */ 
+  private resetState() {
+    this.questionForm.resetForm();
+    this.question = {
+      content: '',
+      option1: '',
+      option2: '',
+      option3: '',
+      option4: '',
+      answer: '',
+      quiz: { qId: this.qId } as Quiz
+    };
+  }
+
 }

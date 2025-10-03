@@ -137,8 +137,11 @@
   "QUESTION_ADD_SUCCESS": "Pregunta añadida correctamente",
   "QUESTION_ADD_ERROR": "Error al añadir la pregunta",
   "BACK_TO_QUIZ": "Volver al cuestionario",
-  "QUESTION_LOAD_ERROR": "Error al cargar las preguntas",
+  "QUESTIONS_LOAD_ERROR": "Error al cargar las preguntas",
   "QUESTION_DELETED_SUCCESS": "Pregunta eliminada con éxito",
   "QUESTION_DELETE_ERROR": "Error al eliminar la pregunta",
-  "QUESTION_DELETE_CONFIRM": "¿Estás seguro de que deseas eliminar esta pregunta?"
+  "QUESTION_DELETE_CONFIRM": "¿Estás seguro de que deseas eliminar esta pregunta?",
+  "QUESTION_LOAD_ERROR": "Error al cargar la pregunta",
+  "QUESTION_UPDATE_SUCCESS": "Pregunta actualizada con éxito",
+  "EDIT_QUESTION": "Editar pregunta"
 }

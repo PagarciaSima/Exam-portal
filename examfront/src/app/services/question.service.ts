@@ -64,5 +64,23 @@ export class QuestionService {
   public  deleteQuestion(quesId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/question/${quesId}`);
   }
+
+  /**
+   * Retrieves a specific question by its ID from the backend API.
+   * @param quesId The ID of the question to be retrieved.
+   * @returns An Observable emitting the requested question.
+   */
+  public getQuestion(quesId: number): Observable<Question> {
+    return this.http.get<Question>(`${this.apiUrl}/question/${quesId}`);
+  }
+
+  /**
+   * Updates an existing question in the backend API.
+   * @param question The question object containing updated data.
+   * @returns An Observable emitting the updated question.
+   */
+  public updateQuestion(question: Question) {
+    return this.http.put<Question>(`${this.apiUrl}/question`, question);
+  }
     
 }

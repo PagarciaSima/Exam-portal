@@ -46,11 +46,10 @@ export class ViewQuizQuestionsComponent implements OnInit {
     this.questionService.getQuestionsOfQuiz(quizId).subscribe({
       next: (data: any) => {
         this.questions = data;
-        console.log(this.questions);
       },
       error: (error) => {
         this.notificationService.error(
-          this.translate.instant('QUESTION_LOAD_ERROR'),
+          this.translate.instant('QUESTIONS_LOAD_ERROR'),
           this.translate.instant('ERROR')
         );
         console.error('Error fetching questions:', error);
@@ -97,8 +96,12 @@ export class ViewQuizQuestionsComponent implements OnInit {
     });
   }
 
-  editQuestion(): void {
-    alert('Edit question');
+  /**
+   * Navigates to the Edit Question page for the specified question ID.
+   * @param quesId The ID of the question to be edited.
+   */
+  editQuestion(quesId: number): void {
+    this.router.navigate(['admin/add-question', this.qId, this.qTitle, quesId]);
   }
   
 }

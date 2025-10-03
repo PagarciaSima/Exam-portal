@@ -87,49 +87,68 @@ export class AddQuizComponent implements OnInit {
   }
 
   /**
-   * Handles the submission of the quiz form.
-   * 
-   * If in edit mode, updates the existing quiz; otherwise, adds a new quiz.
-   * Displays success or error notifications based on the outcome of the operation.
-   * Resets the form and navigates to the quizzes list upon successful addition of a new quiz.
-   *
-   * @returns void 
+   * Handles the form submission for adding or editing a quiz.
+   * Calls the appropriate method based on the current mode (add or edit).
    */
-  formSubmit() {
+  public formSubmit() {
+    // Trim text fields before submit
+    if (this.quiz.title) this.quiz.title = this.quiz.title.trim();
+    if (this.quiz.description) this.quiz.description = this.quiz.description.trim();
+
     if (this.isEditMode) {
-      this.quizService.updateQuiz(this.quiz).subscribe({
-        next: () => {
-          this.translate.get('QUIZ_UPDATE_SUCCESS').subscribe((msg: string) => {
-            this.notificationService.success(msg, this.translate.instant('SUCCESS'));
-          });
-          this.router.navigate(['/admin/quizzes']);
-        },
-        error: (error) => {
-          this.translate.get('QUIZ_UPDATE_ERROR').subscribe((msg: string) => {
-            this.notificationService.error(msg, this.translate.instant('ERROR'));
-          });
-          console.error('Error updating quiz', error);
-        }
-      });
+      this.editQuiz();
       
     } else {
-      this.quizService.addQuiz(this.quiz).subscribe({
-        next: () => {
-          this.translate.get('QUIZ_ADD_SUCCESS').subscribe((msg: string) => {
-            this.notificationService.success(msg, this.translate.instant('SUCCESS'));
-          });
-          this.quizForm.resetForm();
-          this.quiz = this.setQuizDefaultValue();
-          this.router.navigate(['/admin/quizzes']);
-        },
-        error: (error) => {
-          this.translate.get('QUIZ_ADD_ERROR').subscribe((msg: string) => {
-            this.notificationService.error(msg, this.translate.instant('ERROR'));
-          });
-          console.error('Error adding quiz', error);
-        }
-      });
+      this.addQuiz();
     }
+  }
+
+  /**
+   * Adds a new quiz using the QuizService.
+   * Displays success or error notifications based on the outcome of the operation.
+   */
+  private addQuiz() {
+    this.quizService.addQuiz(this.quiz).subscribe({
+      next: () => {
+        this.translate.get('QUIZ_ADD_SUCCESS').subscribe((msg: string) => {
+          this.notificationService.success(msg, this.translate.instant('SUCCESS'));
+        });
+        this.quizForm.resetForm();
+        this.quiz = this.setQuizDefaultValue();
+        this.router.navigate(['/admin/quizzes']);
+      },
+      error: (error) => {
+        this.translate.get('QUIZ_ADD_ERROR').subscribe((msg: string) => {
+          this.notificationService.error(msg, this.translate.instant('ERROR'));
+        });
+        console.error('Error adding quiz', error);
+      }
+    });
+  }
+
+  /**
+   * Edits an existing quiz using the QuizService.
+   * Displays success or error notifications based on the outcome of the operation.
+   * Assumes that the `quiz` property has been populated with the updated quiz data.
+   * Navigates back to the quizzes list upon successful update.
+   */
+  private editQuiz() {
+    this.quizService.updateQuiz(this.quiz).subscribe({
+      next: () => {
+        this.translate.get('QUIZ_UPDATE_SUCCESS').subscribe((msg: string) => {
+          this.notificationService.success(msg, this.translate.instant('SUCCESS'));
+        });
+        this.quizForm.resetForm();
+        this.quiz = this.setQuizDefaultValue();
+        this.router.navigate(['/admin/quizzes']);
+      },
+      error: (error) => {
+        this.translate.get('QUIZ_UPDATE_ERROR').subscribe((msg: string) => {
+          this.notificationService.error(msg, this.translate.instant('ERROR'));
+        });
+        console.error('Error updating quiz', error);
+      }
+    });
   }
 
   /**

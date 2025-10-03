@@ -87,6 +87,11 @@ const routes: Routes = [
         component: AddQuestionComponent,
         data: { animation: 'addQuestion' }
       },
+      {
+        path: 'add-question/:qid/:title/:quesId', // Edit question route
+        component: AddQuestionComponent,
+        data: { animation: 'editQuestion' }
+      },
 
     ]
   },

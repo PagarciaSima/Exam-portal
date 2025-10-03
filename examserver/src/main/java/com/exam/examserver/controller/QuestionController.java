@@ -60,7 +60,7 @@ public class QuestionController {
      * @param question the question with updated fields
      * @return the updated question
      */
-    @PutMapping("/")
+    @PutMapping()
     public ResponseEntity<?> updateQuestion(@RequestBody Question question) {
         LOGGER.info("Received request to update question with ID: {}", question.getQuesId());
         Question updatedQuestion = questionService.updateQuestion(question);
@@ -103,5 +103,18 @@ public class QuestionController {
         questionService.deleteQuestion(questionId);
         LOGGER.info("Question deleted with ID: {}", questionId);
         return ResponseEntity.ok().build();
+    }
+    
+    /**
+     * Retrieve a specific question by its ID.
+     *
+     * @param questionId the ID of the question to retrieve
+     * @return the question with the given ID
+     */
+    @GetMapping("/{questionId}")
+    public ResponseEntity<Question> getQuestion(@PathVariable Long questionId) {
+        LOGGER.info("Received request to fetch question with ID: {}", questionId);
+        Question question = questionService.getQuestion(questionId);
+        return ResponseEntity.ok(question);
     }
 }

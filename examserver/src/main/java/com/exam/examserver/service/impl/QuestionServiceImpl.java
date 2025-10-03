@@ -86,6 +86,7 @@ public class QuestionServiceImpl implements IQuestionService {
             LOGGER.warn("Question with ID {} not found", questionId);
             throw new IllegalArgumentException("Question not found with ID: " + questionId);
         }
+        
         return questionOpt.get();
     }
 
