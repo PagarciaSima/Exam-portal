@@ -1,61 +1,97 @@
-<mat-card [@slideIn] *ngIf="user" aria-label="User Profile Card">
+<mat-card [@slideIn] *ngIf="user" [attr.aria-label]="'PROFILE_CARD' | translate" role="region">
     <h1 class="text-center mt20" tabindex="0">{{ 'PROFILE_WELCOME' | translate }}</h1>
     <mat-card-content>
         <div class="bootstrap-wrapper">
             <div class="container">
                 <div class="container text-center">
                     <img src="assets/img/default.png"
-                         alt="{{ 'PROFILE_IMAGE_ALT' | translate }} {{ user.firstName }} {{ user.lastName }}"
-                         class="profile-image" width="120" height="120" aria-label="Profile Image">
-                    <h1 class="mt20" tabindex="0">{{ user.firstName }} {{ user.lastName }}</h1>
+                         [attr.alt]="( 'PROFILE_IMAGE_ALT' | translate ) + ' ' + user.firstName + ' ' + user.lastName"
+                         class="profile-image" width="120" height="120"
+                         [attr.aria-label]="( 'PROFILE_IMAGE_ALT' | translate ) + ' ' + user.firstName + ' ' + user.lastName"
+                         role="img">
                 </div>
                 <div class="row mt20">
                     <div class="col-md-10 offset-md-1">
-                        <table class="table text-center" aria-label="User Details">
-                            <tr>
-                                <th scope="row" class="font-bold">{{ 'USERNAME' | translate }}</th>
-                                <td tabindex="0">{{ user.username }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="font-bold">{{ 'USER_ID' | translate }}</th>
-                                <td tabindex="0">Exam{{ user.id }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="font-bold">{{ 'PHONE' | translate }}</th>
-                                <td tabindex="0">{{ user.phone }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="font-bold">{{ 'ROLE' | translate }}</th>
-                                <td>
-                                    <span style="display: inline-flex; align-items: center; gap: 5px;">
-                                        <mat-icon [style.color]="user.authorities[0].authority === 'ADMIN' ? 'orange' : 'blue'"
-                                                  aria-label="{{ user.authorities[0].authority === 'ADMIN' ? ('ADMIN' | translate) : ('USER' | translate) }} icon">
-                                            {{ user.authorities[0].authority === 'ADMIN' ? 'admin_panel_settings' : 'person' }}
-                                        </mat-icon>
-                                        <span tabindex="0">{{ user.authorities[0].authority === 'ADMIN' ? ('ADMIN' | translate) : ('USER' | translate) }}</span>
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="font-bold">{{ 'STATUS' | translate }}</th>
-                                <td>
-                                    <span style="display: inline-flex; align-items: center; gap: 5px;">
-                                        <mat-icon [style.color]="user.enabled ? 'green' : 'red'"
-                                                  aria-label="{{ user.enabled ? ('ENABLED' | translate) : ('DISABLED' | translate) }} status icon">
-                                            {{ user.enabled ? 'check_circle' : 'cancel' }}
-                                        </mat-icon>
-                                        <span tabindex="0">{{ user.enabled ? ('ENABLED' | translate) : ('DISABLED' | translate) }}</span>
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
+                        <!-- Vista tabla (no edición) -->
+                        <ng-container *ngIf="!isEditMode; else editForm">
+                            <table class="table text-center" [attr.aria-label]="'USER_DETAILS' | translate" role="table">
+                                <tr>
+                                    <th scope="row" class="font-bold">{{ 'FIRST_NAME' | translate }}</th>
+                                    <td tabindex="0" [attr.aria-label]="'FIRST_NAME' | translate">{{ user.firstName }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="font-bold">{{ 'LAST_NAME' | translate }}</th>
+                                    <td tabindex="0" [attr.aria-label]="'LAST_NAME' | translate">{{ user.lastName }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="font-bold">{{ 'USERNAME' | translate }}</th>
+                                    <td tabindex="0" [attr.aria-label]="'USERNAME' | translate">{{ user.username }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="font-bold">{{ 'USER_ID' | translate }}</th>
+                                    <td tabindex="0" [attr.aria-label]="'USER_ID' | translate">Exam{{ user.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="font-bold">{{ 'PHONE' | translate }}</th>
+                                    <td tabindex="0" [attr.aria-label]="'PHONE' | translate">{{ user.phone }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="font-bold">{{ 'EMAIL' | translate }}</th>
+                                    <td tabindex="0" [attr.aria-label]="'EMAIL' | translate">{{ user.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="font-bold">{{ 'ROLE' | translate }}</th>
+                                    <td>
+                                        <span style="display: inline-flex; align-items: center; gap: 5px;">
+                                            <mat-icon [style.color]="user.authorities[0].authority === 'ADMIN' ? 'orange' : 'blue'"
+                                                [attr.aria-label]="user.authorities[0].authority === 'ADMIN' ? ('ADMIN' | translate) : ('USER' | translate)">
+                                                {{ user.authorities[0].authority === 'ADMIN' ? 'admin_panel_settings' : 'person' }}
+                                            </mat-icon>
+                                            <span tabindex="0" [attr.aria-label]="'ROLE' | translate">
+                                                {{ user.authorities[0].authority === 'ADMIN' ? ('ADMIN' | translate) : ('USER' | translate) }}
+                                            </span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="font-bold">{{ 'STATUS' | translate }}</th>
+                                    <td>
+                                        <span style="display: inline-flex; align-items: center; gap: 5px;">
+                                            <mat-icon [style.color]="user.enabled ? 'green' : 'red'"
+                                                [attr.aria-label]="user.enabled ? ('ENABLED' | translate) : ('DISABLED' | translate)">
+                                                {{ user.enabled ? 'check_circle' : 'cancel' }}
+                                            </mat-icon>
+                                            <span tabindex="0" [attr.aria-label]="'STATUS' | translate">
+                                                {{ user.enabled ? ('ENABLED' | translate) : ('DISABLED' | translate) }}
+                                            </span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <mat-card-actions class="text-center mt20">
+                                <button mat-raised-button color="primary" (click)="toggleEdit()" type="button"
+                                    [attr.aria-label]="'UPDATE' | translate" tabindex="0">
+                                    {{ 'UPDATE' | translate }}
+                                </button>
+                                <button mat-raised-button color="accent" type="button"
+                                    [attr.aria-label]="'SHARE' | translate" tabindex="0">
+                                    {{ 'SHARE' | translate }}
+                                </button>
+                            </mat-card-actions>
+                        </ng-container>
+
+                        <!-- Vista edición (formulario vertical) -->
+                        <ng-template #editForm>
+                            <app-profile-edit
+                                *ngIf="isEditMode"
+                                [user]="user"
+                                (save)="saveProfile($event)"
+                                (cancel)="cancelEdit()">
+                            </app-profile-edit>
+                        </ng-template>
                     </div>
                 </div>
             </div>
         </div>
-        <mat-card-actions class="text-center mt20">
-            <button mat-raised-button color="primary" aria-label="Update Profile">{{ 'UPDATE' | translate }}</button>
-            <button mat-raised-button color="accent" aria-label="Share Profile">{{ 'SHARE' | translate }}</button>
-        </mat-card-actions>
     </mat-card-content>
 </mat-card>

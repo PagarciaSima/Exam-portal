@@ -26,6 +26,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class ProfileComponent implements OnInit {
 
   user: User = null;
+  isEditMode = false;
+  private originalUser: User = null;
 
   constructor(
     private loginService: LoginService,
@@ -57,5 +59,19 @@ export class ProfileComponent implements OnInit {
         console.error(err);
       }
     });
+  }
+
+  toggleEdit() {
+    this.isEditMode = true;
+    this.originalUser = { ...this.user };
+  }
+
+  cancelEdit() {
+    this.user = { ...this.originalUser };
+    this.isEditMode = false;
+  }
+
+  saveProfile() {
+    console.log('Profile saved:', this.user);
   }
 }

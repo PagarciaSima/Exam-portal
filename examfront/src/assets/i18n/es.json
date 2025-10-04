@@ -143,5 +143,17 @@
   "QUESTION_DELETE_CONFIRM": "¿Estás seguro de que deseas eliminar esta pregunta?",
   "QUESTION_LOAD_ERROR": "Error al cargar la pregunta",
   "QUESTION_UPDATE_SUCCESS": "Pregunta actualizada con éxito",
-  "EDIT_QUESTION": "Editar pregunta"
+  "EDIT_QUESTION": "Editar pregunta",
+  "FIRST_NAME": "Nombre",
+  "LAST_NAME": "Apellido",
+  "SIGNUP_FORM": "Formulario de registro",
+  "CHANGE_PASSWORD": "Cambiar contraseña",
+  "CANCEL": "Cancelar",
+  "NEW_PASSWORD": "Nueva contraseña",
+  "CONFIRM_PASSWORD": "Confirmar contraseña",
+  "ENTER_NEW_PASSWORD": "Introduce una nueva contraseña",
+  "REPEAT_NEW_PASSWORD": "Repite la nueva contraseña",
+  "PASSWORDS_DO_NOT_MATCH": "Las contraseñas no coinciden",
+  "PASSWORD_CHANGE_SUCCESS": "Contraseña cambiada con éxito",
+  "PASSWORD_CHANGE_ERROR": "Error al cambiar la contraseña"
 }

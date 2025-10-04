@@ -1,0 +1,114 @@
+<form [@slideIn] #profileForm="ngForm" (ngSubmit)="saveProfile()" aria-label="Edit Profile Form" novalidate>
+    <!-- First name -->
+    <mat-form-field appearance="outline" style="width:100%;margin-bottom:12px;">
+        <mat-label>{{ 'FIRST_NAME' | translate }}</mat-label>
+        <input
+            matInput
+            [(ngModel)]="user.firstName"
+            name="firstName"
+            required
+            autocomplete="given-name"
+            [attr.aria-label]="'FIRST_NAME' | translate"
+            #firstNameInput="ngModel">
+        <mat-error *ngIf="firstNameInput.invalid && firstNameInput.touched">
+            <span *ngIf="firstNameInput.errors?.required">{{ 'FIRSTNAME_REQUIRED' | translate }}</span>
+        </mat-error>
+    </mat-form-field>
+    <!-- Last name -->
+    <mat-form-field appearance="outline" style="width:100%;margin-bottom:12px;">
+        <mat-label>{{ 'LAST_NAME' | translate }}</mat-label>
+        <input
+            matInput
+            [(ngModel)]="user.lastName"
+            name="lastName"
+            required
+            autocomplete="family-name"
+            [attr.aria-label]="'LAST_NAME' | translate"
+            #lastNameInput="ngModel">
+        <mat-error *ngIf="lastNameInput.invalid && lastNameInput.touched">
+            <span *ngIf="lastNameInput.errors?.required">{{ 'LASTNAME_REQUIRED' | translate }}</span>
+        </mat-error>
+    </mat-form-field>
+    <!-- Teléfono -->
+    <mat-form-field appearance="outline" style="width:100%;margin-bottom:12px;">
+        <mat-label>{{ 'PHONE' | translate }}</mat-label>
+        <input
+            matInput
+            [(ngModel)]="user.phone"
+            name="phone"
+            required
+            autocomplete="tel"
+            [attr.aria-label]="'PHONE' | translate"
+            #phoneInput="ngModel">
+        <mat-error *ngIf="phoneInput.invalid && phoneInput.touched">
+            <span *ngIf="phoneInput.errors?.required">{{ 'PHONE_REQUIRED' | translate }}</span>
+        </mat-error>
+    </mat-form-field>
+    <!-- Email -->
+    <mat-form-field appearance="outline" style="width:100%;margin-bottom:12px;">
+        <mat-label>{{ 'EMAIL' | translate }}</mat-label>
+        <input
+            matInput
+            [(ngModel)]="user.email"
+            name="email"
+            required
+            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+            type="email"
+            autocomplete="email"
+            [attr.aria-label]="'EMAIL' | translate"
+            #emailInput="ngModel">
+        <mat-error *ngIf="emailInput.invalid && emailInput.touched">
+            <span *ngIf="emailInput.errors?.required">{{ 'EMAIL_REQUIRED' | translate }}</span>
+            <span *ngIf="emailInput.errors?.pattern">{{ 'EMAIL_INVALID' | translate }}</span>
+        </mat-error>
+    </mat-form-field>
+    <!-- Estado habilitado -->
+    <mat-slide-toggle
+        [(ngModel)]="user.enabled"
+        name="enabled"
+        style="margin-bottom:12px;"
+        [attr.aria-label]="user.enabled ? ('ENABLED' | translate) : ('DISABLED' | translate)">
+        {{ user.enabled ? ('ENABLED' | translate) : ('DISABLED' | translate) }}
+    </mat-slide-toggle>
+    <!-- Rol -->
+    <div style="margin-bottom:12px; display: flex; align-items: center;">
+        <strong>{{ 'ROLE' | translate }}:</strong>
+        <span class="ml10" style="display: inline-flex; align-items: center; gap: 5px;">
+            <mat-icon [style.color]="user.authorities[0].authority === 'ADMIN' ? 'orange' : 'blue'" [attr.aria-label]="user.authorities[0].authority === 'ADMIN' ? ('ADMIN' | translate) : ('USER' | translate)">
+                {{ user.authorities[0].authority === 'ADMIN' ? 'admin_panel_settings' : 'person' }}
+            </mat-icon>
+            {{ user.authorities[0].authority === 'ADMIN' ? ('ADMIN' | translate) : ('USER' | translate) }}
+        </span>
+    </div>
+    <!-- ID de usuario -->
+    <div style="margin-bottom:12px;">
+        <strong>{{ 'USER_ID' | translate }}:</strong> Exam{{ user.id }}
+    </div>
+    <!-- Botones de acción -->
+    <mat-card-actions class="text-center mt20" style="display: flex; justify-content: center; gap: 12px;">
+        <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="profileForm.invalid"
+            [attr.aria-label]="'SAVE' | translate">
+            {{ 'SAVE' | translate }}
+        </button>
+        <button
+            mat-button
+            color="warn"
+            (click)="cancelEdit()"
+            type="button"
+            [attr.aria-label]="'CANCEL' | translate">
+            {{ 'CANCEL' | translate }}
+        </button>
+        <button
+            mat-button
+            color="accent"
+            type="button"
+            (click)="openChangePasswordModal()"
+            [attr.aria-label]="'CHANGE_PASSWORD' | translate">
+            {{ 'CHANGE_PASSWORD' | translate }}
+        </button>
+    </mat-card-actions>
+</form>

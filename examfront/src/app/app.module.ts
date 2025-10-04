@@ -40,6 +40,9 @@ import { AddQuizComponent } from './pages/admin/add-quiz/add-quiz.component';
 import { ViewQuizzesComponent } from './pages/admin/view-quizzes/view-quizzes.component';
 import { ViewQuizQuestionsComponent } from './pages/admin/view-quiz-questions/view-quiz-questions.component';
 import { AddQuestionComponent } from './pages/admin/add-question/add-question.component';
+import { ProfileEditComponent } from './pages/profile/profile-edit/profile-edit.component';
+import { ProfileChangePasswordComponent } from './pages/profile/profile-change-password/profile-change-password.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -63,7 +66,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ViewQuizzesComponent,
     AddQuizComponent,
     ViewQuizQuestionsComponent,
-    AddQuestionComponent
+    AddQuestionComponent,
+    ProfileEditComponent,
+    ProfileChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -83,6 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatMenuModule,
     MatTooltipModule,
     MatSelectModule,
+    MatDialogModule,
     MatSlideToggleModule,
     TranslateModule.forRoot({
       loader: {

@@ -34,7 +34,12 @@
 }
 
 .table tr:hover {
-    background-color: #14080890; /* efecto hover */
+    background-color: #73707065; /* efecto hover */
     transition: background-color 0.3s ease;
     color: white;
 }
+
+tr {
+    max-height: 60px;
+}
+

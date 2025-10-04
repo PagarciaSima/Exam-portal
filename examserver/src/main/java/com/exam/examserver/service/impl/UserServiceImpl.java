@@ -198,4 +198,98 @@ public class UserServiceImpl implements IUserService{
 
 	    LOGGER.info("User with ID '{}' has been deleted", userId);
 	}
+
+	/**
+	 * Updates the details of an existing user.
+	 * <p>
+	 * This method fetches the user by ID and updates only the fields provided
+	 * in the {@code updatedUser} object. Fields that are {@code null} will remain unchanged.
+	 * Logs are added to track which fields are being updated.
+	 *
+	 * @param userId the ID of the user to update
+	 * @param updatedUser a {@link User} object containing the updated fields
+	 * @return the updated {@link User} entity
+	 * @throws ResponseStatusException if the user with the given ID does not exist (HTTP 404)
+	 */
+	@Override
+	@Transactional
+	public User updateUser(Long userId, User updatedUser) {
+	    User existingUser = userRepository.findById(userId)
+	        .orElseThrow(() -> {
+	            LOGGER.warn("Attempted to update non-existing user with ID {}", userId);
+	            return new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+	        });
+
+	    LOGGER.info("Updating user with ID {}", userId);
+
+	    if (updatedUser.getFirstName() != null) {
+	        LOGGER.info("Updating firstName: '{}' -> '{}'", existingUser.getFirstName(), updatedUser.getFirstName());
+	        existingUser.setFirstName(updatedUser.getFirstName());
+	    }
+	    if (updatedUser.getLastName() != null) {
+	        LOGGER.info("Updating lastName: '{}' -> '{}'", existingUser.getLastName(), updatedUser.getLastName());
+	        existingUser.setLastName(updatedUser.getLastName());
+	    }
+	    if (updatedUser.getPhone() != null) {
+	        LOGGER.info("Updating phone: '{}' -> '{}'", existingUser.getPhone(), updatedUser.getPhone());
+	        existingUser.setPhone(updatedUser.getPhone());
+	    }
+	    if (updatedUser.getEmail() != null) {
+	        LOGGER.info("Updating email: '{}' -> '{}'", existingUser.getEmail(), updatedUser.getEmail());
+	        existingUser.setEmail(updatedUser.getEmail());
+	    }
+
+	    if (existingUser.isEnabled() != updatedUser.isEnabled()) {
+	        LOGGER.info("Updating enabled status: '{}' -> '{}'", existingUser.isEnabled(), updatedUser.isEnabled());
+	        existingUser.setEnabled(updatedUser.isEnabled());
+	    }
+
+	    User savedUser = userRepository.save(existingUser);
+	    LOGGER.info("User with ID {} updated successfully", userId);
+	    return savedUser;
+	}
+
+	/**
+	 * Updates the password of an existing user.
+	 * <p>
+	 * This method performs the following steps:
+	 * <ul>
+	 *   <li>Logs the incoming request to update the password.</li>
+	 *   <li>Retrieves the user by ID from the repository.</li>
+	 *   <li>Throws a {@link ResponseStatusException} with {@code 404 NOT_FOUND} if the user does not exist.</li>
+	 *   <li>Validates that the new password is not {@code null} or blank, 
+	 *       otherwise throws a {@link ResponseStatusException} with {@code 400 BAD_REQUEST}.</li>
+	 *   <li>Encodes the new password using the configured {@code PasswordEncoder}.</li>
+	 *   <li>Updates and persists the user entity with the encoded password.</li>
+	 *   <li>Logs the successful password update.</li>
+	 * </ul>
+	 *
+	 * @param userId      the ID of the user whose password should be updated
+	 * @param newPassword the new password to be set; must not be {@code null} or blank
+	 * @throws ResponseStatusException if the user is not found ({@code 404})
+	 *                                 or if the password is {@code null} or blank ({@code 400})
+	 */
+	@Override
+	public void updatePassword(Long userId, String newPassword) {
+	    LOGGER.info("Request received to update password for userId={}", userId);
+
+	    User existingUser = userRepository.findById(userId)
+	            .orElseThrow(() -> {
+	                LOGGER.warn("Password update failed: user with ID {} not found", userId);
+	                return new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+	            });
+
+	    if (newPassword == null || newPassword.isBlank()) {
+	        LOGGER.warn("Password update failed: empty or null password provided for userId={}", userId);
+	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password cannot be empty");
+	    }
+
+	    String encodedPassword = passwordEncoder.encode(newPassword);
+	    existingUser.setPassword(encodedPassword);
+
+	    userRepository.save(existingUser);
+
+	    LOGGER.info("Password successfully updated for userId={}", userId);
+	}
+
 }
