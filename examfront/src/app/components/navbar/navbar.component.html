@@ -1,19 +1,19 @@
-<mat-toolbar color="primary" class="navbar-toolbar" role="navigation" aria-label="Main navigation">
+<mat-toolbar color="primary" class="navbar-toolbar" role="navigation" [attr.aria-label]="'MAIN_NAVIGATION' | translate">
     <div class="brand">
-        <button mat-icon-button (click)="redirectHome()" aria-label="Go to home page">
+        <button mat-icon-button (click)="redirectHome()" [attr.aria-label]="'HOME' | translate">
             <mat-icon aria-hidden="true">menu_book</mat-icon>
         </button>
-        <span class="ml10 fs20 brand-text" aria-label="Exam Portal">{{ 'EXAM_PORTAL' | translate }}</span>
+        <span class="ml10 fs20 brand-text" [attr.aria-label]="'EXAM_PORTAL' | translate">{{ 'EXAM_PORTAL' | translate }}</span>
         <!-- Lenguage selector -->
-        <button mat-icon-button [matMenuTriggerFor]="langMenu" class="ml10 lang-btn" aria-label="Select language">
+        <button mat-icon-button [matMenuTriggerFor]="langMenu" class="ml10 lang-btn" [attr.aria-label]="'SELECT_LANGUAGE' | translate">
             <mat-icon aria-hidden="true">language</mat-icon>
         </button>
-        <mat-menu #langMenu="matMenu" aria-label="Language menu">
-            <button mat-menu-item (click)="selectLanguage('en')" aria-label="Switch to English">
+        <mat-menu #langMenu="matMenu" [attr.aria-label]="'LANGUAGE_MENU' | translate">
+            <button mat-menu-item (click)="selectLanguage('en')" [attr.aria-label]="'SWITCH_TO_ENGLISH' | translate">
                 <mat-icon aria-hidden="true">language</mat-icon>
                 {{ 'ENGLISH' | translate }}
             </button>
-            <button mat-menu-item (click)="selectLanguage('es')" aria-label="Switch to Spanish">
+            <button mat-menu-item (click)="selectLanguage('es')" [attr.aria-label]="'SWITCH_TO_SPANISH' | translate">
                 <mat-icon aria-hidden="true">language</mat-icon>
                 {{ 'SPANISH' | translate }}
             </button>
@@ -22,18 +22,18 @@
     <span class="spacer" aria-hidden="true"></span>
     <div class="user-links d-flex flex-row flex-md-row flex-wrap align-items-center">
         <ng-container *ngIf="!isLoggedIn">
-            <a routerLink="/login" class="login-link" aria-label="Login">{{ 'LOGIN' | translate }}</a>
-            <a routerLink="/signup" class="mr20 ml20 login-link" aria-label="Register">{{ 'REGISTER' | translate }}</a>
+            <a routerLink="/login" class="login-link" [attr.aria-label]="'LOGIN' | translate">{{ 'LOGIN' | translate }}</a>
+            <a routerLink="/signup" class="mr20 ml20 login-link" [attr.aria-label]="'REGISTER' | translate">{{ 'REGISTER' | translate }}</a>
         </ng-container>
         <ng-container *ngIf="isLoggedIn">
             <div class="user-row d-flex align-items-center w-100">
                 <a [routerLink]="user.authorities[0]?.authority === 'ADMIN' ? '/admin/profile' : '/user-dashboard'"
                    class="login-link mr20"
-                   aria-label="User profile">
+                   [attr.aria-label]="'PROFILE' | translate">
                     <mat-icon class="mr10 vertical-align-middle" aria-hidden="true">account_circle</mat-icon>
                     {{user.username}}
                 </a>
-                <a (click)="logout()" routerLink="/login" class="login-link ml20" aria-label="Logout">
+                <a (click)="logout()" routerLink="/login" class="login-link ml20" [attr.aria-label]="'LOGOUT' | translate">
                     <mat-icon class="mr10 vertical-align-middle" aria-hidden="true">logout</mat-icon>
                     {{ 'LOGOUT' | translate }}
                 </a>

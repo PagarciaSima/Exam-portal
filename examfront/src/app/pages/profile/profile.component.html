@@ -1,5 +1,5 @@
 <mat-card [@slideIn] *ngIf="user" [attr.aria-label]="'PROFILE_CARD' | translate" role="region">
-    <h1 class="text-center mt20" tabindex="0">{{ 'PROFILE_WELCOME' | translate }}</h1>
+    <h1 class="text-center mt20" tabindex="0" [attr.aria-label]="'PROFILE_WELCOME' | translate">{{ 'PROFILE_WELCOME' | translate }}</h1>
     <mat-card-content>
         <div class="bootstrap-wrapper">
             <div class="container">
@@ -16,52 +16,52 @@
                         <ng-container *ngIf="!isEditMode; else editForm">
                             <table class="table text-center" [attr.aria-label]="'USER_DETAILS' | translate" role="table">
                                 <tr>
-                                    <th scope="row" class="font-bold">{{ 'FIRST_NAME' | translate }}</th>
-                                    <td tabindex="0" [attr.aria-label]="'FIRST_NAME' | translate">{{ user.firstName }}</td>
+                                    <th scope="row" class="font-bold" [attr.aria-label]="'FIRST_NAME' | translate">{{ 'FIRST_NAME' | translate }}</th>
+                                    <td tabindex="0" [attr.aria-label]="user.firstName">{{ user.firstName }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="font-bold">{{ 'LAST_NAME' | translate }}</th>
-                                    <td tabindex="0" [attr.aria-label]="'LAST_NAME' | translate">{{ user.lastName }}</td>
+                                    <th scope="row" class="font-bold" [attr.aria-label]="'LAST_NAME' | translate">{{ 'LAST_NAME' | translate }}</th>
+                                    <td tabindex="0" [attr.aria-label]="user.lastName">{{ user.lastName }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="font-bold">{{ 'USERNAME' | translate }}</th>
-                                    <td tabindex="0" [attr.aria-label]="'USERNAME' | translate">{{ user.username }}</td>
+                                    <th scope="row" class="font-bold" [attr.aria-label]="'USERNAME' | translate">{{ 'USERNAME' | translate }}</th>
+                                    <td tabindex="0" [attr.aria-label]="user.username">{{ user.username }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="font-bold">{{ 'USER_ID' | translate }}</th>
-                                    <td tabindex="0" [attr.aria-label]="'USER_ID' | translate">Exam{{ user.id }}</td>
+                                    <th scope="row" class="font-bold" [attr.aria-label]="'USER_ID' | translate">{{ 'USER_ID' | translate }}</th>
+                                    <td tabindex="0" [attr.aria-label]="'Exam ' + user.id">Exam{{ user.id }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="font-bold">{{ 'PHONE' | translate }}</th>
-                                    <td tabindex="0" [attr.aria-label]="'PHONE' | translate">{{ user.phone }}</td>
+                                    <th scope="row" class="font-bold" [attr.aria-label]="'PHONE' | translate">{{ 'PHONE' | translate }}</th>
+                                    <td tabindex="0" [attr.aria-label]="user.phone">{{ user.phone }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="font-bold">{{ 'EMAIL' | translate }}</th>
-                                    <td tabindex="0" [attr.aria-label]="'EMAIL' | translate">{{ user.email }}</td>
+                                    <th scope="row" class="font-bold" [attr.aria-label]="'EMAIL' | translate">{{ 'EMAIL' | translate }}</th>
+                                    <td tabindex="0" [attr.aria-label]="user.email">{{ user.email }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="font-bold">{{ 'ROLE' | translate }}</th>
+                                    <th scope="row" class="font-bold" [attr.aria-label]="'ROLE' | translate">{{ 'ROLE' | translate }}</th>
                                     <td>
                                         <span style="display: inline-flex; align-items: center; gap: 5px;">
                                             <mat-icon [style.color]="user.authorities[0].authority === 'ADMIN' ? 'orange' : 'blue'"
                                                 [attr.aria-label]="user.authorities[0].authority === 'ADMIN' ? ('ADMIN' | translate) : ('USER' | translate)">
                                                 {{ user.authorities[0].authority === 'ADMIN' ? 'admin_panel_settings' : 'person' }}
                                             </mat-icon>
-                                            <span tabindex="0" [attr.aria-label]="'ROLE' | translate">
+                                            <span tabindex="0" [attr.aria-label]="user.authorities[0].authority === 'ADMIN' ? ('ADMIN' | translate) : ('USER' | translate)">
                                                 {{ user.authorities[0].authority === 'ADMIN' ? ('ADMIN' | translate) : ('USER' | translate) }}
                                             </span>
                                         </span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="font-bold">{{ 'STATUS' | translate }}</th>
+                                    <th scope="row" class="font-bold" [attr.aria-label]="'STATUS' | translate">{{ 'STATUS' | translate }}</th>
                                     <td>
                                         <span style="display: inline-flex; align-items: center; gap: 5px;">
                                             <mat-icon [style.color]="user.enabled ? 'green' : 'red'"
                                                 [attr.aria-label]="user.enabled ? ('ENABLED' | translate) : ('DISABLED' | translate)">
                                                 {{ user.enabled ? 'check_circle' : 'cancel' }}
                                             </mat-icon>
-                                            <span tabindex="0" [attr.aria-label]="'STATUS' | translate">
+                                            <span tabindex="0" [attr.aria-label]="user.enabled ? ('ENABLED' | translate) : ('DISABLED' | translate)">
                                                 {{ user.enabled ? ('ENABLED' | translate) : ('DISABLED' | translate) }}
                                             </span>
                                         </span>

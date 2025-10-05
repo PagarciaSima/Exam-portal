@@ -172,8 +172,14 @@
                         </div>
 
                         <div class="container text-center" style="margin-top: 15px;">
-                            <span>{{ 'ALREADY_ACCOUNT' | translate }}</span>
-                            <a routerLink="/login" class="login-link">
+                            <span [attr.aria-label]="'ALREADY_ACCOUNT' | translate">{{ 'ALREADY_ACCOUNT' | translate }}</span>
+                            <a 
+                                routerLink="/login" 
+                                class="login-link"
+                                [attr.aria-label]="'LOGIN_HERE' | translate"
+                                tabindex="0"
+                                role="link"
+                            >
                                 {{ 'LOGIN_HERE' | translate }}
                             </a>
                         </div>

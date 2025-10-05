@@ -1,4 +1,10 @@
-<form [@slideIn] #profileForm="ngForm" (ngSubmit)="saveProfile()" aria-label="Edit Profile Form" novalidate>
+<form
+    [@slideIn]
+    #profileForm="ngForm"
+    (ngSubmit)="saveProfile()"
+    [attr.aria-label]="'EDIT_PROFILE_FORM' | translate"
+    role="form"
+    novalidate>
     <!-- First name -->
     <mat-form-field appearance="outline" style="width:100%;margin-bottom:12px;">
         <mat-label>{{ 'FIRST_NAME' | translate }}</mat-label>
@@ -9,6 +15,8 @@
             required
             autocomplete="given-name"
             [attr.aria-label]="'FIRST_NAME' | translate"
+            [attr.aria-required]="true"
+            [attr.aria-invalid]="firstNameInput.invalid"
             #firstNameInput="ngModel">
         <mat-error *ngIf="firstNameInput.invalid && firstNameInput.touched">
             <span *ngIf="firstNameInput.errors?.required">{{ 'FIRSTNAME_REQUIRED' | translate }}</span>
@@ -24,6 +32,8 @@
             required
             autocomplete="family-name"
             [attr.aria-label]="'LAST_NAME' | translate"
+            [attr.aria-required]="true"
+            [attr.aria-invalid]="lastNameInput.invalid"
             #lastNameInput="ngModel">
         <mat-error *ngIf="lastNameInput.invalid && lastNameInput.touched">
             <span *ngIf="lastNameInput.errors?.required">{{ 'LASTNAME_REQUIRED' | translate }}</span>
@@ -39,6 +49,8 @@
             required
             autocomplete="tel"
             [attr.aria-label]="'PHONE' | translate"
+            [attr.aria-required]="true"
+            [attr.aria-invalid]="phoneInput.invalid"
             #phoneInput="ngModel">
         <mat-error *ngIf="phoneInput.invalid && phoneInput.touched">
             <span *ngIf="phoneInput.errors?.required">{{ 'PHONE_REQUIRED' | translate }}</span>
@@ -56,6 +68,8 @@
             type="email"
             autocomplete="email"
             [attr.aria-label]="'EMAIL' | translate"
+            [attr.aria-required]="true"
+            [attr.aria-invalid]="emailInput.invalid"
             #emailInput="ngModel">
         <mat-error *ngIf="emailInput.invalid && emailInput.touched">
             <span *ngIf="emailInput.errors?.required">{{ 'EMAIL_REQUIRED' | translate }}</span>
@@ -67,14 +81,17 @@
         [(ngModel)]="user.enabled"
         name="enabled"
         style="margin-bottom:12px;"
-        [attr.aria-label]="user.enabled ? ('ENABLED' | translate) : ('DISABLED' | translate)">
+        [attr.aria-label]="user.enabled ? ('ENABLED' | translate) : ('DISABLED' | translate)"
+        [attr.aria-checked]="user.enabled">
         {{ user.enabled ? ('ENABLED' | translate) : ('DISABLED' | translate) }}
     </mat-slide-toggle>
     <!-- Rol -->
     <div style="margin-bottom:12px; display: flex; align-items: center;">
         <strong>{{ 'ROLE' | translate }}:</strong>
         <span class="ml10" style="display: inline-flex; align-items: center; gap: 5px;">
-            <mat-icon [style.color]="user.authorities[0].authority === 'ADMIN' ? 'orange' : 'blue'" [attr.aria-label]="user.authorities[0].authority === 'ADMIN' ? ('ADMIN' | translate) : ('USER' | translate)">
+            <mat-icon
+                [style.color]="user.authorities[0].authority === 'ADMIN' ? 'orange' : 'blue'"
+                [attr.aria-label]="user.authorities[0].authority === 'ADMIN' ? ('ADMIN' | translate) : ('USER' | translate)">
                 {{ user.authorities[0].authority === 'ADMIN' ? 'admin_panel_settings' : 'person' }}
             </mat-icon>
             {{ user.authorities[0].authority === 'ADMIN' ? ('ADMIN' | translate) : ('USER' | translate) }}

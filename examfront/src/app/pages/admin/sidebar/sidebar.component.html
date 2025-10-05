@@ -1,12 +1,13 @@
-<mat-card [@slideIn]>
+<mat-card [@slideIn] [attr.aria-label]="'MENU' | translate">
     <mat-action-list>
-        <div mat-subheader id="sidebar-menu-label">{{ 'MENU' | translate }}</div>
+        <div mat-subheader id="sidebar-menu-label" [attr.aria-label]="'MENU' | translate">{{ 'MENU' | translate }}</div>
         <!-- Home -->
         <button
             mat-list-item
             routerLink="/admin"
             aria-labelledby="sidebar-menu-label home-label"
             role="button"
+            [attr.aria-label]="'HOME' | translate"
         >
             <mat-icon matListIcon aria-hidden="true">home</mat-icon>
             <span matLine id="home-label">{{ 'HOME' | translate }}</span>
@@ -17,6 +18,7 @@
             routerLink="/admin/profile"
             aria-labelledby="sidebar-menu-label profile-label"
             role="button"
+            [attr.aria-label]="'PROFILE' | translate"
         >
             <mat-icon matListIcon aria-hidden="true">account_circle</mat-icon>
             <span matLine id="profile-label">{{ 'PROFILE' | translate }}</span>
@@ -27,6 +29,7 @@
             routerLink="/admin/categories"
             role="button"
             aria-labelledby="sidebar-menu-label categories-label"
+            [attr.aria-label]="'CATEGORIES' | translate"
         >
             <mat-icon matListIcon aria-hidden="true">category</mat-icon>
             <span matLine id="categories-label">{{ 'CATEGORIES' | translate }}</span>
@@ -37,6 +40,7 @@
             routerLink="/admin/add-category"
             role="button"
             aria-labelledby="sidebar-menu-label add-category-label"
+            [attr.aria-label]="'ADD_CATEGORY' | translate"
         >
             <mat-icon matListIcon aria-hidden="true">add</mat-icon>
             <span matLine id="add-category-label">{{ 'ADD_CATEGORY' | translate }}</span>
@@ -47,6 +51,7 @@
             routerLink="/admin/quizzes"
             role="button"
             aria-labelledby="sidebar-menu-label quizzes-label"
+            [attr.aria-label]="'QUIZZES' | translate"
         >
             <mat-icon matListIcon aria-hidden="true">quiz</mat-icon>
             <span matLine id="quizzes-label">{{ 'QUIZZES' | translate }}</span>
@@ -57,6 +62,7 @@
             routerLink="/admin/add-quiz"
             aria-labelledby="sidebar-menu-label add-quiz-label"
             role="button"
+            [attr.aria-label]="'ADD_QUIZ' | translate"
         >
             <mat-icon matListIcon aria-hidden="true">add</mat-icon>
             <span matLine id="add-quiz-label">{{ 'ADD_QUIZ' | translate }}</span>
@@ -67,6 +73,7 @@
             (click)="logout()"
             aria-labelledby="sidebar-menu-label logout-label"
             role="button"
+            [attr.aria-label]="'LOGOUT' | translate"
         >
             <mat-icon matListIcon aria-hidden="true">logout</mat-icon>
             <span matLine id="logout-label">{{ 'LOGOUT' | translate }}</span>

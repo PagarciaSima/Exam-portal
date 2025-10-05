@@ -25,11 +25,13 @@
                                 aria-required="true"
                                 aria-describedby="quiz-title-error"
                                 aria-labelledby="quiz-title-label"
+                                [attr.aria-label]="'QUIZ_TITLE_LABEL' | translate"
                             >
                             <mat-error
                                 id="quiz-title-error"
                                 *ngIf="title.invalid && (title.dirty || title.touched)"
                                 role="alert"
+                                [attr.aria-label]="'QUIZ_TITLE_REQUIRED' | translate"
                             >
                                 {{ 'QUIZ_TITLE_REQUIRED' | translate }}
                             </mat-error>
@@ -49,11 +51,13 @@
                                 aria-required="true"
                                 aria-describedby="quiz-description-error"
                                 aria-labelledby="quiz-description-label"
+                                [attr.aria-label]="'QUIZ_DESCRIPTION_LABEL' | translate"
                             ></textarea>
                             <mat-error
                                 id="quiz-description-error"
                                 *ngIf="description.invalid && (description.dirty || description.touched)"
                                 role="alert"
+                                [attr.aria-label]="'QUIZ_DESCRIPTION_REQUIRED' | translate"
                             >
                                 {{ 'QUIZ_DESCRIPTION_REQUIRED' | translate }}
                             </mat-error>
@@ -75,11 +79,13 @@
                                         aria-required="true"
                                         aria-describedby="quiz-max-marks-error"
                                         aria-labelledby="quiz-max-marks-label"
+                                        [attr.aria-label]="'QUIZ_MAX_MARKS_LABEL' | translate"
                                     >
                                     <mat-error
                                         id="quiz-max-marks-error"
                                         *ngIf="maxMarks.invalid && (maxMarks.dirty || maxMarks.touched)"
                                         role="alert"
+                                        [attr.aria-label]="'QUIZ_MAX_MARKS_REQUIRED' | translate"
                                     >
                                         {{ 'QUIZ_MAX_MARKS_REQUIRED' | translate }}
                                     </mat-error>
@@ -99,11 +105,13 @@
                                         aria-required="true"
                                         aria-describedby="quiz-number-of-questions-error"
                                         aria-labelledby="quiz-number-of-questions-label"
+                                        [attr.aria-label]="'QUIZ_NUMBER_OF_QUESTIONS_LABEL' | translate"
                                     >
                                     <mat-error
                                         id="quiz-number-of-questions-error"
                                         *ngIf="numberOfQuestions.invalid && (numberOfQuestions.dirty || numberOfQuestions.touched)"
                                         role="alert"
+                                        [attr.aria-label]="'QUIZ_NUMBER_OF_QUESTIONS_REQUIRED' | translate"
                                     >
                                         {{ 'QUIZ_NUMBER_OF_QUESTIONS_REQUIRED' | translate }}
                                     </mat-error>
@@ -115,7 +123,7 @@
                         <mat-slide-toggle
                             name="active"
                             [(ngModel)]="quiz.active"
-                            aria-label="{{ 'QUIZ_ACTIVE_TOGGLE' | translate }}"
+                            [attr.aria-label]="'QUIZ_ACTIVE_TOGGLE' | translate"
                             color="primary"
                             class="mt10 mb10"
                         >
@@ -132,6 +140,7 @@
                                 aria-required="true"
                                 aria-describedby="quiz-category-error"
                                 aria-labelledby="quiz-category-label"
+                                [attr.aria-label]="'QUIZ_CATEGORY_LABEL' | translate"
                             >
                                 <mat-option *ngFor="let category of categories" [value]="category">
                                     {{ category.title }}
@@ -141,6 +150,7 @@
                                 id="quiz-category-error"
                                 *ngIf="category.invalid && (category.dirty || category.touched)"
                                 role="alert"
+                                [attr.aria-label]="'QUIZ_CATEGORY_REQUIRED' | translate"
                             >
                                 {{ 'QUIZ_CATEGORY_REQUIRED' | translate }}
                             </mat-error>
@@ -153,6 +163,7 @@
                                 mat-raised-button
                                 color="primary"
                                 [disabled]="quizForm.invalid"
+                                [attr.aria-label]="isEditMode ? ('EDIT_QUIZ' | translate) : ('ADD_QUIZ' | translate)"
                             >
                                 {{ isEditMode ? ('EDIT_QUIZ' | translate) : ('ADD_QUIZ' | translate) }}
                             </button>
@@ -162,6 +173,7 @@
                                 color="accent"
                                 class="ml10"
                                 (click)="quizForm.resetForm()"
+                                [attr.aria-label]="'RESET' | translate"
                             >
                                 {{ 'RESET' | translate }}
                             </button>

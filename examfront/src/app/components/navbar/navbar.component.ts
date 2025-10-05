@@ -62,6 +62,16 @@ export class NavbarComponent implements OnInit {
     this.user = null;
   }
 
+  /**
+   * Switches the application's language to the specified language code.
+   * @param lang The language code to switch to (e.g., 'en', 'es').
+   * 
+   * @remarks
+   * This method updates the application's language by setting it in the LanguageService
+   * and applying it through the TranslateService.
+   * 
+   * @returns void
+   */
   selectLanguage(lang: string) {
     this.languageService.setLanguage(lang);
     this.translate.use(lang);

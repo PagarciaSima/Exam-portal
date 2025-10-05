@@ -64,8 +64,18 @@
                         </div>
 
                         <div class="container text-center" style="margin-top: 15px;">
-                            <span>{{ 'NO_ACCOUNT' | translate }}</span>
-                            <a routerLink="/signup" class="signup-link" aria-label="Registrarse">
+                            <span
+                                [attr.aria-label]="'NO_ACCOUNT' | translate"
+                                role="text"
+                            >
+                                {{ 'NO_ACCOUNT' | translate }}
+                            </span>
+                            <a
+                                routerLink="/signup"
+                                class="signup-link"
+                                [attr.aria-label]="'SIGN_UP' | translate"
+                                role="link"
+                            >
                                 {{ 'SIGN_UP' | translate }}
                             </a>
                         </div>

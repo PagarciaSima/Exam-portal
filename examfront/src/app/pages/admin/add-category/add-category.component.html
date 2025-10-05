@@ -23,12 +23,14 @@
                                 aria-required="true"
                                 aria-describedby="category-title-error"
                                 aria-labelledby="category-title-label"
+                                [attr.aria-label]="'CATEGORY_TITLE_LABEL' | translate"
                                 [(ngModel)]="category.title"
                             />
                             <mat-error
                                 id="category-title-error"
                                 *ngIf="title.invalid && (title.dirty || title.touched)"
                                 role="alert"
+                                [attr.aria-label]="'CATEGORY_TITLE_REQUIRED' | translate"
                             >
                                 {{ 'CATEGORY_TITLE_REQUIRED' | translate }}
                             </mat-error>
@@ -46,12 +48,14 @@
                                 aria-required="true"
                                 aria-describedby="category-description-error"
                                 aria-labelledby="category-description-label"
+                                [attr.aria-label]="'CATEGORY_DESCRIPTION_LABEL' | translate"
                                 [(ngModel)]="category.description"
                             ></textarea>
                             <mat-error
                                 id="category-description-error"
                                 *ngIf="description.invalid && (description.dirty || description.touched)"
                                 role="alert"
+                                [attr.aria-label]="'CATEGORY_DESCRIPTION_REQUIRED' | translate"
                             >
                                 {{ 'CATEGORY_DESCRIPTION_REQUIRED' | translate }}
                             </mat-error>

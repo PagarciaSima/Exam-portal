@@ -1,7 +1,7 @@
 <h1 class="mt20" tabindex="0">{{ 'QUESTIONS' | translate }} {{ qTitle }}</h1>
 <div class="container text-center mt20 mb20" [@slideIn]>
     <button mat-raised-button color="primary" role="button"
-        (click)="addQuestion()" aria-label="Add Question"
+        (click)="addQuestion()" [attr.aria-label]="'ADD_QUESTION' | translate"
     >
         {{ 'ADD_QUESTION' | translate }}
     </button>
@@ -9,7 +9,7 @@
 <div class="bootstrap-wrapper" role="main">
     <div class="row">
         <div class="col-md-12">
-            <mat-card *ngFor="let q of questions; let i = index" class="mb20" [@slideIn] aria-labelledby="question-{{i}}">
+            <mat-card *ngFor="let q of questions; let i = index" class="mb20" [@slideIn] [attr.aria-labelledby]="'question-' + i">
                 <mat-card-content>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <p class="question-content" id="question-{{i}}" tabindex="0">
@@ -18,13 +18,13 @@
                         </p>
                         <span class="question-actions">
                             <button mat-icon-button color="warn"
-                                aria-label="{{ 'DELETE' | translate }} {{ 'QUESTION' | translate }} {{ i + 1 }}"
+                                [attr.aria-label]="('DELETE' | translate) + ' ' + ('QUESTION' | translate) + ' ' + (i + 1)"
                                 matTooltip="{{ 'DELETE' | translate }}"
                                 (click)="deleteQuestion(q.quesId)">
                                 <mat-icon aria-hidden="true">delete</mat-icon>
                             </button>
                             <button mat-icon-button color="primary"
-                                aria-label="{{ 'EDIT' | translate }} {{ 'QUESTION' | translate }} {{ i + 1 }}"
+                                [attr.aria-label]="('EDIT' | translate) + ' ' + ('QUESTION' | translate) + ' ' + (i + 1)"
                                 matTooltip="{{ 'EDIT' | translate }}"
                                 (click)="editQuestion(q.quesId)">
                                 <mat-icon aria-hidden="true">edit</mat-icon>

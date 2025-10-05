@@ -1,10 +1,25 @@
-<footer class="footer bg-primary text-white py-3 mt-5">
+<footer class="footer bg-primary text-white py-3 mt-5"
+        role="contentinfo"
+        [attr.aria-label]="'FOOTER_SECTION' | translate">
   <div class="container text-center">
-    <span>
+    <span tabindex="0" [attr.aria-label]="'FOOTER_COPYRIGHT' | translate">
       {{ 'FOOTER_COPYRIGHT' | translate }} &copy; {{ currentYear }} Exam Portal
     </span>
-    <span class="d-block d-md-inline ml-md-3">
-      {{ 'FOOTER_POWERED' | translate }} <a href="https://angular.io/" target="_blank" rel="noopener" class="text-white font-weight-bold">Angular</a> &amp; <a href="https://spring.io/projects/spring-boot" target="_blank" rel="noopener" class="text-white font-weight-bold">Spring Boot</a>
+    <span class="d-block d-md-inline ml-md-3" tabindex="0" [attr.aria-label]="'FOOTER_POWERED' | translate">
+      {{ 'FOOTER_POWERED' | translate }}
+      <a href="https://angular.io/" target="_blank" rel="noopener"
+         class="font-weight-bold"
+         style="color: #FFD600; text-decoration: underline;"
+         [attr.aria-label]="'ANGULAR_LINK' | translate">
+        Angular
+      </a>
+      &amp;
+      <a href="https://spring.io/projects/spring-boot" target="_blank" rel="noopener"
+         class="font-weight-bold"
+         style="color: #00FFB0; text-decoration: underline;"
+         [attr.aria-label]="'SPRING_BOOT_LINK' | translate">
+        Spring Boot
+      </a>
     </span>
   </div>
 </footer>
