@@ -2,6 +2,8 @@ package com.exam.examserver.service;
 
 import java.util.Set;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.exam.examserver.model.user.User;
 import com.exam.examserver.model.userrole.UserRole;
 
@@ -18,5 +20,7 @@ public interface IUserService {
 	User updateUser(Long userId, User updatedUser);
 
 	void updatePassword(Long userId, String newPassword);
+
+	String updateProfilePicture(Long userId, MultipartFile file);
 
 }

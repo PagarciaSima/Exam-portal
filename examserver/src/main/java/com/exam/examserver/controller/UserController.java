@@ -3,6 +3,7 @@ package com.exam.examserver.controller;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.exam.examserver.model.dto.PasswordUpdateRequest;
 import com.exam.examserver.model.dto.UserDto;
@@ -64,5 +67,17 @@ public class UserController {
 	    return ResponseEntity.ok(Map.of("message", "Password updated successfully"));
 	}
 
+	@PostMapping("/{userId}/profile")
+	public ResponseEntity<Map<String, String>> uploadProfilePicture(
+	        @PathVariable Long userId,
+	        @RequestParam("file") MultipartFile file) {
+	    try {
+	        String profileUrl = userService.updateProfilePicture(userId, file);
+	        return ResponseEntity.ok(Map.of("profileUrl", profileUrl));
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body(Map.of("error", "Error uploading profile picture: " + e.getMessage()));
+	    }
+	}
 
 }

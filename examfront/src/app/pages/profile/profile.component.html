@@ -4,11 +4,15 @@
         <div class="bootstrap-wrapper">
             <div class="container">
                 <div class="container text-center">
-                    <img src="assets/img/default.png"
-                         [attr.alt]="( 'PROFILE_IMAGE_ALT' | translate ) + ' ' + user.firstName + ' ' + user.lastName"
-                         class="profile-image" width="120" height="120"
-                         [attr.aria-label]="( 'PROFILE_IMAGE_ALT' | translate ) + ' ' + user.firstName + ' ' + user.lastName"
-                         role="img">
+                    
+                    <img [src]="user.profile || 'assets/img/default.png'"
+                        [attr.alt]="('PROFILE_IMAGE_ALT' | translate) + ' ' + user.firstName + ' ' + user.lastName"
+                        class="profile-image"
+                        width="120"
+                        height="120"
+                        [attr.aria-label]="('PROFILE_IMAGE_ALT' | translate) + ' ' + user.firstName + ' ' + user.lastName"
+                        role="img">
+
                 </div>
                 <div class="row mt20">
                     <div class="col-md-10 offset-md-1">

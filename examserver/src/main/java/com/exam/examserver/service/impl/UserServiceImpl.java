@@ -11,8 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.exam.examserver.files.IFileService;
 import com.exam.examserver.model.role.Role;
 import com.exam.examserver.model.user.User;
 import com.exam.examserver.model.userrole.UserRole;
@@ -31,6 +33,8 @@ public class UserServiceImpl implements IUserService{
 	private RoleRepository roleRepository;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private IFileService fileService;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -290,6 +294,12 @@ public class UserServiceImpl implements IUserService{
 	    userRepository.save(existingUser);
 
 	    LOGGER.info("Password successfully updated for userId={}", userId);
+	}
+
+	@Override
+	@Transactional
+	public String updateProfilePicture(Long userId, MultipartFile file) {
+	    return this.fileService.updateProfileLocal(userId, file);
 	}
 
 }

@@ -15,11 +15,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebSecurity
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class MySecurityConfig extends WebSecurityConfigurerAdapter{
+public class MySecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer{
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -54,6 +56,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter{
 	        .cors(cors -> cors.configurationSource(corsConfigurationSource))
 	        .authorizeRequests(requests -> requests
 	            .antMatchers("/generate-token", "/user/").permitAll()
+	            .antMatchers("/images/**").permitAll()
 	            .antMatchers(HttpMethod.OPTIONS).permitAll()
 	            .anyRequest().authenticated()
 	        )
@@ -66,5 +69,12 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter{
 
 	    http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 	}
+	
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Sirve todas las imágenes de /images/** desde la carpeta física /images
+        registry.addResourceHandler("/images/**")
+                .addResourceLocations("file:" + System.getProperty("user.dir") + "/images/");
+    }
     
 }
