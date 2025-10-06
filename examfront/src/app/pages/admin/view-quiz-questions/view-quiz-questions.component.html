@@ -18,7 +18,7 @@
                                 alt="Imagen de la pregunta"
                                 style="width: 60px; height: 60px; object-fit: contain; margin-right: 16px; border-radius: 8px; border: 1px solid #eee;">
                             <p class="question-content" id="question-{{i}}" tabindex="0">
-                                <b>{{ 'QUESTION' | translate }} {{ i + 1 }}</b> - 
+                                <b>{{ 'QUESTION' | translate }} {{ (page * size) + i + 1 }}</b> - 
                                 <span>&nbsp;{{q.content}} </span>
                             </p>
                         </div>
@@ -93,5 +93,13 @@
                 </mat-card-content>
             </mat-card>
         </div>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
+      <app-paginator
+        [page]="page"
+        [totalPages]="totalPages"
+        [range]="5"
+        (pageChange)="goToPage($event)">
+      </app-paginator>
     </div>
 </div>

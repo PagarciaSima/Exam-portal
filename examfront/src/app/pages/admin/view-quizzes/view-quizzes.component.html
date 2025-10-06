@@ -85,3 +85,12 @@
   </div>
 </mat-card-action>
 </mat-card>
+
+<div style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
+  <app-paginator
+    [page]="page"
+    [totalPages]="totalPages"
+    [range]="5"
+    (pageChange)="goToPage($event)">
+  </app-paginator>
+</div>

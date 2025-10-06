@@ -9,6 +9,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -126,6 +128,36 @@ public class QuestionController {
 
         LOGGER.info("Fetched {} questions for Quiz ID {}: '{}'", list.size(), quiz.getqId(), quiz.getTitle());
         return ResponseEntity.ok(list);
+    }
+    
+    /**
+     * Retrieve questions for a specific quiz in a paginated manner.
+     * <p>
+     * This endpoint returns the questions belonging to the given quiz ID,
+     * ordered by their ID (or another field if desired), and paginated
+     * using standard query parameters for page and size.
+     * </p>
+     *
+     * <p>Example request:</p>
+     * <pre>
+     * GET /question/quiz/5/paged?page=0&size=10
+     * </pre>
+     *
+     * @param qid  the ID of the quiz
+     * @param page the page number (zero-based)
+     * @param size the number of questions per page
+     * @return a page of questions for the specified quiz
+     */
+    @GetMapping("/quiz/{qid}/paged")
+    public ResponseEntity<?> getQuestionsByQuizPaged(
+            @PathVariable Long qid,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        LOGGER.info("Received request to fetch paginated questions for quiz ID {}: page {}, size {}", qid, page, size);
+
+        Page<Question> questionsPage = quizService.getQuestionsByQuizPaged(qid, page, size);
+        return ResponseEntity.ok(questionsPage);
     }
 
     /**

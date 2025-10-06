@@ -17,6 +17,9 @@ import { Router } from '@angular/router';
 export class ViewQuizzesComponent implements OnInit {
 
   quizzes: Quiz[] = [];
+  page = 0;
+  size = 5;
+  totalPages = 1;
 
   constructor(
     private quizService: QuizService,
@@ -26,7 +29,7 @@ export class ViewQuizzesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadQuizzes();
+    this.loadQuizzesPaged();
   }
 
   /**
@@ -38,6 +41,26 @@ export class ViewQuizzesComponent implements OnInit {
       next: (data: any) => {
         this.quizzes = data;
         console.log(this.quizzes);
+      },
+      error: (error) => {
+        this.notificacionService.error(
+          this.translate.instant('QUIZZES_LOAD_ERROR'),
+          this.translate.instant('ERROR')
+        );
+        console.error('Error fetching quizzes:', error);
+      }
+    });
+  }
+
+  /**
+   * Loads a paginated list of quizzes from the server.
+   * Updates the local `quizzes` array and `totalPages` based on the response.
+   */
+  loadQuizzesPaged(): void {
+    this.quizService.getQuizzesPaged(this.page, this.size).subscribe({
+      next: (data) => {
+        this.quizzes = data.content;
+        this.totalPages = data.totalPages;
       },
       error: (error) => {
         this.notificacionService.error(
@@ -107,5 +130,16 @@ export class ViewQuizzesComponent implements OnInit {
    */
   public viewQuestions(qId: number, title: string): void {
     this.router.navigate(['/admin/view-questions', qId, title]);
+  }
+
+  /**
+   * Navigates to the specified page of quizzes.
+   * @param page The page number to navigate to.
+   */
+  goToPage(page: number) {
+    if (page >= 0 && page < this.totalPages) {
+      this.page = page;
+      this.loadQuizzesPaged();
+    }
   }
 }

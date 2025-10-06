@@ -7,10 +7,16 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.exam.examserver.model.exam.question.Question;
 import com.exam.examserver.model.exam.quiz.Quiz;
+import com.exam.examserver.repository.QuestionRepository;
 import com.exam.examserver.repository.QuizRepository;
 import com.exam.examserver.service.IQuizService;
 
@@ -25,6 +31,8 @@ public class QuizServiceImpl implements IQuizService {
 
     @Autowired
     private QuizRepository quizRepository;
+    @Autowired
+    private QuestionRepository questionRepository;
 
     /**
      * Adds a new quiz.
@@ -113,4 +121,65 @@ public class QuizServiceImpl implements IQuizService {
         quizRepository.delete(quiz);
         LOGGER.info("Quiz with ID {} deleted successfully", quizId);
     }
+    
+    /**
+     * Retrieve quizzes in a paginated and alphabetically ordered manner.
+     *
+     * <p>This method fetches quizzes from the database ordered by their title in ascending order
+     * and returns a {@link Page} containing the requested page of quizzes.
+     * Pagination parameters allow clients to specify which page and how many items per page
+     * should be returned.</p>
+     *
+     * <p>If the requested page exceeds the total number of pages, an empty page will be returned.</p>
+     *
+     * @param page the zero-based page index (0 = first page)
+     * @param size the number of quizzes to return per page
+     * @return a {@link Page} of {@link Quiz} objects, sorted by title in ascending order
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Quiz> getQuizzesPaged(int page, int size) {
+        LOGGER.info("Fetching quizzes paginated: page {}, size {}, ordered by title ASC", page, size);
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "title"));
+
+        return quizRepository.findAll(pageable);
+    }
+
+    /**
+     * Retrieves paginated questions for a specific quiz.
+     *
+     * <p>This method first verifies that the quiz exists. Then, it retrieves the questions
+     * associated with that quiz using pagination and sorting (by question ID ascending).</p>
+     *
+     * @param qid  the ID of the quiz
+     * @param page the zero-based page index (0 = first page)
+     * @param size the number of questions per page
+     * @return a {@link Page} of {@link Question} objects belonging to the quiz
+     * @throws IllegalArgumentException if the quiz does not exist
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Question> getQuestionsByQuizPaged(Long qid, int page, int size) {
+        LOGGER.info("Fetching paginated questions for quiz ID {} (page {}, size {})", qid, page, size);
+
+        // Verificar que el quiz existe
+        Quiz quiz = quizRepository.findById(qid)
+                .orElseThrow(() -> new IllegalArgumentException("Quiz not found with ID: " + qid));
+
+        // Crear paginación (ordenar por ID o cualquier campo deseado)
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "quesId"));
+
+        // Obtener las preguntas paginadas
+        Page<Question> questionsPage = questionRepository.findByQuiz_qId(quiz.getqId(), pageable);
+
+        LOGGER.info("Fetched {} questions (page {} of {}) for quiz '{}'",
+                questionsPage.getNumberOfElements(),
+                questionsPage.getNumber() + 1,
+                questionsPage.getTotalPages(),
+                quiz.getTitle());
+
+        return questionsPage;
+    }
+
 }

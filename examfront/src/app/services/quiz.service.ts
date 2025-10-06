@@ -70,4 +70,16 @@ export class QuizService {
   public updateQuiz(quiz: Quiz): Observable<Quiz> {
     return this.http.put<Quiz>(`${this.apiUrl}/quiz/`, quiz);
   }
+
+  /**
+   * Retrieves paginated quizzes from the backend API.
+   * @param page The page number (zero-based).
+   * @param size The number of items per page.
+   * @returns An observable emitting a Page object with quizzes.
+   */
+  public getQuizzesPaged(page: number, size: number): Observable<{ content: Quiz[], totalPages: number, totalElements: number }> {
+    return this.http.get<{ content: Quiz[], totalPages: number, totalElements: number }>(
+      `${this.apiUrl}/quiz/paged?page=${page}&size=${size}`
+    );
+  }
 }

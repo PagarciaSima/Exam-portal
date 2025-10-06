@@ -20,6 +20,9 @@ export class ViewQuizQuestionsComponent implements OnInit {
   qId: number;
   qTitle: string;
   questions: Question[] = [];
+  page = 0;
+  size = 7;
+  totalPages = 1;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -33,9 +36,8 @@ export class ViewQuizQuestionsComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.qId = params['id'];
       this.qTitle = params['title'];
+      this.getQuestionsOfQuizPaged();
     });
-
-    this.getQuestionsOfQuiz(this.qId);
   }
 
   /**
@@ -57,7 +59,23 @@ export class ViewQuizQuestionsComponent implements OnInit {
       }
     });
   }
-  
+
+  getQuestionsOfQuizPaged(): void {
+    this.questionService.getQuestionsOfQuizPaged(this.qId, this.page, this.size).subscribe({
+      next: (data) => {
+        this.questions = data.content;
+        this.totalPages = data.totalPages;
+      },
+      error: (error) => {
+        this.notificationService.error(
+          this.translate.instant('QUESTIONS_LOAD_ERROR'),
+          this.translate.instant('ERROR')
+        );
+        console.error('Error fetching questions:', error);
+      }
+    });
+  }
+
   /**
    * Navigates to the Add Question page for the current quiz.
    */
@@ -104,5 +122,11 @@ export class ViewQuizQuestionsComponent implements OnInit {
   editQuestion(quesId: number): void {
     this.router.navigate(['admin/add-question', this.qId, this.qTitle, quesId]);
   }
-  
+
+  goToPage(page: number) {
+    if (page >= 0 && page < this.totalPages) {
+      this.page = page;
+      this.getQuestionsOfQuizPaged();
+    }
+  }
 }

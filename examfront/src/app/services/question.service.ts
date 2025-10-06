@@ -98,4 +98,16 @@ export class QuestionService {
     return this.http.put<Question>(`${this.apiUrl}/question`, question);
   }
     
+  /**
+   * Retrieves paginated questions for a specific quiz.
+   * @param quizId The quiz ID.
+   * @param page The page number (zero-based).
+   * @param size The number of items per page.
+   * @returns An Observable emitting a Page object with questions.
+   */
+  public getQuestionsOfQuizPaged(quizId: number, page: number, size: number): Observable<{ content: Question[], totalPages: number, totalElements: number }> {
+    return this.http.get<{ content: Question[], totalPages: number, totalElements: number }>(
+      `${this.apiUrl}/question/quiz/${quizId}/paged?page=${page}&size=${size}`
+    );
+  }
 }
