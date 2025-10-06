@@ -32,5 +32,12 @@
             <mat-divider></mat-divider>
         </mat-list-item>
     </mat-list>
-    
+    <div style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
+        <app-paginator
+          [page]="page"
+          [totalPages]="totalPages"
+          [range]="5"
+          (pageChange)="goToPage($event)">
+        </app-paginator>
+    </div>
 </mat-card>

@@ -43,6 +43,7 @@ import { AddQuestionComponent } from './pages/admin/add-question/add-question.co
 import { ProfileEditComponent } from './pages/profile/profile-edit/profile-edit.component';
 import { ProfileChangePasswordComponent } from './pages/profile/profile-change-password/profile-change-password.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { PaginatorComponent } from './shared/paginator/paginator.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -68,7 +69,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ViewQuizQuestionsComponent,
     AddQuestionComponent,
     ProfileEditComponent,
-    ProfileChangePasswordComponent
+    ProfileChangePasswordComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,

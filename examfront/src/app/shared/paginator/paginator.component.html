@@ -1,0 +1,16 @@
+<div class="paginator-container">
+  <button mat-icon-button [disabled]="page === 0" (click)="goToPage(page - 1)" aria-label="Anterior">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <ng-container *ngFor="let p of pageNumbers">
+    <button mat-button
+      [color]="p === page ? 'accent' : ''"
+      [disabled]="p === page"
+      (click)="goToPage(p)">
+      {{ p + 1 }}
+    </button>
+  </ng-container>
+  <button mat-icon-button [disabled]="page >= totalPages - 1" (click)="goToPage(page + 1)" aria-label="Siguiente">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+</div>

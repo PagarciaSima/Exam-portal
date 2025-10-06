@@ -1,0 +1,17 @@
+.paginator-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin: 16px 0;
+}
+
+.paginator-container button[mat-button][color="accent"] {
+  font-weight: bold;
+  border-bottom: 2px solid #ff4081; /* color accent por defecto */
+}
+
+.paginator-container button[mat-button]:disabled {
+  opacity: 0.7;
+  cursor: default;
+}

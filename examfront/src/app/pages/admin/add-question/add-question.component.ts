@@ -33,6 +33,8 @@ export class AddQuestionComponent implements OnInit {
     quiz: {} as Quiz
   }
 
+  imageFile: File | null = null;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private questionService: QuestionService,
@@ -97,12 +99,13 @@ export class AddQuestionComponent implements OnInit {
    * Displays success or error notifications based on the outcome of the operation.
    */
   private addNewQuestion() {
-    this.questionService.addQuestion(this.question).subscribe({
+    this.questionService.addQuestionWithImage(this.question, this.imageFile).subscribe({
       next: () => {
         const successMsg = this.translate.instant('QUESTION_ADD_SUCCESS');
         const successTitle = this.translate.instant('SUCCESS');
         this.notificationService.success(successMsg, successTitle);
         this.resetState();
+        this.imageFile = null;
       },
       error: (error) => {
         const errorMsg = this.translate.instant('QUESTION_ADD_ERROR');
@@ -149,6 +152,16 @@ export class AddQuestionComponent implements OnInit {
       answer: '',
       quiz: { qId: this.qId } as Quiz
     };
+  }
+
+  // Maneja el cambio de archivo
+  onImageSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.imageFile = input.files[0];
+    } else {
+      this.imageFile = null;
+    }
   }
 
 }

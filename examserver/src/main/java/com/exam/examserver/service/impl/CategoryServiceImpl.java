@@ -1,12 +1,18 @@
 package com.exam.examserver.service.impl;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,6 +76,26 @@ public class CategoryServiceImpl implements ICategoryService {
             categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "title"))
         );
     }
+    
+    /**
+     * Retrieve categories in a paginated and alphabetically ordered manner.
+     *
+     * <p>This method fetches categories from the database ordered by their title in ascending order
+     * and returns a {@link Page} containing the requested page of categories.
+     * Pagination parameters allow clients to specify which page and how many items per page
+     * should be returned.</p>
+     *
+     * @param page the zero-based page index (0 = first page)
+     * @param size the number of categories to return per page
+     * @return a {@link Page} of {@link Category} objects, sorted by title in ascending order
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Category> getCategoriesPaged(int page, int size) {
+        LOGGER.info("Fetching categories paginated: page {}, size {}, ordered by title ASC", page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "title"));
+        return categoryRepository.findAll(pageable);
+    }
 
     /**
      * Retrieves a category by its ID.
@@ -106,5 +132,32 @@ public class CategoryServiceImpl implements ICategoryService {
         }
         categoryRepository.deleteById(categoryId);
         LOGGER.info("Category with ID {} deleted successfully", categoryId);
+    }
+    
+    /**
+     * Create multiple categories in a single operation.
+     *
+     * <p>This method allows bulk creation of categories by accepting a set of category objects.
+     * Each category will be persisted in the database, and the method returns a set of the
+     * saved categories including any generated IDs.</p>
+     *
+     * <p>If the provided set is null or empty, the method returns an empty set and logs a warning.</p>
+     *
+     * @param categories the set of {@link Category} objects to be created
+     * @return a set of {@link Category} objects that were successfully saved
+     */
+    @Override
+    @Transactional
+    public Set<Category> addCategories(Set<Category> categories) {
+        if (categories == null || categories.isEmpty()) {
+            LOGGER.warn("No categories provided for bulk creation");
+            return Collections.emptySet();
+        }
+
+        LOGGER.info("Creating {} categories in bulk", categories.size());
+
+        List<Category> savedCategories = categoryRepository.saveAll(categories);
+
+        return new HashSet<>(savedCategories);
     }
 }

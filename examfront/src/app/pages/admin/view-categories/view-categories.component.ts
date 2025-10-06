@@ -16,13 +16,10 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ViewCategoriesComponent implements OnInit {
 
-  categories: Category[] = [
-    { cid: 1, title: 'Science', description: 'Quizzes related to various scientific topics.' },
-    { cid: 2, title: 'Mathematics', description: 'Quizzes covering mathematical concepts and problems.' },
-    { cid: 3, title: 'History', description: 'Quizzes about historical events and figures.' },
-    { cid: 4, title: 'Geography', description: 'Quizzes on geographical locations and features.' },
-    { cid: 5, title: 'Literature', description: 'Quizzes about literary works and authors.' }
-  ];
+  categories: Category[] = [];
+  page = 0;
+  size = 7;
+  totalPages = 1;
 
   constructor(
     private categoryService: CategoryService,
@@ -32,20 +29,22 @@ export class ViewCategoriesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.fetchAllCategories();
+    this.fetchCategoriesPaged();
   }
 
   /**
-   * Fetches all categories from the backend service and assigns them to the local `categories` property.
+   * Fetches a paginated list of categories from the backend service.
+   * Updates the local `categories` property and `totalPages` based on the response.
    * Displays an error notification if the request fails.
    *
    * @private
    * @returns {void}
    */
-  private fetchAllCategories() {
-    this.categoryService.getCategories().subscribe({
-      next: (categories) => {
-        this.categories = categories;
+  private fetchCategoriesPaged() {
+    this.categoryService.getCategoriesPaged(this.page, this.size).subscribe({
+      next: (data) => {
+        this.categories = data.content;
+        this.totalPages = data.totalPages;
       },
       error: () => {
         this.notificationService.error(
@@ -100,5 +99,18 @@ export class ViewCategoriesComponent implements OnInit {
         });
       }
     });
+  }
+
+  /**
+   * Navigates to the specified page of categories if within valid range.
+   *
+   * @param {number} page - The page number to navigate to.
+   * @returns {void}
+   */
+  goToPage(page: number) {
+    if (page >= 0 && page < this.totalPages) {
+      this.page = page;
+      this.fetchCategoriesPaged();
+    }
   }
 }

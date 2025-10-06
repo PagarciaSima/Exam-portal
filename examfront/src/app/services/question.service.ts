@@ -45,6 +45,21 @@ export class QuestionService {
   }
 
   /**
+   * Adds a new question with optional image to the backend API.
+   * @param question The question object to be added.
+   * @param imageFile Optional image file for the question.
+   * @returns An Observable emitting the added question.
+   */
+  public addQuestionWithImage(question: Question, imageFile?: File): Observable<Question> {
+    const formData = new FormData();
+    formData.append('question', new Blob([JSON.stringify(question)], { type: 'application/json' }));
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+    return this.http.post<Question>(`${this.apiUrl}/question/add`, formData);
+  }
+
+  /**
    * 
    * @param quesId The ID of the question to be deleted.
    * Deletes a question by its ID from the backend API.
