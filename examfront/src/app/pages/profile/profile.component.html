@@ -4,15 +4,36 @@
         <div class="bootstrap-wrapper">
             <div class="container">
                 <div class="container text-center">
-                    
-                    <img [src]="user.profile || 'assets/img/default.png'"
-                        [attr.alt]="('PROFILE_IMAGE_ALT' | translate) + ' ' + user.firstName + ' ' + user.lastName"
-                        class="profile-image"
-                        width="120"
-                        height="120"
-                        [attr.aria-label]="('PROFILE_IMAGE_ALT' | translate) + ' ' + user.firstName + ' ' + user.lastName"
-                        role="img">
+                    <div class="profile-img-wrapper">
+                        <img [src]="user.profile || 'assets/img/default.png'"
+                            [attr.alt]="('PROFILE_IMAGE_ALT' | translate) + ' ' + user.firstName + ' ' + user.lastName"
+                            class="profile-image"
+                            width="120"
+                            height="120"
+                            [attr.aria-label]="('PROFILE_IMAGE_ALT' | translate) + ' ' + user.firstName + ' ' + user.lastName"
+                            role="img"
+                            style="border-radius: 50%;">
 
+                        <!-- Botón de editar dentro de la foto, abajo a la izquierda -->
+                        <button mat-icon-button
+                            color="accent"
+                            [matMenuTriggerFor]="profileMenu"
+                            aria-label="Edit profile image"
+                            class="edit-profile-btn">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <mat-menu #profileMenu="matMenu">
+                            <input type="file" #fileInput accept="image/*" style="display:none" (change)="handlePhotoUpload($event)" />
+                            <button mat-menu-item (click)="onUploadPhoto(fileInput)">
+                                <mat-icon color="primary">upload</mat-icon>
+                                <span>{{ 'UPLOAD_PHOTO' | translate }}</span>
+                            </button>
+                            <button mat-menu-item (click)="onRemovePhoto()">
+                                <mat-icon color="warn">delete</mat-icon>
+                                <span>{{ 'REMOVE_PHOTO' | translate }}</span>
+                            </button>
+                        </mat-menu>
+                    </div>
                 </div>
                 <div class="row mt20">
                     <div class="col-md-10 offset-md-1">
@@ -76,10 +97,6 @@
                                 <button mat-raised-button color="primary" (click)="toggleEdit()" type="button"
                                     [attr.aria-label]="'UPDATE' | translate" tabindex="0">
                                     {{ 'UPDATE' | translate }}
-                                </button>
-                                <button mat-raised-button color="accent" type="button"
-                                    [attr.aria-label]="'SHARE' | translate" tabindex="0">
-                                    {{ 'SHARE' | translate }}
                                 </button>
                             </mat-card-actions>
                         </ng-container>

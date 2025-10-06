@@ -302,4 +302,9 @@ public class UserServiceImpl implements IUserService{
 	    return this.fileService.updateProfileLocal(userId, file);
 	}
 
+	@Override
+	public void deleteProfilePicture(Long userId) {
+		this.fileService.deleteProfileLocal(userId);
+	}
+
 }

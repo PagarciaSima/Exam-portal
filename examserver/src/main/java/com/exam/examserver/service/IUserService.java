@@ -23,4 +23,6 @@ public interface IUserService {
 
 	String updateProfilePicture(Long userId, MultipartFile file);
 
+	void deleteProfilePicture(Long userId);
+
 }

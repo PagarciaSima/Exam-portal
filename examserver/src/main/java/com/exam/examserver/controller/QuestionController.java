@@ -1,5 +1,6 @@
 package com.exam.examserver.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,8 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.exam.examserver.files.IFileService;
 import com.exam.examserver.model.exam.question.Question;
 import com.exam.examserver.model.exam.quiz.Quiz;
 import com.exam.examserver.service.IQuestionService;
@@ -39,6 +44,8 @@ public class QuestionController {
     private IQuestionService questionService;
     @Autowired
     private IQuizService quizService;
+    @Autowired
+    private IFileService fileService;
 
     /**
      * Create a new question.
@@ -51,6 +58,36 @@ public class QuestionController {
         LOGGER.info("Received request to add question: {}", question.getContent());
         Question createdQuestion = questionService.addQuestion(question);
         LOGGER.info("Question created with ID: {}", createdQuestion.getQuesId());
+        return ResponseEntity.ok(createdQuestion);
+    }
+    
+    /**
+     * Handles HTTP POST requests to create a new question.
+     * <p>
+     * This endpoint accepts a {@link Question} object along with an optional image file.
+     * If an image is provided, it will be saved to the file system and its relative path 
+     * will be linked to the {@link Question}. The question is then persisted in the database.
+     * </p>
+     *
+     * @param question   the {@link Question} object containing the question details
+     * @param imageFile  an optional {@link MultipartFile} representing the image to associate with the question;
+     *                   may be {@code null} or empty
+     * @return a {@link ResponseEntity} containing the created {@link Question} if successful,
+     *         or an error response if the image could not be saved
+     */
+    @PostMapping("/add")
+    public ResponseEntity<?> addQuestion(
+            @RequestPart("question") Question question,
+            @RequestPart(value = "image", required = false) MultipartFile imageFile) {
+
+        try {
+			fileService.createQuestionImageLocal(question, imageFile);
+		} catch (IOException e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                    .body("Error guardando la imagen");
+		}
+
+        Question createdQuestion = questionService.addQuestion(question);
         return ResponseEntity.ok(createdQuestion);
     }
 

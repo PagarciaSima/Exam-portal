@@ -79,5 +79,17 @@ public class UserController {
 	                .body(Map.of("error", "Error uploading profile picture: " + e.getMessage()));
 	    }
 	}
+	
+	@DeleteMapping("/{userId}/profile")
+	public ResponseEntity<Map<String, String>> deleteProfilePicture(@PathVariable Long userId) {
+	    try {
+	        userService.deleteProfilePicture(userId);
+	        return ResponseEntity.ok(Map.of("message", "Profile picture deleted successfully"));
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body(Map.of("error", "Error deleting profile picture: " + e.getMessage()));
+	    }
+	}
+	
 
 }

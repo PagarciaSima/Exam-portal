@@ -12,10 +12,16 @@
             <mat-card *ngFor="let q of questions; let i = index" class="mb20" [@slideIn] [attr.aria-labelledby]="'question-' + i">
                 <mat-card-content>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <p class="question-content" id="question-{{i}}" tabindex="0">
-                            <b>{{ 'QUESTION' | translate }} {{ i + 1 }}</b> - 
-                            <span>&nbsp;{{q.content}} </span>
-                        </p>
+                        <div style="display: flex; align-items: end; width: 100%;">
+                            <img 
+                                [src]="q.image ? q.image : 'assets/img/question.jpg'"
+                                alt="Imagen de la pregunta"
+                                style="width: 60px; height: 60px; object-fit: contain; margin-right: 16px; border-radius: 8px; border: 1px solid #eee;">
+                            <p class="question-content" id="question-{{i}}" tabindex="0">
+                                <b>{{ 'QUESTION' | translate }} {{ i + 1 }}</b> - 
+                                <span>&nbsp;{{q.content}} </span>
+                            </p>
+                        </div>
                         <span class="question-actions">
                             <button mat-icon-button color="warn"
                                 [attr.aria-label]="('DELETE' | translate) + ' ' + ('QUESTION' | translate) + ' ' + (i + 1)"
