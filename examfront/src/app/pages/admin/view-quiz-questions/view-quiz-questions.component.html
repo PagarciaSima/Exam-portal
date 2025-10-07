@@ -94,7 +94,7 @@
             </mat-card>
         </div>
     </div>
-    <div style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
+    <div *ngIf="questions.length > 0" style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
       <app-paginator
         [page]="page"
         [totalPages]="totalPages"

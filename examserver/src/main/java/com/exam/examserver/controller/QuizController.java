@@ -93,12 +93,22 @@ public class QuizController {
     @GetMapping("/paged")
     public ResponseEntity<?> getQuizzesPaged(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String search) {
 
-        LOGGER.info("Received request to fetch paginated quizzes: page {}, size {}", page, size);
-        Page<Quiz> quizzes = quizService.getQuizzesPaged(page, size);
+        Page<Quiz> quizzes;
+
+        if (search != null && !search.isBlank()) {
+            String trimmed = search.trim();
+            LOGGER.debug("Search present -> using requested page {} for search '{}'", page, trimmed);
+            quizzes = quizService.searchQuizzesPaged(trimmed, page, size);
+        } else {
+            quizzes = quizService.getQuizzesPaged(page, size);
+        }
+
         return ResponseEntity.ok(quizzes);
     }
+
     
     /**
      * Retrieve a quiz by ID.
@@ -125,4 +135,5 @@ public class QuizController {
         quizService.deleteQuiz(quizId);
         return ResponseEntity.ok().build();
     }
+    
 }

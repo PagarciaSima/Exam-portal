@@ -16,5 +16,6 @@ public interface IQuizService {
 	public void deleteQuiz(Long quizId);
 	public Page<Quiz> getQuizzesPaged(int page, int size);
 	public Page<Question> getQuestionsByQuizPaged(Long qid, int page, int size);
+	Page<Quiz> searchQuizzesPaged(String term, int page, int size);
 
 }

@@ -194,6 +194,24 @@ public class QuizServiceImpl implements IQuizService {
 
         return questionsPage;
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Quiz> searchQuizzesPaged(String term, int page, int size) {
+        LOGGER.info("Searching quizzes paginated by term '{}' (page {}, size {})", term, page, size);
+
+        List<Quiz> results = quizRepository.searchQuizzes(term);
+
+        // Ordenar por título alfabéticamente
+        results.sort((a, b) -> a.getTitle().compareToIgnoreCase(b.getTitle()));
+
+        // Calcular paginación manual
+        int start = Math.min(page * size, results.size());
+        int end = Math.min(start + size, results.size());
+        List<Quiz> paged = results.subList(start, end);
+
+        return new PageImpl<>(paged, PageRequest.of(page, size), results.size());
+    }
 
 
 }
