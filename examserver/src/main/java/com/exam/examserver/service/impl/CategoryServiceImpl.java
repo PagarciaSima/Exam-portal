@@ -160,4 +160,37 @@ public class CategoryServiceImpl implements ICategoryService {
 
         return new HashSet<>(savedCategories);
     }
+    
+    /**
+     * Searches for categories whose title or description contains the specified term,
+     * ignoring case sensitivity, and returns the results in a paginated format.
+     * <p>
+     * This method is typically used to support search functionality in the client application,
+     * allowing users to find categories by keyword. The search is performed on both
+     * the {@code title} and {@code description} fields of the {@link Category} entity.
+     * </p>
+     *
+     * @param term the search keyword to look for within category titles or descriptions.
+     * @param page the zero-based page index to retrieve.
+     * @param size the number of categories to include per page.
+     * @return a {@link Page} of {@link Category} objects that match the search criteria.
+     *
+     * @see org.springframework.data.domain.Page
+     * @see org.springframework.data.domain.Pageable
+     * @see com.exam.examserver.model.exam.category.Category
+     */
+    @Override
+    public Page<Category> searchCategories(String term, int page, int size) {
+        LOGGER.info("Searching categories with term: '{}' (page: {}, size: {})", term, page, size);
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Category> result = categoryRepository
+                .findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(term, term, pageable);
+
+        LOGGER.debug("Search for '{}' returned {} results (page {} of {})",
+                term, result.getNumberOfElements(), result.getNumber() + 1, result.getTotalPages());
+
+        return result;
+    }
+
 }

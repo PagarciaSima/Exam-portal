@@ -61,9 +61,13 @@ export class CategoryService {
   /**
    * Get paginated categories.
    */
-  public getCategoriesPaged(page: number, size: number): Observable<{ content: Category[], totalPages: number, totalElements: number }> {
-    return this.http.get<{ content: Category[], totalPages: number, totalElements: number }>(
-      `${this.apiUrl}/paged?page=${page}&size=${size}`
-    );
+  public getCategoriesPaged(page: number, size: number, search?: string): Observable<{ content: Category[], totalPages: number, totalElements: number }> {
+  let params = `?page=${page}&size=${size}`;
+  if (search && search.trim()) {
+    params += `&search=${encodeURIComponent(search.trim())}`;
   }
+  return this.http.get<{ content: Category[], totalPages: number, totalElements: number }>(
+    `${this.apiUrl}/paged${params}`
+  );
+}
 }

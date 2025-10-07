@@ -159,5 +159,7 @@
   "YES": "Sí",
   "REMOVE_PHOTO": "Remove Photo",
   "PROFILE_PHOTO_DELETE_CONFIRM": "Are you sure you want to remove your profile photo?",
-  "PROFILE_PHOTO_DELETE_SUCCESS": "Profile photo removed successfully"
+  "PROFILE_PHOTO_DELETE_SUCCESS": "Profile photo removed successfully",
+  "SEARCH_CATEGORY": "Buscar Categoría",
+  "SEARCH_PLACEHOLDER_CATEGORY": "Buscar por título o descripción"
 }

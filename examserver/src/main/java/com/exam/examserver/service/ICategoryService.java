@@ -15,4 +15,5 @@ public interface ICategoryService {
 	public void deleteCategory(Long categoryId);
 	Page<Category> getCategoriesPaged(int page, int size);
 	public Set<Category> addCategories(Set<Category> categories);
+	Page<Category> searchCategories(String term, int page, int size);
 }

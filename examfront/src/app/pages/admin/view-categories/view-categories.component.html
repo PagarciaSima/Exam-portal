@@ -1,43 +1,55 @@
 <mat-card>
-    
     <mat-list [@slideIn] role="list" aria-label="All Categories">
         <h1 tabindex="0" class="text-center" style="display: flex; align-items: center; justify-content: center;">
             <mat-icon style="margin-right: 8px;">category</mat-icon>
-           {{ 'CATEGORIES' | translate }}
+            {{ 'CATEGORIES' | translate }}
         </h1>
-        <div style="display: flex; justify-content: center;" class="mt20 mb20">
-            <button mat-raised-button color="primary" (click)="addCategory()">
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <button mat-raised-button color="primary" (click)="addCategory()" class="mb20">
                 <mat-icon>add</mat-icon>
                 {{ 'ADD_CATEGORY' | translate }}
             </button>
+            <mat-form-field appearance="outline" style="width: 300px;">
+                <mat-label>{{ 'SEARCH_CATEGORY' | translate }}</mat-label>
+                <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearch()" placeholder="{{ 'SEARCH_PLACEHOLDER_CATEGORY' | translate }}">
+                <button mat-icon-button matSuffix aria-label="Buscar">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-form-field>
         </div>
-        <mat-list-item *ngFor="let category of categories" role="listitem">
-            <mat-icon matListIcon color="primary" aria-hidden="true" class="responsive-icon">category</mat-icon>
-            <h3 matLine id="cat-title-{{category.id}}" tabindex="0">{{ category.title }}</h3>
-            <p matLine id="cat-desc-{{category.id}}" tabindex="0" class="responsive-desc">{{ category.description }}</p>
-            <button mat-icon-button color="warn"
-                [attr.aria-label]="('DELETE' | translate) + ' category ' + category.title"
-                matTooltip="{{ 'DELETE' | translate }}"
-                [attr.aria-describedby]="'cat-title-' + category.cid"
-                (click)="deleteCategory(category.cid)">
-                <mat-icon aria-hidden="true">delete</mat-icon>
-            </button>
-            <button mat-icon-button color="primary"
-                aria-label="{{ 'EDIT' | translate }} category {{ category.title }}"
-                matTooltip="{{ 'EDIT' | translate }}"
-                [attr.aria-describedby]="'cat-title-' + category.cid"
-                (click)="editCategory(category.cid)">
-                <mat-icon aria-hidden="true">edit</mat-icon>
-            </button>
-            <mat-divider></mat-divider>
-        </mat-list-item>
+
+        <!-- Category List -->
+        <mat-list>
+            <mat-list-item *ngFor="let category of categories" role="listitem">
+                <mat-icon matListIcon color="primary" aria-hidden="true" class="responsive-icon">category</mat-icon>
+                <h3 matLine id="cat-title-{{category.id}}" tabindex="0">{{ category.title }}</h3>
+                <p matLine id="cat-desc-{{category.id}}" tabindex="0" class="responsive-desc">{{ category.description }}</p>
+                <button mat-icon-button color="warn"
+                    [attr.aria-label]="('DELETE' | translate) + ' category ' + category.title"
+                    matTooltip="{{ 'DELETE' | translate }}"
+                    [attr.aria-describedby]="'cat-title-' + category.cid"
+                    (click)="deleteCategory(category.cid)">
+                    <mat-icon aria-hidden="true">delete</mat-icon>
+                </button>
+                <button mat-icon-button color="primary"
+                    aria-label="{{ 'EDIT' | translate }} category {{ category.title }}"
+                    matTooltip="{{ 'EDIT' | translate }}"
+                    [attr.aria-describedby]="'cat-title-' + category.cid"
+                    (click)="editCategory(category.cid)">
+                    <mat-icon aria-hidden="true">edit</mat-icon>
+                </button>
+                <mat-divider></mat-divider>
+            </mat-list-item>
+        </mat-list>
     </mat-list>
     <div style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
         <app-paginator
-          [page]="page"
-          [totalPages]="totalPages"
-          [range]="5"
-          (pageChange)="goToPage($event)">
+            [page]="page"
+            [totalPages]="totalPages"
+            [range]="5"
+            (pageChange)="goToPage($event)">
         </app-paginator>
     </div>
 </mat-card>

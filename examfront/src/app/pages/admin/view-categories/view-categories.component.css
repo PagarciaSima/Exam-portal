@@ -32,3 +32,24 @@ mat-list-item:hover p {
   transition: color 0.2s;
 }
 
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 16px 0;
+  padding-top: 16px;
+}
+
+@media (max-width: 484px) {
+  .search-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .search-bar button,
+  .search-bar mat-form-field {
+    width: 100% !important;
+    min-width: 0;
+  }
+}

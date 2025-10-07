@@ -20,6 +20,7 @@ export class ViewCategoriesComponent implements OnInit {
   page = 0;
   size = 7;
   totalPages = 1;
+  searchTerm: string = '';
 
   constructor(
     private categoryService: CategoryService,
@@ -41,7 +42,7 @@ export class ViewCategoriesComponent implements OnInit {
    * @returns {void}
    */
   private fetchCategoriesPaged() {
-    this.categoryService.getCategoriesPaged(this.page, this.size).subscribe({
+    this.categoryService.getCategoriesPaged(this.page, this.size, this.searchTerm).subscribe({
       next: (data) => {
         this.categories = data.content;
         this.totalPages = data.totalPages;
@@ -99,6 +100,17 @@ export class ViewCategoriesComponent implements OnInit {
         });
       }
     });
+  }
+
+  /**
+   * Executes a search for categories based on the current search term.
+   * Resets the page to 0 (first page) and fetches the categories.
+   *
+   * @returns {void}
+   */
+  onSearch() {
+    this.page = 0; // Reset to first page on new search
+    this.fetchCategoriesPaged();
   }
 
   /**
