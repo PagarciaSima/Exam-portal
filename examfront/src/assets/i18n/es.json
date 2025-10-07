@@ -160,5 +160,8 @@
   "REMOVE_PHOTO": "Remove Photo",
   "PROFILE_PHOTO_DELETE_CONFIRM": "Are you sure you want to remove your profile photo?",
   "PROFILE_PHOTO_DELETE_SUCCESS": "Profile photo removed successfully",
-  "SEARCH_CATEGORY": "Buscar Categoría"
+  "SEARCH_CATEGORY": "Buscar Categoría",
+  "SEARCH_QUIZ": "Buscar Cuestionario",
+  "NO_QUIZZES_FOUND": "No se encontraron cuestionarios",
+  "NO_CATEGORIES_FOUND": "No se encontraron categorías"
 }

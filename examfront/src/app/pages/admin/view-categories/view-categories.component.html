@@ -1,5 +1,5 @@
 <mat-card>
-    <mat-list [@slideIn] role="list" aria-label="All Categories">
+    <mat-list [@slideIn] role="list" [attr.aria-label]="'CATEGORIES' | translate">
         <h1 tabindex="0" class="text-center" style="display: flex; align-items: center; justify-content: center;">
             <mat-icon style="margin-right: 8px;">category</mat-icon>
             {{ 'CATEGORIES' | translate }}
@@ -20,7 +20,7 @@
         </div>
 
         <!-- Category List -->
-        <mat-list>
+        <mat-list *ngIf="categories.length > 0; else noCategories" role="list" aria-label="Category List">
             <mat-list-item *ngFor="let category of categories" role="listitem">
                 <mat-icon matListIcon color="primary" aria-hidden="true" class="responsive-icon">category</mat-icon>
                 <h3 matLine id="cat-title-{{category.id}}" tabindex="0">{{ category.title }}</h3>
@@ -43,7 +43,16 @@
             </mat-list-item>
         </mat-list>
     </mat-list>
-    <div style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
+
+    <!-- No categories found -->
+    <ng-template #noCategories>
+        <div class="no-data" role="alert" aria-live="assertive">
+            <p>{{ 'NO_CATEGORIES_FOUND' | translate }}</p>
+        </div>
+    </ng-template>
+
+    <!-- paginator -->
+    <div *ngIf="totalPages > 1" style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
         <app-paginator
             [page]="page"
             [totalPages]="totalPages"

@@ -20,6 +20,7 @@ export class ViewQuizzesComponent implements OnInit {
   page = 0;
   size = 5;
   totalPages = 1;
+  searchTerm: string = '';
 
   constructor(
     private quizService: QuizService,
@@ -57,7 +58,7 @@ export class ViewQuizzesComponent implements OnInit {
    * Updates the local `quizzes` array and `totalPages` based on the response.
    */
   loadQuizzesPaged(): void {
-    this.quizService.getQuizzesPaged(this.page, this.size).subscribe({
+    this.quizService.getQuizzesPaged(this.page, this.size, this.searchTerm).subscribe({
       next: (data) => {
         this.quizzes = data.content;
         this.totalPages = data.totalPages;
@@ -130,6 +131,17 @@ export class ViewQuizzesComponent implements OnInit {
    */
   public viewQuestions(qId: number, title: string): void {
     this.router.navigate(['/admin/view-questions', qId, title]);
+  }
+
+  /**
+   * Called when the search term is changed.
+   * Updates the searchTerm property and reloads the quizzes.
+   * @param term The new search term.
+   */
+  onSearchTermChange(term: string) {
+    this.searchTerm = term;
+    this.page = 0; // Reset to first page on new search
+    this.loadQuizzesPaged();
   }
 
   /**

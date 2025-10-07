@@ -1,0 +1,19 @@
+/* Responsive fix for sidebar and main content */
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column !important;
+  }
+  .col-md-3,
+  .col-md-9 {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+  .sidebar-card {
+    margin-bottom: 16px;
+  }
+}
+
+/* Optional: Prevent horizontal scroll */
+.container-fluid {
+  overflow-x: hidden;
+}

@@ -1,92 +1,103 @@
-<div class="container text-center mt20" [@slideIn]>
-    <button mat-raised-button color="primary" role="button"
-        (click)="addQuiz()" [attr.aria-label]="'ADD_QUIZ' | translate"
-    >
+<!-- Search Bar -->
+<div class="search-bar" role="search" [attr.aria-label]="'SEARCH_QUIZ' | translate">
+    <button mat-raised-button color="primary" (click)="addQuiz()" class="mb20">
+        <mat-icon>add</mat-icon>
         {{ 'ADD_QUIZ' | translate }}
     </button>
+    <app-search-bar
+        [placeholder]="'SEARCH_QUIZ' | translate"
+        [ariaLabel]="'SEARCH_QUIZ' | translate"
+        [value]="searchTerm"
+        (valueChange)="onSearchTermChange($event)">
+    </app-search-bar>
 </div>
-<mat-card *ngFor="let q of quizzes" class="mt20 mr20 ml20" role="region" [attr.aria-label]="q.title"
-  [@slideIn]
->
-    <mat-card-header class="header-card" style="position: relative;">
-        <div mat-card-avatar class="header-image" aria-hidden="true"></div>
-        <mat-card-title>
-            <span id="quiz-title-{{q.id}}">{{ q.title }}</span>
-        </mat-card-title>
-        <mat-card-subtitle>
-            <span id="quiz-category-{{q.id}}">{{ q.category.title }}</span>
-        </mat-card-subtitle>
-        <div class="header-actions">
-            <!-- edit -->
-            <button mat-icon-button color="primary" class="mt10"
-                [attr.aria-label]="( 'EDIT' | translate ) + ' ' + ( 'QUIZ' | translate ) + ' ' + q.title"
-                (click)="editQuiz(q.qId)"
-                style="position: absolute; top: 8px; right: 48px;"
-                matTooltip="{{ 'EDIT' | translate }}"
-            >
-                <mat-icon>edit</mat-icon>
-            </button>
-            <!-- delete -->
-            <button mat-icon-button color="warn" class="mt10"
-                [attr.aria-label]="( 'DELETE' | translate ) + ' ' + ( 'QUIZ' | translate ) + ' ' + q.title"
-                (click)="deleteQuiz(q.qId)"
-                style="position: absolute; top: 8px; right: 8px;"
-                matTooltip="{{ 'DELETE' | translate }}"
-            >
-                <mat-icon>delete</mat-icon>
-            </button>
-        </div>
-    </mat-card-header>
-    <mat-card-content class="content-card">
-        <p class="quiz-description">{{ q.description }}</p>
-        
-        <div class="quiz-info-row">
-        <span>
-            <span class="font-bold">{{ 'MAX_MARKS' | translate }}:</span>
-            <span>&nbsp;{{ q.maxMarks }}</span>
-        </span>
-        <span>
-            <span class="font-bold">{{ 'NUMBER_OF_QUESTIONS' | translate }}:</span>
-            <span>&nbsp;{{ q.numberOfQuestions }}</span>
-        </span>
-        <span style="display: flex; align-items: center;">
-            <span class="font-bold">{{ 'ACTIVE' | translate }}:</span>
-            <span style="margin-left: 4px;">
-                <mat-icon *ngIf="q.active" color="primary" style="color: green;" aria-label="{{ 'ACTIVE' | translate }}">check_circle</mat-icon>
-                <mat-icon *ngIf="!q.active" color="warn" style="color: red;" aria-label="{{ 'DISABLED' | translate }}">cancel</mat-icon>
-            </span>
-        </span>
-        </div>
-       
-    </mat-card-content>
-    <mat-card-action>
-  <div class="quiz-actions">
-    <button mat-raised-button color="accent" role="button" class="ml20 mb-2 mr-2"
-        (click)="viewQuestions(q.qId, q.title)"
-        [attr.aria-label]="('QUESTIONS' | translate) + ' ' + q.title"
-    >
-        {{ 'QUESTIONS' | translate }}
-    </button>
-    <button mat-stroked-button color="accent" class="ml20 mb-2 mr-2" role="button"
-        [attr.aria-label]="('MAX_MARKS' | translate) + ': ' + q.maxMarks"
-    >
-        {{ 'MAX_MARKS' | translate }} {{ q.maxMarks }}
-    </button>
-    <button mat-stroked-button color="primary" class="ml20 mb-2 mr-2" role="button"
-        [attr.aria-label]="('NUMBER_OF_QUESTIONS' | translate) + ': ' + q.numberOfQuestions"
-    >
-        {{ 'NUMBER_OF_QUESTIONS' | translate }}: {{ q.numberOfQuestions }}
-    </button>
-    <button mat-raised-button color="accent" class="ml20 mb-2" role="button"
-        [attr.aria-label]="('ATTEMPTS' | translate) + ' ' + q.title"
-    >
-        {{ 'ATTEMPTS' | translate }}
-    </button>
-  </div>
-</mat-card-action>
-</mat-card>
 
-<div style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
+<div [@slideIn] class="quiz-cards-container" *ngIf="quizzes.length > 0; else noQuizzes">
+    <mat-card *ngFor="let q of quizzes" class="mt20 mr20 ml20" role="region" [attr.aria-label]="q.title">
+
+        <mat-card-header class="header-card" style="position: relative;">
+            <div mat-card-avatar class="header-image" aria-hidden="true"></div>
+            <mat-card-title>
+                <span id="quiz-title-{{q.id}}">{{ q.title }}</span>
+            </mat-card-title>
+            <mat-card-subtitle>
+                <span id="quiz-category-{{q.id}}">{{ q.category.title }}</span>
+            </mat-card-subtitle>
+            <div class="header-actions">
+                <!-- edit -->
+                <button mat-icon-button color="primary" class="mt10"
+                    [attr.aria-label]="( 'EDIT' | translate ) + ' ' + ( 'QUIZ' | translate ) + ' ' + q.title"
+                    (click)="editQuiz(q.qId)"
+                    style="position: absolute; top: 8px; right: 48px;"
+                    matTooltip="{{ 'EDIT' | translate }}"
+                >
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <!-- delete -->
+                <button mat-icon-button color="warn" class="mt10"
+                    [attr.aria-label]="( 'DELETE' | translate ) + ' ' + ( 'QUIZ' | translate ) + ' ' + q.title"
+                    (click)="deleteQuiz(q.qId)"
+                    style="position: absolute; top: 8px; right: 8px;"
+                    matTooltip="{{ 'DELETE' | translate }}"
+                >
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </mat-card-header>
+        <mat-card-content class="content-card">
+            <p class="quiz-description">{{ q.description }}</p>
+            
+            <div class="quiz-info-row">
+            <span>
+                <span class="font-bold">{{ 'MAX_MARKS' | translate }}:</span>
+                <span>&nbsp;{{ q.maxMarks }}</span>
+            </span>
+            <span>
+                <span class="font-bold">{{ 'NUMBER_OF_QUESTIONS' | translate }}:</span>
+                <span>&nbsp;{{ q.numberOfQuestions }}</span>
+            </span>
+            <span style="display: flex; align-items: center;">
+                <span class="font-bold">{{ 'ACTIVE' | translate }}:</span>
+                <span style="margin-left: 4px;">
+                    <mat-icon *ngIf="q.active" color="primary" style="color: green;" aria-label="{{ 'ACTIVE' | translate }}">check_circle</mat-icon>
+                    <mat-icon *ngIf="!q.active" color="warn" style="color: red;" aria-label="{{ 'DISABLED' | translate }}">cancel</mat-icon>
+                </span>
+            </span>
+            </div>
+        
+        </mat-card-content>
+        <mat-card-action>
+    <div class="quiz-actions">
+        <button mat-raised-button color="accent" role="button" class="ml10 pr10 mb-2 mr-2"
+            (click)="viewQuestions(q.qId, q.title)"
+            [attr.aria-label]="('QUESTIONS' | translate) + ' ' + q.title"
+        >
+            {{ 'QUESTIONS' | translate }}
+        </button>
+        <span class="quiz-info-chip ml10 mb-2 mr-2" aria-label="{{ ('MAX_MARKS' | translate) + ': ' + q.maxMarks }}">
+            {{ 'MAX_MARKS' | translate }} {{ q.maxMarks }}
+        </span>
+        <span class="quiz-info-chip ml10 mb-2 mr-2" aria-label="{{ ('NUMBER_OF_QUESTIONS' | translate) + ': ' + q.numberOfQuestions }}">
+            {{ 'NUMBER_OF_QUESTIONS' | translate }}: {{ q.numberOfQuestions }}
+        </span>
+        <span class="quiz-info-chip ml10 mb-2" aria-label="{{ ('ATTEMPTS' | translate) + ' ' + q.title }}">
+            {{ 'ATTEMPTS' | translate }}
+        </span>
+    </div>
+    </mat-card-action>
+    </mat-card>
+</div>
+
+<!-- No Quizzes Found -->
+<ng-template #noQuizzes>
+    <div class="no-quizzes-message" style="text-align: center; margin: 32px 0;">
+        <mat-icon color="warn" style="font-size: 48px;">info</mat-icon>
+        <h3>{{ 'NO_QUIZZES_FOUND' | translate }}</h3>
+    </div>
+</ng-template>
+
+<!-- Paginator -->
+<div *ngIf="totalPages > 1" style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
   <app-paginator
     [page]="page"
     [totalPages]="totalPages"

@@ -77,9 +77,13 @@ export class QuizService {
    * @param size The number of items per page.
    * @returns An observable emitting a Page object with quizzes.
    */
-  public getQuizzesPaged(page: number, size: number): Observable<{ content: Quiz[], totalPages: number, totalElements: number }> {
+  public getQuizzesPaged(page: number, size: number, search?: string): Observable<{ content: Quiz[], totalPages: number, totalElements: number }> {
+    let params = `?page=${page}&size=${size}`;
+    if (search && search.trim()) {
+      params += `&search=${encodeURIComponent(search.trim())}`;
+    }
     return this.http.get<{ content: Quiz[], totalPages: number, totalElements: number }>(
-      `${this.apiUrl}/quiz/paged?page=${page}&size=${size}`
+      `${this.apiUrl}/quiz/paged${params}`
     );
   }
 }

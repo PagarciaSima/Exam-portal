@@ -94,11 +94,20 @@ mat-card:hover mat-card-content {
   }
   .quiz-actions {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center; /* <-- Cambia de stretch a center */
     gap: 12px;
-  }
-  .quiz-actions button {
     width: 100%;
+  }
+  .quiz-actions button,
+  .quiz-info-chip {
+    width: 100%;
+    text-align: center;
+    margin-right: 0;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
   .header-card {
     min-height: 100px;
@@ -111,4 +120,36 @@ mat-card:hover mat-card-content {
   gap: 24px;
   margin: 8px 0;
   align-items: center;
+}
+
+.quiz-info-chip {
+  display: inline-block;
+  background: #e3e7f7;
+  color: #3f51b5;
+  border-radius: 16px;
+  padding: 4px 14px;
+  font-size: 0.95em;
+  font-weight: 500;
+  margin-bottom: 4px;
+  box-shadow: 0 1px 4px rgba(63,81,181,0.07);
+  border: 1px solid #c5cae9;
+  letter-spacing: 0.5px;
+  transition: background 0.2s;
+}
+
+.quiz-info-chip:last-child {
+  margin-right: 0;
+}
+
+.quiz-info-chip[aria-label] {
+  cursor: default;
+}
+
+/* Responsive: chips full width on mobile */
+@media (max-width: 600px) {
+  .quiz-info-chip {
+    width: 100%;
+    text-align: center;
+    margin-right: 0;
+  }
 }
