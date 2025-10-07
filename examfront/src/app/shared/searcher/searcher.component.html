@@ -1,0 +1,13 @@
+<div class="search" role="search" [attr.aria-label]="ariaLabel">
+  <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-label>{{ placeholder }}</mat-label>
+    <input matInput
+      [placeholder]="placeholder"
+      [attr.aria-label]="ariaLabel"
+      [(ngModel)]="value"
+      (ngModelChange)="onInputChange($event)">
+    <button mat-icon-button matSuffix aria-label="Buscar">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+</div>

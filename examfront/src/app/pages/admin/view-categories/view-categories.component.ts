@@ -125,4 +125,10 @@ export class ViewCategoriesComponent implements OnInit {
       this.fetchCategoriesPaged();
     }
   }
+
+  onSearchTermChange(term: string) {
+    this.searchTerm = term;
+    this.page = 0; // Reset to first page on new search
+    this.fetchCategoriesPaged();
+  }
 }

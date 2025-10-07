@@ -44,6 +44,7 @@ import { ProfileEditComponent } from './pages/profile/profile-edit/profile-edit.
 import { ProfileChangePasswordComponent } from './pages/profile/profile-change-password/profile-change-password.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PaginatorComponent } from './shared/paginator/paginator.component';
+import { SearcherComponent } from './shared/searcher/searcher.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -70,7 +71,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddQuestionComponent,
     ProfileEditComponent,
     ProfileChangePasswordComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    SearcherComponent
   ],
   imports: [
     BrowserModule,

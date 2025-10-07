@@ -41,7 +41,7 @@ mat-list-item:hover p {
   padding-top: 16px;
 }
 
-@media (max-width: 484px) {
+@media (max-width: 854px) {
   .search-bar {
     flex-direction: column;
     align-items: stretch;

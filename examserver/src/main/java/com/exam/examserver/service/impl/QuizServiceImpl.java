@@ -1,6 +1,7 @@
 package com.exam.examserver.service.impl;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -167,11 +169,22 @@ public class QuizServiceImpl implements IQuizService {
         Quiz quiz = quizRepository.findById(qid)
                 .orElseThrow(() -> new IllegalArgumentException("Quiz not found with ID: " + qid));
 
-        // Crear paginación (ordenar por ID o cualquier campo deseado)
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "quesId"));
+        // limit total size to 20
+        int maxTotalQuestions = 20;
 
-        // Obtener las preguntas paginadas
-        Page<Question> questionsPage = questionRepository.findByQuiz_qId(quiz.getqId(), pageable);
+        List<Question> questionsList = questionRepository.findByQuiz_qId(quiz.getqId());
+        if (questionsList.size() > maxTotalQuestions) {
+            questionsList = questionsList.subList(0, maxTotalQuestions);
+        }
+
+        // Crate limited list
+        int start = Math.min(page * size, questionsList.size());
+        int end = Math.min(start + size, questionsList.size());
+        List<Question> pagedList = questionsList.subList(start, end);
+       
+
+        // pagination
+        Page<Question> questionsPage = new PageImpl<>(pagedList, PageRequest.of(page, size), questionsList.size());
 
         LOGGER.info("Fetched {} questions (page {} of {}) for quiz '{}'",
                 questionsPage.getNumberOfElements(),
@@ -181,5 +194,6 @@ public class QuizServiceImpl implements IQuizService {
 
         return questionsPage;
     }
+
 
 }

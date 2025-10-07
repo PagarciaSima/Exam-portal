@@ -1,4 +1,7 @@
 <div class="paginator-container">
+  <button mat-icon-button [disabled]="page === 0" (click)="goToPage(0)" aria-label="Primera página">
+    <mat-icon>first_page</mat-icon>
+  </button>
   <button mat-icon-button [disabled]="page === 0" (click)="goToPage(page - 1)" aria-label="Anterior">
     <mat-icon>chevron_left</mat-icon>
   </button>
@@ -12,5 +15,8 @@
   </ng-container>
   <button mat-icon-button [disabled]="page >= totalPages - 1" (click)="goToPage(page + 1)" aria-label="Siguiente">
     <mat-icon>chevron_right</mat-icon>
+  </button>
+  <button mat-icon-button [disabled]="page >= totalPages - 1" (click)="goToPage(totalPages - 1)" aria-label="Última página">
+    <mat-icon>last_page</mat-icon>
   </button>
 </div>

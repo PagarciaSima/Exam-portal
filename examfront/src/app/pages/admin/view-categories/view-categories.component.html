@@ -6,18 +6,17 @@
         </h1>
 
         <!-- Search Bar -->
-        <div class="search-bar">
+        <div class="search-bar" role="search" aria-label="Buscar categorías">
             <button mat-raised-button color="primary" (click)="addCategory()" class="mb20">
                 <mat-icon>add</mat-icon>
                 {{ 'ADD_CATEGORY' | translate }}
             </button>
-            <mat-form-field appearance="outline" style="width: 300px;">
-                <mat-label>{{ 'SEARCH_CATEGORY' | translate }}</mat-label>
-                <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearch()" placeholder="{{ 'SEARCH_PLACEHOLDER_CATEGORY' | translate }}">
-                <button mat-icon-button matSuffix aria-label="Buscar">
-                    <mat-icon>search</mat-icon>
-                </button>
-            </mat-form-field>
+            <app-search-bar
+                [placeholder]="'SEARCH_CATEGORY' | translate"
+                [ariaLabel]="'SEARCH_CATEGORY' | translate"
+                [value]="searchTerm"
+                (valueChange)="onSearchTermChange($event)">
+            </app-search-bar>
         </div>
 
         <!-- Category List -->

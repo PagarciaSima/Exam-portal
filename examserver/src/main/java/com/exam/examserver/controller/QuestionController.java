@@ -155,7 +155,7 @@ public class QuestionController {
             @RequestParam(defaultValue = "10") int size) {
 
         LOGGER.info("Received request to fetch paginated questions for quiz ID {}: page {}, size {}", qid, page, size);
-
+        
         Page<Question> questionsPage = quizService.getQuestionsByQuizPaged(qid, page, size);
         return ResponseEntity.ok(questionsPage);
     }
