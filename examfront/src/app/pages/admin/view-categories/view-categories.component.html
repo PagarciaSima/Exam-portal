@@ -20,10 +20,12 @@
         </div>
 
         <!-- Category List -->
-        <mat-list *ngIf="categories.length > 0; else noCategories" role="list" aria-label="Category List">
+        <mat-list *ngIf="categories.length > 0; else noCategories" role="list" aria-label="Category List" class="category-list">
             <mat-list-item *ngFor="let category of categories" role="listitem">
                 <mat-icon matListIcon color="primary" aria-hidden="true" class="responsive-icon">category</mat-icon>
-                <h3 matLine id="cat-title-{{category.id}}" tabindex="0">{{ category.title }}</h3>
+                <h3 matLine id="cat-title-{{category.id}}" tabindex="0">
+                    {{ category.title }} - ID: {{ category.cid }}
+                </h3>
                 <p matLine id="cat-desc-{{category.id}}" tabindex="0" class="responsive-desc">{{ category.description }}</p>
                 <button mat-icon-button color="warn"
                     [attr.aria-label]="('DELETE' | translate) + ' category ' + category.title"

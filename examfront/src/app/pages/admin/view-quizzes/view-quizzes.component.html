@@ -44,13 +44,14 @@
                 </button>
             </div>
         </mat-card-header>
+
         <mat-card-content class="content-card" style="display: flex; justify-content: center;">
             <p class="quiz-description center-text">{{ q.description }}</p>
         </mat-card-content>
         <mat-card-action>
     <div class="quiz-actions">
         <button mat-raised-button color="accent" role="button" class="ml10 pr10 mb-2 mr-2"
-            (click)="viewQuestions(q.qId, q.title)"
+            (click)="viewQuestions(q.qId, q.title)"Q
             [attr.aria-label]="('QUESTIONS' | translate) + ' ' + q.title"
         >
             {{ 'QUESTIONS' | translate }}
@@ -65,7 +66,7 @@
             {{ 'ATTEMPTS' | translate }}
         </span>
         <!-- Estado activo/desactivado abajo -->
-        <span class="quiz-info-chip ml10 mb-2" aria-label="{{ q.active ? ('ACTIVE' | translate) : ('DISABLED' | translate) }}"
+        <span class="quiz-info-chip ml10 mr10 mb-2" aria-label="{{ q.active ? ('ACTIVE' | translate) : ('DISABLED' | translate) }}"
             style="display: flex; align-items: center; justify-content: center;"
         >
             <mat-icon *ngIf="q.active" color="primary" style="color: green;" aria-label="{{ 'ACTIVE' | translate }}"

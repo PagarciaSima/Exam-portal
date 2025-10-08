@@ -32,4 +32,12 @@ mat-list-item:hover p {
   transition: color 0.2s;
 }
 
+@media (min-width: 768px) and (max-width: 1180px) {
+  mat-card {
+    margin-left: 10px;
+  }
+  .search-bar {
+    margin-left: 50px;
+  }
+}
 

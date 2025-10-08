@@ -145,7 +145,6 @@ mat-card:hover mat-card-content {
   cursor: default;
 }
 
-
 /* Responsive: chips full width on mobile */
 @media (max-width: 600px) {
   .quiz-info-chip {
@@ -155,12 +154,23 @@ mat-card:hover mat-card-content {
   }
 }
 
-@media (min-width: 768px) and (max-width: 960px) {
-  .quiz-cards-container {
-    margin-left: 50px;
-  }
-  .search-bar {
-    margin-left: 50px;
+mat-card-header {
+  background-color: rgba(3, 113, 179, 0.5);
+  padding: 15px;
+  border-radius: 25px 25px 0 0;
+  color: white;
+}
+
+mat-card {
+  border-radius: 25px;
+  min-width: 400px;
+}
+
+@media (min-width: 600px) {
+  mat-card {
+    padding-right: 0;
+    padding-left: 0;
+    padding-top: 0;
   }
 }
 
