@@ -163,5 +163,7 @@
   "SEARCH_CATEGORY": "Search Category",
   "SEARCH_QUIZ": "Search Quiz",
   "NO_QUIZZES_FOUND": "No quizzes found",
-  "NO_CATEGORIES_FOUND": "No categories found"
+  "NO_CATEGORIES_FOUND": "No categories found",
+  "NO_QUESTIONS": "No questions available for this quiz",
+  "SEARCH_QUESTION": "Search Question"
 }

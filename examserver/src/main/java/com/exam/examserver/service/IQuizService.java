@@ -17,5 +17,6 @@ public interface IQuizService {
 	public Page<Quiz> getQuizzesPaged(int page, int size);
 	public Page<Question> getQuestionsByQuizPaged(Long qid, int page, int size);
 	Page<Quiz> searchQuizzesPaged(String term, int page, int size);
+	Page<Question> searchQuestionsByQuizPaged(Long qid, String term, int page, int size);
 
 }

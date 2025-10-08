@@ -195,6 +195,18 @@ public class QuizServiceImpl implements IQuizService {
         return questionsPage;
     }
     
+    /**
+     * Searches quizzes by a given term and returns a paginated result.
+     * <p>
+     * The search is performed using the repository method to fetch quizzes matching the term. 
+     * Results are then sorted alphabetically by title and paginated manually according to the requested page and size.
+     * </p>
+     *
+     * @param term the search term to filter quizzes by title or other relevant fields
+     * @param page the page number to retrieve (0-based)
+     * @param size the number of quizzes per page
+     * @return a Page of {@link Quiz} containing the paginated search results
+     */
     @Override
     @Transactional(readOnly = true)
     public Page<Quiz> searchQuizzesPaged(String term, int page, int size) {
@@ -211,6 +223,30 @@ public class QuizServiceImpl implements IQuizService {
         List<Quiz> paged = results.subList(start, end);
 
         return new PageImpl<>(paged, PageRequest.of(page, size), results.size());
+    }
+
+    /**
+     * Searches questions within a specific quiz by a given search term and returns a paginated result.
+     * <p>
+     * The search includes the question's content, all options (option1-4), and the answer. 
+     * It uses the repository method to perform the query directly in the database, 
+     * which is efficient for large quizzes.
+     * </p>
+     *
+     * @param qid  the ID of the quiz whose questions are being searched
+     * @param term the search term to filter questions; matches against content, options, or answer
+     * @param page the page number to retrieve (0-based)
+     * @param size the number of questions per page
+     * @return a Page of {@link Question} containing the search results for the requested page
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Question> searchQuestionsByQuizPaged(Long qid, String term, int page, int size) {
+        LOGGER.info("Searching questions for quiz ID {} with term '{}' (page {}, size {})", qid, term, page, size);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Question> result = questionRepository.searchQuestionsByQuiz(qid, term, pageable);
+        LOGGER.info("Search returned {} questions out of total {}", result.getNumberOfElements(), result.getTotalElements());
+        return result;
     }
 
 

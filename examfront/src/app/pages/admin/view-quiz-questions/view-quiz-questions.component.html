@@ -1,14 +1,23 @@
 <h1 class="mt20" tabindex="0">{{ 'QUESTIONS' | translate }} {{ qTitle }}</h1>
-<div class="container text-center mt20 mb20" [@slideIn]>
-    <button mat-raised-button color="primary" role="button"
+
+<!-- Search Bar -->
+<div class="search-bar" role="search" [attr.aria-label]="'SEARCH_QUESTION' | translate">
+    <button mat-raised-button color="primary" role="button" class="mb20"
         (click)="addQuestion()" [attr.aria-label]="'ADD_QUESTION' | translate"
     >
         {{ 'ADD_QUESTION' | translate }}
     </button>
+    <app-search-bar
+        [placeholder]="'SEARCH_QUESTION' | translate"
+        [ariaLabel]="'SEARCH_QUESTION' | translate"
+        [value]="searchTerm"
+        (valueChange)="onSearchTermChange($event)">
+    </app-search-bar>
 </div>
+
 <div class="bootstrap-wrapper" role="main">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" *ngIf="questions.length != 0; else noQuestions">
             <mat-card *ngFor="let q of questions; let i = index" class="mb20" [@slideIn] [attr.aria-labelledby]="'question-' + i">
                 <mat-card-content>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -93,7 +102,19 @@
                 </mat-card-content>
             </mat-card>
         </div>
+
+        <!-- No questions Found -->
+        <ng-template #noQuestions>
+            <div class="no-results-message" role="alert" aria-live="assertive"
+                style="display: flex; align-items: center; justify-content: center; min-height: 300px; width: 100%;"
+            >
+                <mat-icon color="warn" class="no-results-icon">info</mat-icon>
+                <h2 class="no-results-text">{{ 'NO_QUESTIONS' | translate }}</h2>
+            </div>
+        </ng-template>
     </div>
+
+    <!-- Paginator-->
     <div *ngIf="questions.length > 0" style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
       <app-paginator
         [page]="page"

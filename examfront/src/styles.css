@@ -116,6 +116,36 @@ mat-card {
   padding-top: 16px;
 }
 
+
+.no-results-message {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 18px !important;
+    margin: 48px 0 !important;
+    min-height: 80px !important;
+}
+
+.no-results-icon {
+    font-size: 2.5rem !important;
+    color: #d3af2f !important;
+    vertical-align: middle !important;
+    display: flex !important;
+    align-items: center !important;
+    height: 2.5rem !important;
+    margin-right: 20px !important;
+}
+
+.no-results-text {
+    color: #d3af2f !important;
+    margin-bottom: 0 !important;
+    font-size: 2rem !important;
+    font-weight: 600 !important;
+    line-height: 2.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
 @media (max-width: 854px) {
   .search-bar {
     flex-direction: column;
@@ -130,3 +160,4 @@ mat-card {
     min-width: 0;
   }
 }
+

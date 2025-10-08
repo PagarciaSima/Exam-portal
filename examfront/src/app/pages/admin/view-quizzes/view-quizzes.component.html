@@ -90,9 +90,9 @@
 
 <!-- No Quizzes Found -->
 <ng-template #noQuizzes>
-    <div class="no-quizzes-message" style="text-align: center; margin: 32px 0;">
-        <mat-icon color="warn" style="font-size: 48px;">info</mat-icon>
-        <h3>{{ 'NO_QUIZZES_FOUND' | translate }}</h3>
+    <div class="no-results-message" role="alert" aria-live="assertive">
+        <mat-icon color="warn" class="no-results-icon">info</mat-icon>
+        <h2 class="no-results-text">{{ 'NO_QUIZZES_FOUND' | translate }}</h2>
     </div>
 </ng-template>
 

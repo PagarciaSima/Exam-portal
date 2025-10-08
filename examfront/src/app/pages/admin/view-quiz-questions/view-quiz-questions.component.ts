@@ -23,6 +23,7 @@ export class ViewQuizQuestionsComponent implements OnInit {
   page = 0;
   size = 7;
   totalPages = 1;
+  searchTerm = ''; // <-- Añade esto
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -61,7 +62,7 @@ export class ViewQuizQuestionsComponent implements OnInit {
   }
 
   getQuestionsOfQuizPaged(): void {
-    this.questionService.getQuestionsOfQuizPaged(this.qId, this.page, this.size).subscribe({
+    this.questionService.getQuestionsOfQuizPaged(this.qId, this.page, this.size, this.searchTerm).subscribe({
       next: (data) => {
         this.questions = data.content;
         this.totalPages = data.totalPages;
@@ -121,6 +122,12 @@ export class ViewQuizQuestionsComponent implements OnInit {
    */
   editQuestion(quesId: number): void {
     this.router.navigate(['admin/add-question', this.qId, this.qTitle, quesId]);
+  }
+
+  onSearchTermChange(term: string) {
+    this.searchTerm = term;
+    this.page = 0; // Reinicia la paginación al buscar
+    this.getQuestionsOfQuizPaged();
   }
 
   goToPage(page: number) {

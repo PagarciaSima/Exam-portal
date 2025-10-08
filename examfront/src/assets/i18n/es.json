@@ -163,5 +163,7 @@
   "SEARCH_CATEGORY": "Buscar Categoría",
   "SEARCH_QUIZ": "Buscar Cuestionario",
   "NO_QUIZZES_FOUND": "No se encontraron cuestionarios",
-  "NO_CATEGORIES_FOUND": "No se encontraron categorías"
+  "NO_CATEGORIES_FOUND": "No se encontraron categorías",
+  "NO_QUESTIONS": "No hay preguntas disponibles para este cuestionario",
+  "SEARCH_QUESTION": "Buscar Pregunta"
 }

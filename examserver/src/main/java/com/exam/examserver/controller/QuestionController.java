@@ -131,35 +131,38 @@ public class QuestionController {
     }
     
     /**
-     * Retrieve questions for a specific quiz in a paginated manner.
+     * Retrieves a paginated list of questions for a specific quiz.
      * <p>
-     * This endpoint returns the questions belonging to the given quiz ID,
-     * ordered by their ID (or another field if desired), and paginated
-     * using standard query parameters for page and size.
+     * If a search term is provided, the results are filtered to include only questions
+     * whose content, options (option1-4), or answer contain the term (case-insensitive).
+     * Pagination is applied according to the 'page' and 'size' parameters.
      * </p>
      *
-     * <p>Example request:</p>
-     * <pre>
-     * GET /question/quiz/5/paged?page=0&size=10
-     * </pre>
-     *
-     * @param qid  the ID of the quiz
-     * @param page the page number (zero-based)
-     * @param size the number of questions per page
-     * @return a page of questions for the specified quiz
+     * @param qid    the ID of the quiz whose questions are being retrieved
+     * @param page   the page number to retrieve (0-based)
+     * @param size   the number of questions per page
+     * @param search an optional search term to filter questions by content, options, or answer
+     * @return a {@link ResponseEntity} containing a {@link Page} of {@link Question} matching the criteria
      */
     @GetMapping("/quiz/{qid}/paged")
     public ResponseEntity<?> getQuestionsByQuizPaged(
             @PathVariable Long qid,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String search
+    ) {
+        Page<Question> questions;
 
-        LOGGER.info("Received request to fetch paginated questions for quiz ID {}: page {}, size {}", qid, page, size);
-        
-        Page<Question> questionsPage = quizService.getQuestionsByQuizPaged(qid, page, size);
-        return ResponseEntity.ok(questionsPage);
+        if (search != null && !search.isBlank()) {
+            String trimmed = search.trim();
+            questions = quizService.searchQuestionsByQuizPaged(qid, trimmed, page, size);
+        } else {
+            questions = quizService.getQuestionsByQuizPaged(qid, page, size);
+        }
+
+        return ResponseEntity.ok(questions);
     }
-
+    
     /**
      * Delete a question by ID.
      *
