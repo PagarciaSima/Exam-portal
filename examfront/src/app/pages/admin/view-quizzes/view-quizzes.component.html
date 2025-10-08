@@ -44,27 +44,8 @@
                 </button>
             </div>
         </mat-card-header>
-        <mat-card-content class="content-card">
-            <p class="quiz-description">{{ q.description }}</p>
-            
-            <div class="quiz-info-row">
-            <span>
-                <span class="font-bold">{{ 'MAX_MARKS' | translate }}:</span>
-                <span>&nbsp;{{ q.maxMarks }}</span>
-            </span>
-            <span>
-                <span class="font-bold">{{ 'NUMBER_OF_QUESTIONS' | translate }}:</span>
-                <span>&nbsp;{{ q.numberOfQuestions }}</span>
-            </span>
-            <span style="display: flex; align-items: center;">
-                <span class="font-bold">{{ 'ACTIVE' | translate }}:</span>
-                <span style="margin-left: 4px;">
-                    <mat-icon *ngIf="q.active" color="primary" style="color: green;" aria-label="{{ 'ACTIVE' | translate }}">check_circle</mat-icon>
-                    <mat-icon *ngIf="!q.active" color="warn" style="color: red;" aria-label="{{ 'DISABLED' | translate }}">cancel</mat-icon>
-                </span>
-            </span>
-            </div>
-        
+        <mat-card-content class="content-card" style="display: flex; justify-content: center;">
+            <p class="quiz-description center-text">{{ q.description }}</p>
         </mat-card-content>
         <mat-card-action>
     <div class="quiz-actions">
@@ -82,6 +63,22 @@
         </span>
         <span class="quiz-info-chip ml10 mb-2" aria-label="{{ ('ATTEMPTS' | translate) + ' ' + q.title }}">
             {{ 'ATTEMPTS' | translate }}
+        </span>
+        <!-- Estado activo/desactivado abajo -->
+        <span class="quiz-info-chip ml10 mb-2" aria-label="{{ q.active ? ('ACTIVE' | translate) : ('DISABLED' | translate) }}"
+            style="display: flex; align-items: center; justify-content: center;"
+        >
+            <mat-icon *ngIf="q.active" color="primary" style="color: green;" aria-label="{{ 'ACTIVE' | translate }}"
+                class="mr10"
+            >
+                check_circle
+            </mat-icon>
+            <mat-icon *ngIf="!q.active" color="warn" style="color: red;" aria-label="{{ 'DISABLED' | translate }}"
+                class="mr10"
+            >
+                cancel
+            </mat-icon>
+            {{ q.active ? ('ACTIVE' | translate) : ('DISABLED' | translate) }}
         </span>
     </div>
     </mat-card-action>
