@@ -6,9 +6,8 @@
      "start": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
-  },
+    "lint": "ng lint"
+},
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.2.17",
