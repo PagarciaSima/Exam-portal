@@ -1,68 +1,75 @@
 <mat-card>
-    <mat-list [@slideIn] role="list" [attr.aria-label]="'CATEGORIES' | translate">
-        <h1 tabindex="0" class="text-center" style="display: flex; align-items: center; justify-content: center;">
-            <mat-icon style="margin-right: 8px;">category</mat-icon>
-            {{ 'CATEGORIES' | translate }}
-        </h1>
+  <mat-list [@slideIn] role="list" [attr.aria-label]="'CATEGORIES' | translate">
+    <h1 tabindex="0" class="text-center" style="display: flex; align-items: center; justify-content: center;">
+      <mat-icon style="margin-right: 8px;">category</mat-icon>
+      {{ 'CATEGORIES' | translate }}
+    </h1>
 
-        <!-- Search Bar -->
-        <div class="search-bar" role="search" [attr.aria-label]="'SEARCH_CATEGORY' | translate">
-            <button mat-raised-button color="primary" (click)="addCategory()" class="mb20">
-                <mat-icon>add</mat-icon>
-                {{ 'ADD_CATEGORY' | translate }}
-            </button>
-            <app-search-bar
-                [placeholder]="'SEARCH_CATEGORY' | translate"
-                [ariaLabel]="'SEARCH_CATEGORY' | translate"
-                [value]="searchTerm"
-                (valueChange)="onSearchTermChange($event)">
-            </app-search-bar>
-        </div>
-
-        <!-- Category List -->
-        <mat-list *ngIf="categories.length > 0; else noCategories" role="list" aria-label="Category List" class="category-list">
-            <mat-list-item *ngFor="let category of categories" role="listitem">
-                <mat-icon matListIcon color="primary" aria-hidden="true" class="responsive-icon">category</mat-icon>
-                <h3 matLine id="cat-title-{{category.id}}" tabindex="0">
-                    {{ category.title }} - ID: {{ category.cid }}
-                </h3>
-                <p matLine id="cat-desc-{{category.id}}" tabindex="0" class="responsive-desc">{{ category.description }}</p>
-                <button mat-icon-button color="warn"
-                    [attr.aria-label]="('DELETE' | translate) + ' category ' + category.title"
-                    matTooltip="{{ 'DELETE' | translate }}"
-                    [attr.aria-describedby]="'cat-title-' + category.cid"
-                    (click)="deleteCategory(category.cid)">
-                    <mat-icon aria-hidden="true">delete</mat-icon>
-                </button>
-                <button mat-icon-button color="primary"
-                    aria-label="{{ 'EDIT' | translate }} category {{ category.title }}"
-                    matTooltip="{{ 'EDIT' | translate }}"
-                    [attr.aria-describedby]="'cat-title-' + category.cid"
-                    (click)="editCategory(category.cid)">
-                    <mat-icon aria-hidden="true">edit</mat-icon>
-                </button>
-                <mat-divider></mat-divider>
-            </mat-list-item>
-        </mat-list>
-    </mat-list>
-
-    <!-- No categories Found -->
-    <ng-template #noCategories>
-        <div class="no-results-message" role="alert" aria-live="assertive"
-            style="display: flex; align-items: center; justify-content: center; min-height: 300px; width: 100%;"
-        >
-            <mat-icon color="warn" class="no-results-icon">info</mat-icon>
-            <h2 class="no-results-text">{{ 'NO_CATEGORIES_FOUND' | translate }}</h2>
-        </div>
-    </ng-template>
-
-    <!-- paginator -->
-    <div *ngIf="totalPages > 1" style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
-        <app-paginator
-            [page]="page"
-            [totalPages]="totalPages"
-            [range]="5"
-            (pageChange)="goToPage($event)">
-        </app-paginator>
+    <!-- Search Bar -->
+    <div class="search-bar" role="search" [attr.aria-label]="'SEARCH_CATEGORY' | translate">
+      <button mat-raised-button color="primary" (click)="addCategory()" class="mb20">
+        <mat-icon>add</mat-icon>
+        {{ 'ADD_CATEGORY' | translate }}
+      </button>
+      <app-search-bar
+        style="display: flex; justify-content: center;"
+        [placeholder]="'SEARCH_CATEGORY' | translate"
+        [ariaLabel]="'SEARCH_CATEGORY' | translate"
+        [value]="searchTerm"
+        (valueChange)="onSearchTermChange($event)">
+      </app-search-bar>
     </div>
+
+    <!-- Category List -->
+    <mat-list *ngIf="categories.length > 0; else noCategories" role="list" aria-label="Category List" class="category-list">
+      <mat-list-item *ngFor="let category of categories; let last = last" role="listitem" class="mb20">
+        <div class="category-item-content">
+          <mat-icon matListIcon color="primary" aria-hidden="true" class="category-icon">category</mat-icon>
+          <div>
+            <span class="font-bold category-title">{{ category.title }}<span class="id"> - ID: {{ category.cid }}</span></span>
+            <div class="category-description pr10">{{ category.description }}</div>
+          </div>
+        </div>
+
+        <div matListItemMeta>
+          <button mat-icon-button color="warn"
+            [attr.aria-label]="('DELETE' | translate) + ' category ' + category.title"
+            matTooltip="{{ 'DELETE' | translate }}"
+            (click)="deleteCategory(category.cid)"
+            class="action-btn"
+        >
+            <mat-icon aria-hidden="true">delete</mat-icon>
+          </button>
+          <button mat-icon-button color="primary"
+            aria-label="{{ 'EDIT' | translate }} category {{ category.title }}"
+            matTooltip="{{ 'EDIT' | translate }}"
+            (click)="editCategory(category.cid)"
+            class="action-btn"
+        >
+            <mat-icon aria-hidden="true">edit</mat-icon>
+          </button>
+        </div>
+        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </mat-list>
+
+  <!-- No categories Found -->
+  <ng-template #noCategories>
+    <div class="no-results-message" role="alert" aria-live="assertive"
+      style="display: flex; align-items: center; justify-content: center; min-height: 300px; width: 100%;">
+      <mat-icon color="warn" class="no-results-icon">info</mat-icon>
+      <h2 class="no-results-text">{{ 'NO_CATEGORIES_FOUND' | translate }}</h2>
+    </div>
+  </ng-template>
+
+  <!-- paginator -->
+  <div *ngIf="totalPages > 1" style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
+    <app-paginator
+      [page]="page"
+      [totalPages]="totalPages"
+      [range]="5"
+      (pageChange)="goToPage($event)">
+    </app-paginator>
+  </div>
 </mat-card>

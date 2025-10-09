@@ -1,22 +1,23 @@
-<div class="paginator-container">
-  <button mat-icon-button [disabled]="page === 0" (click)="goToPage(0)" aria-label="Primera página">
+<div class="paginator-container flex-wrap">
+  <button mat-icon-button [disabled]="page === 0" (click)="goToPage(0)" aria-label="Primera página" class="btn btn-sm">
     <mat-icon>first_page</mat-icon>
   </button>
-  <button mat-icon-button [disabled]="page === 0" (click)="goToPage(page - 1)" aria-label="Anterior">
+  <button mat-icon-button [disabled]="page === 0" (click)="goToPage(page - 1)" aria-label="Anterior" class="btn btn-sm">
     <mat-icon>chevron_left</mat-icon>
   </button>
   <ng-container *ngFor="let p of pageNumbers">
     <button mat-button
       [color]="p === page ? 'accent' : ''"
       [disabled]="p === page"
-      (click)="goToPage(p)">
+      (click)="goToPage(p)"
+      class="btn btn-sm">
       {{ p + 1 }}
     </button>
   </ng-container>
-  <button mat-icon-button [disabled]="page >= totalPages - 1" (click)="goToPage(page + 1)" aria-label="Siguiente">
+  <button mat-icon-button [disabled]="page >= totalPages - 1" (click)="goToPage(page + 1)" aria-label="Siguiente" class="btn btn-sm">
     <mat-icon>chevron_right</mat-icon>
   </button>
-  <button mat-icon-button [disabled]="page >= totalPages - 1" (click)="goToPage(totalPages - 1)" aria-label="Última página">
+  <button mat-icon-button [disabled]="page >= totalPages - 1" (click)="goToPage(totalPages - 1)" aria-label="Última página" class="btn btn-sm">
     <mat-icon>last_page</mat-icon>
   </button>
 </div>

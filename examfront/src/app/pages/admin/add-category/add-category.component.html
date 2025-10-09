@@ -10,7 +10,7 @@
                     <form #categoryForm="ngForm" aria-labelledby="add-category-title"
                         (ngSubmit)="formSubmit()" autocomplete="on" novalidate>
                         <!-- Category title -->
-                        <mat-form-field class="w100" appearance="outline">
+                        <mat-form-field class="w100 mt20" appearance="outline">
                             <mat-label id="category-title-label">{{ 'CATEGORY_TITLE_LABEL' | translate }}</mat-label>
                             <input
                                 type="text"
@@ -36,7 +36,7 @@
                             </mat-error>
                         </mat-form-field>
                         <!-- Category Description -->
-                        <mat-form-field class="w100" appearance="outline">
+                        <mat-form-field class="w100 mt20" appearance="outline">
                             <mat-label id="category-description-label">{{ 'CATEGORY_DESCRIPTION_LABEL' | translate }}</mat-label>
                             <textarea
                                 name="description"
@@ -61,7 +61,7 @@
                             </mat-error>
                         </mat-form-field>
 
-                        <div class="container text-center mt15">
+                        <div class="container text-center mt20">
                             <button
                                 mat-raised-button
                                 color="primary"

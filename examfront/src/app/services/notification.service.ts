@@ -76,8 +76,8 @@ export class NotificationService {
       confirmButtonText: 'Sí',
       cancelButtonText: 'No',
       customClass: {
-        confirmButton: 'mat-raised-button mat-primary swal2-confirm mr20', 
-        cancelButton: 'mat-raised-button mat-warn swal2-cancel'
+        confirmButton: 'mat-mdc-raised-button mat-mdc-button-base mdc-button mdc-button--raised mat-primary swal2-confirm', 
+        cancelButton: 'ml20 mat-mdc-raised-button mat-mdc-button-base mdc-button mdc-button--raised mat-warn swal2-cancel'
       },
       buttonsStyling: false 
     }).then(result => result.isConfirmed);

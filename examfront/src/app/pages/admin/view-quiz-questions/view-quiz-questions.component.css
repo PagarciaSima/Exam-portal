@@ -67,6 +67,10 @@ mat-card-content {
     border-color: #1a237e;
 }
 
+.question-content {
+    min-width: 150px;
+}
+
 .question-actions {
     display: flex;
     gap: 2px;
@@ -85,4 +89,10 @@ mat-card-content {
 .row.answer-options .row {
     margin-left: 0 !important;
     margin-right: 0 !important;
+}
+
+@media (max-width: 550px) {
+    mat-card-content img {
+        display: none;
+    }
 }

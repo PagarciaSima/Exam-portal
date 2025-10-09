@@ -20,7 +20,7 @@ export class CategoryService {
    * Get all categories.
    */
   public getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.apiUrl}/`);
+    return this.http.get<Category[]>(`${this.apiUrl}`);
   }
 
   /**

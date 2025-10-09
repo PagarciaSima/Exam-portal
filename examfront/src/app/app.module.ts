@@ -14,7 +14,7 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
+import {MatIconModule} from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -45,6 +45,7 @@ import { ProfileChangePasswordComponent } from './pages/profile/profile-change-p
 import { MatDialogModule } from '@angular/material/dialog';
 import { PaginatorComponent } from './shared/paginator/paginator.component';
 import { SearcherComponent } from './shared/searcher/searcher.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -94,6 +95,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSelectModule,
     MatDialogModule,
     MatSlideToggleModule,
+    MatDividerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

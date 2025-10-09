@@ -33,11 +33,103 @@ mat-list-item:hover p {
 }
 
 @media (min-width: 768px) and (max-width: 1180px) {
-  mat-card {
-    margin-left: 10px;
-  }
   .search-bar {
     margin-left: 50px;
   }
 }
 
+.category-item-content {
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+  width: 100%;           /* Ocupa todo el ancho disponible */
+  min-width: 0;          /* Permite que los hijos se reduzcan correctamente */
+  flex: 1 1 0;           /* Flexibilidad para crecer y reducirse */
+}
+
+.category-icon {
+  margin-right: 16px; 
+}
+
+.category-title,
+.category-description {
+  margin-left: 0;
+  display: block;
+}
+
+.category-description {
+  word-break: break-word;      /* Permite saltos de línea en palabras largas */
+  white-space: normal;         /* Permite saltos de línea automáticos */
+  overflow-wrap: anywhere;     /* Rompe el texto si es necesario */
+  max-width: 100%;             /* Evita que se salga del contenedor */
+}
+
+@media (max-width: 600px) {
+  .id {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .category-item-content {
+    flex-direction: row;
+    align-items: center;
+    margin-left: 8px;
+  }
+  .category-title {
+    max-width: 140px;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .category-icon {
+    margin-right: 8px;
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  .category-description {
+    display: none;
+  }
+}
+
+mat-list-item {
+  min-height: fit-content;
+}
+
+mat-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.category-item-content {
+  flex: 1 1 auto;          /* Se adapta al espacio disponible */
+  min-width: 0;            /* Permite que el contenido se encoja correctamente */
+  display: flex;
+  align-items: center;
+  overflow: hidden;        /* Evita desbordamientos visuales */
+}
+
+.category-item-content > div {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.category-title {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+mat-list-item [matListItemMeta] {
+  margin: 0;
+}
+
+.action-btn {
+  width: fit-content;
+}

@@ -1,10 +1,10 @@
 <div class="bootstrap-wrapper">
     <div class="container-fluid" role="main" [attr.aria-label]="'ADMIN' | translate">
         <div class="row g-3">
-            <div class="col-lg-3" role="navigation" [attr.aria-label]="'MENU' | translate">
+            <div class="col-12 col-lg-3" role="navigation" [attr.aria-label]="'MENU' | translate">
                 <app-sidebar></app-sidebar>
             </div>
-            <div class="col-lg-9" role="region" [attr.aria-label]="'HOME' | translate">
+            <div class="col-12 col-lg-9" role="region" [attr.aria-label]="'HOME' | translate">
                 <router-outlet></router-outlet>
             </div>
         </div>

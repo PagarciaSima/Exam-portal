@@ -20,8 +20,8 @@
             <mat-card-title>
                 <span id="quiz-title-{{q.id}}">{{ q.title }}</span>
             </mat-card-title>
-            <mat-card-subtitle>
-                <span id="quiz-category-{{q.id}}">{{ q.category.title }}</span>
+            <mat-card-subtitle class="pt-2">
+                <span [id]="'quiz-category-' + q.id">{{ q.category.title }}</span>
             </mat-card-subtitle>
             <div class="header-actions">
                 <!-- edit -->
@@ -45,7 +45,7 @@
             </div>
         </mat-card-header>
 
-        <mat-card-content class="content-card" style="display: flex; justify-content: center;">
+        <mat-card-content class="content-card mt10 mb10" style="display: flex; justify-content: center;">
             <p class="quiz-description center-text">{{ q.description }}</p>
         </mat-card-content>
         <mat-card-action>
