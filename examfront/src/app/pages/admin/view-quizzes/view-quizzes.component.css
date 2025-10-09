@@ -174,4 +174,7 @@ mat-card {
   }
 }
 
+.no-results-icon {
+  min-width: fit-content;
+}
 

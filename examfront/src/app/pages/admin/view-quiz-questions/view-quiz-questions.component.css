@@ -96,3 +96,7 @@ mat-card-content {
         display: none;
     }
 }
+
+.no-results-icon {
+    min-width: fit-content;
+}
