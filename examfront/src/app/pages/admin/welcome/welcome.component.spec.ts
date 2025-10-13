@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'; // <--- Importa esto
 
 import { WelcomeComponent } from './welcome.component';
 
@@ -8,7 +9,8 @@ describe('WelcomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WelcomeComponent ]
+      declarations: [ WelcomeComponent ],
+      imports: [ NoopAnimationsModule ] // <--- Añadido
     })
     .compileComponents();
   });

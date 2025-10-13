@@ -1,7 +1,7 @@
 <div class="bootstrap-wrapper">
     <div class="container">
         <div class="row login-wrapper">
-            <div>
+            <div class="d-flex justify-content-center ">
                 <mat-card @fadeInUp>
                     <div class="container img-hover-zoom">
                         <a routerLink="/" aria-label="Ir a la página principal">
@@ -12,7 +12,7 @@
                     
                     <form #loginForm="ngForm" (ngSubmit)="formSubmit()" aria-labelledby="login-title" autocomplete="on">
                         <!-- Username -->
-                        <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-form-field appearance="outline" class="full-width required-field mt-3">
                             <mat-label for="username-input">{{ 'USERNAME_LABEL' | translate }}</mat-label>
                             <input
                                 id="username-input"
@@ -25,15 +25,15 @@
                                 autocomplete="username"
                                 aria-required="true"
                                 aria-describedby="username-hint username-error"
-                            />
-                            <mat-hint id="username-hint">{{ 'USERNAME_HINT' | translate }}</mat-hint>
+                            />   
                             <mat-error id="username-error" *ngIf="username.invalid && (username.dirty || username.touched)">
                                 <span *ngIf="username.errors?.required">{{ 'USERNAME_REQUIRED' | translate }}</span>
                             </mat-error>
+                            <mat-hint id="username-hint">{{ 'USERNAME_HINT' | translate }}</mat-hint>
                         </mat-form-field>
 
                         <!-- Password -->
-                        <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-form-field appearance="outline" class="full-width required-field mt-3">
                             <mat-label for="password-input">{{ 'PASSWORD_LABEL' | translate }}</mat-label>
                             <input
                                 id="password-input"
@@ -54,7 +54,7 @@
                         </mat-form-field>
                 
                         <!-- Buttons -->
-                        <div class="container text-center m-t-20">
+                        <div class="container text-center mt-3">
                             <button type="submit" [disabled]="loginForm.invalid" mat-raised-button color="primary">
                                 {{ 'LOGIN' | translate }}
                             </button>

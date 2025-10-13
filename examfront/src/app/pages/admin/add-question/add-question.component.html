@@ -11,34 +11,37 @@
                     <form #questionForm="ngForm" aria-labelledby="add-question-title"
                         (ngSubmit)="formSubmit()" autocomplete="on" novalidate>
                         
-                        <!-- Question Content -->
-                        <mat-form-field class="w100" appearance="outline">
-                            <mat-label id="question-content-label">{{ 'QUESTION' | translate }}</mat-label>
-                            <textarea
+                        <!-- Question Content con CKEditor (sin mat-form-field) -->
+                        <div class="w100 mb10 mt-3">
+                            <mat-label id="question-content-label" style="margin-bottom: 8px; display: block; font-size: 1.1rem; color: #3f51b5;">
+                                {{ 'QUESTION' | translate }}
+                            </mat-label>
+                            <ckeditor
+                                [editor]="Editor"
+                                [(ngModel)]="question.content"
                                 name="content"
-                                matInput
-                                rows="4"
-                                [placeholder]="'QUESTION' | translate"
                                 required
                                 #content="ngModel"
                                 aria-required="true"
                                 aria-labelledby="question-content-label"
                                 aria-describedby="question-content-error"
                                 [attr.aria-label]="'QUESTION' | translate"
-                                [(ngModel)]="question.content"
-                            ></textarea>
-                            <mat-error
+                                [config]="{ placeholder: ('QUESTION' | translate) }"
+                            ></ckeditor>
+                            <div
                                 id="question-content-error"
                                 *ngIf="content.invalid && (content.dirty || content.touched)"
+                                class="mat-error"
                                 role="alert"
                                 [attr.aria-label]="('QUESTION' | translate) + ' ' + ('IS_REQUIRED' | translate)"
+                                style="color: #f44336; margin-top: 4px;"
                             >
                                 {{ 'QUESTION' | translate }} {{ 'IS_REQUIRED' | translate }}
-                            </mat-error>
-                        </mat-form-field>
+                            </div>
+                        </div>
 
                         <!-- Option 1 -->
-                        <mat-form-field class="w100" appearance="outline">
+                        <mat-form-field class="w100 mt-3" appearance="outline">
                             <mat-label id="option1-label">{{ 'OPTION' | translate }} 1</mat-label>
                             <input
                                 type="text"
@@ -64,7 +67,7 @@
                         </mat-form-field>
 
                         <!-- Option 2 -->
-                        <mat-form-field class="w100" appearance="outline">
+                        <mat-form-field class="w100 mt-3" appearance="outline">
                             <mat-label id="option2-label">{{ 'OPTION' | translate }} 2</mat-label>
                             <input
                                 type="text"
@@ -90,7 +93,7 @@
                         </mat-form-field>
 
                         <!-- Option 3 -->
-                        <mat-form-field class="w100" appearance="outline">
+                        <mat-form-field class="w100 mt-3" appearance="outline">
                             <mat-label id="option3-label">{{ 'OPTION' | translate }} 3</mat-label>
                             <input
                                 type="text"
@@ -116,7 +119,7 @@
                         </mat-form-field>
 
                         <!-- Option 4 -->
-                        <mat-form-field class="w100" appearance="outline">
+                        <mat-form-field class="w100 mt-3" appearance="outline">
                             <mat-label id="option4-label">{{ 'OPTION' | translate }} 4</mat-label>
                             <input
                                 type="text"
@@ -142,7 +145,7 @@
                         </mat-form-field>
 
                         <!-- Correct Answer -->
-                        <mat-form-field class="w100" appearance="outline">
+                        <mat-form-field class="w100 mt-3" appearance="outline">
                             <mat-label id="correct-answer-label">{{ 'CORRECT_ANSWER' | translate }}</mat-label>
                             <mat-select
                                 name="answer"
@@ -175,7 +178,7 @@
                         </mat-form-field>
 
                         <!-- Question Image (botón con icono) -->
-                        <div class="w100 mb10" style="display: flex; align-items: center; gap: 12px;">
+                        <div class="w100 mt-3" style="display: flex; align-items: center; gap: 12px;">
                             <button mat-raised-button color="accent" type="button" (click)="fileInput.click()">
                                 <mat-icon aria-hidden="true">image</mat-icon>
                                 {{ 'ADD_IMAGE' | translate }}
@@ -192,7 +195,7 @@
                         </div>
 
                         <!-- Add Question Button (dentro del form) -->
-                        <div class="container text-center mt15" style="display: flex; justify-content: center; gap: 16px;">
+                        <div class="container text-center mt-3" style="display: flex; justify-content: center; gap: 16px;">
                             <button
                                 mat-raised-button
                                 color="primary"

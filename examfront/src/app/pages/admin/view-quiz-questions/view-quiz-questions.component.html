@@ -17,7 +17,7 @@
 
 <div class="bootstrap-wrapper" role="main">
     <div class="row">
-        <div class="col-md-12" *ngIf="questions.length != 0; else noQuestions">
+        <div class="col-md-12" *ngIf="!isLoading && questions.length != 0">
             <mat-card *ngFor="let q of questions; let i = index" class="mb20" [@slideIn] [attr.aria-labelledby]="'question-' + i">
                 <mat-card-content>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -104,14 +104,12 @@
         </div>
 
         <!-- No questions Found -->
-        <ng-template #noQuestions>
-            <div class="no-results-message" role="alert" aria-live="assertive"
-                style="display: flex; align-items: center; justify-content: center; min-height: 300px; width: 100%;"
-            >
-                <mat-icon color="warn" class="no-results-icon">info</mat-icon>
-                <h2 class="no-results-text">{{ 'NO_QUESTIONS' | translate }}</h2>
-            </div>
-        </ng-template>
+        <div *ngIf="!isLoading && questions.length == 0" class="no-results-message" role="alert" aria-live="assertive"
+            style="display: flex; align-items: center; justify-content: center; min-height: 300px; width: 100%;"
+        >
+            <mat-icon color="warn" class="no-results-icon">info</mat-icon>
+            <h2 class="no-results-text">{{ 'NO_QUESTIONS' | translate }}</h2>
+        </div>
     </div>
 
     <!-- Paginator-->

@@ -21,6 +21,7 @@ export class ViewQuizzesComponent implements OnInit {
   size = 5;
   totalPages = 1;
   searchTerm: string = '';
+  isLoading: boolean = true;
 
   constructor(
     private quizService: QuizService,
@@ -34,26 +35,6 @@ export class ViewQuizzesComponent implements OnInit {
   }
 
   /**
-   * Fetches all quizzes from the backend service and assigns them to the local `quizzes` property.
-   * Displays an error notification if the request fails.
-   */
-  private loadQuizzes(): void {
-    this.quizService.getQuizzes().subscribe({
-      next: (data: any) => {
-        this.quizzes = data;
-        console.log(this.quizzes);
-      },
-      error: (error) => {
-        this.notificacionService.error(
-          this.translate.instant('QUIZZES_LOAD_ERROR'),
-          this.translate.instant('ERROR')
-        );
-        console.error('Error fetching quizzes:', error);
-      }
-    });
-  }
-
-  /**
    * Loads a paginated list of quizzes from the server.
    * Updates the local `quizzes` array and `totalPages` based on the response.
    */
@@ -62,6 +43,7 @@ export class ViewQuizzesComponent implements OnInit {
       next: (data) => {
         this.quizzes = data.content;
         this.totalPages = data.totalPages;
+        this.isLoading = false;
       },
       error: (error) => {
         this.notificacionService.error(

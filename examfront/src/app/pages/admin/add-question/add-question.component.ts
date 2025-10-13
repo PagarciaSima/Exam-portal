@@ -6,7 +6,8 @@ import { Question } from 'src/app/model/Question';
 import { Quiz } from 'src/app/model/Quiz';
 import { NotificationService } from 'src/app/services/notification.service';
 import { QuestionService } from 'src/app/services/question.service';
-import { TranslateService } from '@ngx-translate/core'; // Importa el servicio de traducción
+import { TranslateService } from '@ngx-translate/core'; 
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-add-question',
@@ -15,6 +16,8 @@ import { TranslateService } from '@ngx-translate/core'; // Importa el servicio d
   animations: [slideIn]
 })
 export class AddQuestionComponent implements OnInit {
+
+  public Editor = ClassicEditor;
 
   @ViewChild('questionForm') questionForm: NgForm;
   

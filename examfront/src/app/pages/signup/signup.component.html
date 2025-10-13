@@ -12,7 +12,7 @@
                     
                     <form #signupForm="ngForm" (ngSubmit)="formSubmit()" aria-labelledby="signupFormTitle">
                         <!-- Username -->
-                        <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-form-field appearance="outline" class="full-width required-field mt-3">
                             <mat-label id="usernameLabel">{{ 'USERNAME_LABEL' | translate }}</mat-label>
                             <input
                                 [(ngModel)]="user.username"
@@ -35,7 +35,7 @@
                         </mat-form-field>
 
                         <!-- Password -->
-                        <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-form-field appearance="outline" class="full-width required-field mt-3">
                             <mat-label id="passwordLabel">{{ 'PASSWORD_LABEL' | translate }}</mat-label>
                             <input
                                 [(ngModel)]="user.password"
@@ -57,7 +57,7 @@
                         </mat-form-field>
 
                         <!-- Repeat Password -->
-                        <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-form-field appearance="outline" class="full-width required-field mt-3">
                             <mat-label id="repeatPasswordLabel">{{ 'REPEAT_PASSWORD_LABEL' | translate }}</mat-label>
                             <input
                                 [(ngModel)]="repeatPassword"
@@ -84,7 +84,7 @@
                         </div>
 
                         <!-- First name -->
-                        <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-form-field appearance="outline" class="full-width required-field mt-3">
                             <mat-label id="firstNameLabel">{{ 'FIRSTNAME_LABEL' | translate }}</mat-label>
                             <input
                                 [(ngModel)]="user.firstName"
@@ -102,7 +102,7 @@
                         </mat-form-field>
 
                         <!-- Last name -->
-                        <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-form-field appearance="outline" class="full-width required-field mt-3">
                             <mat-label id="lastNameLabel">{{ 'LASTNAME_LABEL' | translate }}</mat-label>
                             <input
                                 [(ngModel)]="user.lastName"
@@ -120,7 +120,7 @@
                         </mat-form-field>
 
                         <!-- E-mail -->
-                        <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-form-field appearance="outline" class="full-width required-field mt-3">
                             <mat-label id="emailLabel">{{ 'EMAIL_LABEL' | translate }}</mat-label>
                             <input
                                 [(ngModel)]="user.email"
@@ -141,7 +141,7 @@
                         </mat-form-field>
 
                         <!-- Phone -->
-                        <mat-form-field appearance="outline" class="full-width required-field">
+                        <mat-form-field appearance="outline" class="full-width required-field mt-3">
                             <mat-label id="phoneLabel">{{ 'PHONE_LABEL' | translate }}</mat-label>
                             <input
                                 [(ngModel)]="user.phone"
@@ -162,7 +162,7 @@
                         </mat-form-field>
 
                         <!-- Buttons -->
-                        <div class="container text-center">
+                        <div class="container text-center mt-3">
                             <button type="submit" [disabled]="signupForm.invalid" mat-raised-button color="primary">
                                 {{ 'REGISTER_BUTTON' | translate }}
                             </button>

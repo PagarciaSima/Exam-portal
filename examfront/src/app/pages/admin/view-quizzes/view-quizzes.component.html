@@ -12,7 +12,7 @@
     </app-search-bar>
 </div>
 
-<div [@slideIn] class="quiz-cards-container" *ngIf="quizzes.length > 0; else noQuizzes">
+<div [@slideIn] class="quiz-cards-container" *ngIf="!isLoading && quizzes.length > 0">
     <mat-card *ngFor="let q of quizzes" class="mt20 mr20 ml20" role="region" [attr.aria-label]="q.title">
 
         <mat-card-header class="header-card" style="position: relative;">
@@ -87,12 +87,10 @@
 </div>
 
 <!-- No Quizzes Found -->
-<ng-template #noQuizzes>
-    <div class="no-results-message" role="alert" aria-live="assertive">
-        <mat-icon color="warn" class="no-results-icon">info</mat-icon>
-        <h2 class="no-results-text">{{ 'NO_QUIZZES_FOUND' | translate }}</h2>
-    </div>
-</ng-template>
+<div *ngIf="!isLoading && quizzes.length === 0" class="no-results-message" role="alert" aria-live="assertive">
+    <mat-icon color="warn" class="no-results-icon">info</mat-icon>
+    <h2 class="no-results-text">{{ 'NO_QUIZZES_FOUND' | translate }}</h2>
+</div>
 
 <!-- Paginator -->
 <div *ngIf="totalPages > 1" style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">

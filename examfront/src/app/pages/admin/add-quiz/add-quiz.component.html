@@ -74,6 +74,7 @@
                                         matInput
                                         [placeholder]="'QUIZ_MAX_MARKS_PLACEHOLDER' | translate"
                                         required
+                                        min="1"
                                         [(ngModel)]="quiz.maxMarks"
                                         #maxMarks="ngModel"
                                         aria-required="true"
@@ -100,6 +101,7 @@
                                         matInput
                                         [placeholder]="'QUIZ_NUMBER_OF_QUESTIONS_PLACEHOLDER' | translate"
                                         required
+                                        min="1"
                                         [(ngModel)]="quiz.numberOfQuestions"
                                         #numberOfQuestions="ngModel"
                                         aria-required="true"
@@ -137,11 +139,14 @@
                                 name="category"
                                 [(ngModel)]="quiz.category"
                                 #category="ngModel"
+                                required
                                 aria-required="true"
                                 aria-describedby="quiz-category-error"
                                 aria-labelledby="quiz-category-label"
                                 [attr.aria-label]="'QUIZ_CATEGORY_LABEL' | translate"
+                                (blur)="category.control.markAsTouched()"
                             >
+                                <mat-option [value]="null">{{ 'SELECT_CATEGORY' | translate }}</mat-option>
                                 <mat-option *ngFor="let category of categories" [value]="category">
                                     {{ category.title }}
                                 </mat-option>

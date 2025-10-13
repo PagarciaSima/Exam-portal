@@ -165,7 +165,7 @@ export class AddQuizComponent implements OnInit {
    * - `category`: An object with `cid` as 0, and empty `title` and `description`.
    */
   private setQuizDefaultValue(): Quiz {
-    return this.quiz = {
+    return {
       title: '',
       description: '',
       questions: [],
@@ -173,7 +173,7 @@ export class AddQuizComponent implements OnInit {
       maxMarks: 0,
       numberOfQuestions: 0,
       active: false,
-      category: { cid: 0, title: '', description: '' }
+      category: null
     };
   }
 }
