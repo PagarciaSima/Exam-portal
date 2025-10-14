@@ -165,5 +165,9 @@
   "NO_QUIZZES_FOUND": "No quizzes found",
   "NO_CATEGORIES_FOUND": "No categories found",
   "NO_QUESTIONS": "No questions available for this quiz",
-  "SEARCH_QUESTION": "Search Question"
+  "SEARCH_QUESTION": "Search Question",
+  "SELECT_CATEGORY": "Select Category",
+  "ALL_QUIZZES": "All Quizzes",
+  "VIEW": "View",
+  "START": "Start"
 }

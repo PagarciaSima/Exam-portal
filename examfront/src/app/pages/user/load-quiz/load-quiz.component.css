@@ -1,0 +1,78 @@
+/* Avatar redondo con borde */
+.quiz-avatar img {
+    background: #fff;
+    border-radius: 50%;
+    border: 2px solid #3f51b5;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+/* Card header con fondo y color */
+mat-card-header {
+    background-color: rgba(3, 113, 179, 0.5);
+    padding: 15px;
+    border-radius: 25px;
+    color: white;
+}
+
+/* Card general */
+mat-card {
+    cursor: pointer;
+    border-radius: 25px;
+    min-width: 300px;
+    box-shadow: 0 2px 8px rgba(63,81,181,0.08);
+    transition:
+        box-shadow 0.3s ease,
+        transform 0.3s ease,
+        background-color 0.25s ease,
+        color 0.25s ease;
+}
+
+mat-card:hover {
+    background-color: #f5f5f5;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    transform: translateY(-4px) scale(1.01);
+    z-index: 1;
+}
+
+mat-card-title,
+mat-card-subtitle {
+    color: white;
+    font-weight: 500;
+}
+
+.truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Número de líneas antes de truncar */
+  line-clamp: 3; /* Propiedad estándar */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  max-height: 4.5em; /* Ajusta según el tamaño de fuente */
+}
+
+.no-results-icon {
+    width: fit-content;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    mat-card-header {
+        padding: 10px;
+        border-radius: 25px;
+        text-align: center;
+    }
+
+    mat-card-title,
+    mat-card-subtitle {
+        width: 100%;
+        text-align: center;
+        display: block;
+    }
+    .truncate {
+        text-align: center;
+    }
+}
+

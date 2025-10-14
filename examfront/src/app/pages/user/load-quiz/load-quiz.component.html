@@ -1,0 +1,77 @@
+<div class="bootstrap-wrapper" [@slideIn] role="main">
+  <div class="container-fluid mt-5">
+    <h1 class="text-center" tabindex="0" [attr.aria-label]="['ALL_QUIZZES' | translate]">
+      {{ 'ALL_QUIZZES' | translate }}
+    </h1>
+    <!-- Searcher -->
+    <div class="search-bar mb-4" role="search" [attr.aria-label]="'SEARCH_QUIZ' | translate">
+      <app-search-bar
+        [placeholder]="'SEARCH_QUIZ' | translate"
+        [ariaLabel]="'SEARCH_QUIZ' | translate"
+        [value]="searchTerm"
+        (valueChange)="onSearchTermChange($event)">
+      </app-search-bar>
+    </div>
+    <!-- Quiz List -->
+    <div class="row quizzes" *ngIf="!isLoading && quizzes.length > 0" role="list">
+      <div *ngFor="let quiz of quizzes" class="col-12 col-lg-6 py-2" role="listitem">
+        <mat-card class="text-center" aria-labelledby="quiz-title-{{quiz.qid}}">
+          <mat-card-header class="d-flex justify-content-center">
+            <div mat-card-avatar class="quiz-avatar">
+              <img src="assets/img/quiz.gif"
+                   [attr.alt]="'Avatar de ' + quiz.title"
+                   style="width:40px; height:40px; border-radius:50%;">
+            </div>
+            <mat-card-title class="mb-2" id="quiz-title-{{quiz.qid}}" tabindex="0">
+              {{ quiz.title }}
+            </mat-card-title>
+            <mat-card-subtitle tabindex="0">
+              {{ quiz.category.title }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="mt-3">
+            <p class="truncate" tabindex="0" aria-label="{{ quiz.description }}">
+              {{ truncateDescription(quiz.description, 100) }}
+            </p>
+          </mat-card-content>
+          <mat-card-action class="mt-3 d-flex justify-content-center gap-2 flex-wrap">
+            <button mat-raised-button color="primary"
+                    (click)="viewQuiz(quiz.qid)"
+                    [attr.aria-label]="'Ver el quiz ' + quiz.title">
+              {{ 'VIEW' | translate }}
+            </button>
+            <button mat-raised-button color="accent"
+                    (click)="startQuiz(quiz.qid)"
+                    [attr.aria-label]="'Comenzar el quiz ' + quiz.title">
+              {{ 'START' | translate }}
+            </button>
+            <button mat-raised-button color="accent"
+                    [attr.aria-label]="'Preguntas: ' + quiz.numberOfQuestions">
+              {{ 'QUESTIONS' | translate }}: {{ quiz.numberOfQuestions }}
+            </button>
+            <button mat-button color="accent"
+                    [attr.aria-label]="'Puntaje máximo: ' + quiz.maxMarks">
+              {{ 'MAX_MARKS' | translate }} : {{ quiz.maxMarks }}
+            </button>
+          </mat-card-action>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- No Quizzes Found -->
+    <div *ngIf="!isLoading && quizzes.length === 0" class="no-results-message" role="alert" aria-live="assertive">
+        <mat-icon color="warn" class="no-results-icon">info</mat-icon>
+        <h2 class="no-results-text">{{ 'NO_QUIZZES_FOUND' | translate }}</h2>
+    </div>
+
+    <!-- Paginador -->
+    <div *ngIf="totalPages > 1" style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
+      <app-paginator
+        [page]="page"
+        [totalPages]="totalPages"
+        [range]="5"
+        (pageChange)="goToPage($event)">
+      </app-paginator>
+    </div>
+  </div>
+</div>

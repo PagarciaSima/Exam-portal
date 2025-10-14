@@ -1,0 +1,38 @@
+<mat-card [@slideIn] [attr.aria-label]="'MENU' | translate" class="sidebar-card">
+    <mat-action-list>
+        <div mat-subheader id="sidebar-menu-label" [attr.aria-label]="'MENU' | translate">{{ 'MENU' | translate }}</div>
+        <!-- Home -->
+        <button mat-list-item routerLink="/user-dashboard" aria-labelledby="sidebar-menu-label home-label" role="button"
+            [attr.aria-label]="'HOME' | translate">
+            <mat-icon matListIcon aria-hidden="true">home</mat-icon>
+            <span matLine id="home-label">{{ 'HOME' | translate }}</span>
+        </button>
+
+        <!-- All Quizzes -->
+        <button mat-list-item [routerLink]="['/user-dashboard', 0]" aria-labelledby="sidebar-menu-label all-quizzes-label"
+            role="button" [attr.aria-label]="'ALL_QUIZZES' | translate">
+            <mat-icon matListIcon aria-hidden="true">list_alt</mat-icon>
+            <span matLine id="all-quizzes-label">{{ 'ALL_QUIZZES' | translate }}</span>
+        </button>
+
+        <!-- Search Bar -->
+        <div class="mt-4 w-100">
+            <app-search-bar [placeholder]="'SEARCH_CATEGORY' | translate" [ariaLabel]="'SEARCH_CATEGORY' | translate"
+                [value]="searchTerm" (valueChange)="onSearchTermChange($event)">
+            </app-search-bar>
+        </div>
+
+        <!-- Categories -->
+        <button *ngFor="let category of categories" mat-list-item routerLink=""
+            aria-labelledby="sidebar-menu-label profile-label" role="button" [attr.aria-label]="'PROFILE' | translate">
+            <mat-icon matListIcon aria-hidden="true">quiz</mat-icon>
+            <span matLine id="profile-label">{{ category.title }}</span>
+        </button>
+    </mat-action-list>
+
+    <!-- Paginator -->
+    <div *ngIf="totalPages > 1" style="display: flex; justify-content: center; align-items: center; margin: 16px 0;">
+        <app-paginator [page]="page" [totalPages]="totalPages" [range]="5" (pageChange)="goToPage($event)">
+        </app-paginator>
+    </div>
+</mat-card>

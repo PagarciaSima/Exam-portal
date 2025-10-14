@@ -25,6 +25,8 @@ mat-card {
     background-color 0.25s ease,
     color 0.25s ease;
   box-shadow: 0 2px 8px rgba(63,81,181,0.08);
+  border-radius: 25px;
+  margin: 0; /* Elimina margen lateral para que Bootstrap lo gestione */
 }
 
 .card-icon {
@@ -152,25 +154,40 @@ mat-card:hover mat-card-content {
     text-align: center;
     margin-right: 0;
   }
+  mat-card-header {
+     align-items: center !important;
+  }
+ 
 }
 
 mat-card-header {
   background-color: rgba(3, 113, 179, 0.5);
   padding: 15px;
-  border-radius: 25px 25px 0 0;
+  border-radius: 25px;
   color: white;
 }
 
-mat-card {
-  border-radius: 25px;
-  min-width: 400px;
+.quiz-cards-container {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 1rem;
 }
 
-@media (min-width: 600px) {
-  mat-card {
-    padding-right: 0;
-    padding-left: 0;
-    padding-top: 0;
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.col-12, .col-md-6 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (max-width: 600px) {
+  .quiz-cards-container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.5rem;
   }
 }
 

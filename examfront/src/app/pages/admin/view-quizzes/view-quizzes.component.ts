@@ -56,6 +56,17 @@ export class ViewQuizzesComponent implements OnInit {
   }
 
   /**
+   * Truncates a string to a specified length and adds ellipsis if truncated.
+   * @param desc The description to truncate.
+   * @param limit The maximum length of the truncated string.
+   * @returns The truncated string with ellipsis if truncated.
+   */
+  truncateDescription(desc: string, limit: number = 100): string {
+    if (!desc) return '';
+    return desc.length > limit ? desc.substring(0, limit) + '...' : desc;
+  }
+
+  /**
    *  Navigates the user to the "Add Quiz" page within the admin section.
    */
   addQuiz() {

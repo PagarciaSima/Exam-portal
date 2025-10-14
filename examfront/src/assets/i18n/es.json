@@ -165,5 +165,9 @@
   "NO_QUIZZES_FOUND": "No se encontraron cuestionarios",
   "NO_CATEGORIES_FOUND": "No se encontraron categorías",
   "NO_QUESTIONS": "No hay preguntas disponibles para este cuestionario",
-  "SEARCH_QUESTION": "Buscar Pregunta"
+  "SEARCH_QUESTION": "Buscar Pregunta",
+  "SELECT_CATEGORY": "Seleccionar Categoría",
+  "ALL_QUIZZES": "Todos los Cuestionarios",
+  "VIEW": "Ver",
+  "START": "Iniciar"
 }

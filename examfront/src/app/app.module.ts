@@ -29,6 +29,7 @@ import { authInterceptorProvider } from './interceptors/AuthInterceptor';
 import { AddCategoryComponent } from './pages/admin/add-category/add-category.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { SidebarComponent } from './pages/admin/sidebar/sidebar.component';
+
 import { ViewCategoriesComponent } from './pages/admin/view-categories/view-categories.component';
 import { WelcomeComponent } from './pages/admin/welcome/welcome.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -46,6 +47,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { PaginatorComponent } from './shared/paginator/paginator.component';
 import { SearcherComponent } from './shared/searcher/searcher.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { SidebarUserComponent } from './pages/user/sidebar-user/sidebar-user.component';
+import { LoadQuizComponent } from './pages/user/load-quiz/load-quiz.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -73,7 +76,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProfileEditComponent,
     ProfileChangePasswordComponent,
     PaginatorComponent,
-    SearcherComponent
+    SearcherComponent,
+    SidebarUserComponent,
+    SidebarUserComponent,
+    LoadQuizComponent
   ],
   imports: [
     BrowserModule,
