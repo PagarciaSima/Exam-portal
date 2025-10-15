@@ -1,57 +1,60 @@
-<div class="bootstrap-wrapper">
+<div class="bootstrap-wrapper" role="main" [attr.aria-label]="'INSTRUCTIONS_SECTION' | translate">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <mat-card class="mt-4">
-                    <mat-card-header class="alert alert-warning w-100 d-flex align-items-center justify-content-center">
-                        <mat-icon color="warn" class="me-3">warning</mat-icon>
+                <mat-card class="mt-4" [attr.aria-label]="'QUIZ_INSTRUCTIONS_CARD' | translate" role="region">
+                    <mat-card-header class="alert alert-warning w-100 d-flex align-items-center justify-content-center" role="banner">
+                        <mat-icon color="warn" class="me-3" aria-hidden="true">warning</mat-icon>
                         <div>
-                            <mat-card-title>
-                                Read the instructions of this page carefully
+                            <mat-card-title tabindex="0" [attr.aria-label]="'INSTRUCTIONS_TITLE' | translate">
+                                {{ 'READ_INSTRUCTIONS' | translate }}
                             </mat-card-title>
-                            <mat-card-subtitle class="pb-2">
-                                One step more to go
+                            <mat-card-subtitle class="pb-2" tabindex="0" [attr.aria-label]="'INSTRUCTIONS_SUBTITLE' | translate">
+                                {{ 'ONE_STEP_MORE' | translate }}
                             </mat-card-subtitle>
                         </div>
                     </mat-card-header>
                     <mat-card-content class="mt-3">
-                        <h3 class="d-flex align-items-center justify-content-start mb-3">
+                        <h3 class="d-flex align-items-center justify-content-start mb-3" tabindex="0" [attr.aria-label]="quiz?.title">
                             <img src="assets/img/quiz.gif"
-                                alt="Quiz avatar"
+                                alt="{{ 'QUIZ_AVATAR_ALT' | translate }} {{ quiz?.title }}"
                                 style="width:40px; height:40px; border-radius:50%; margin-right:12px;">
                             <b>{{ quiz?.title }}</b>
                         </h3>
-                        <p>{{ quiz?.description }}</p>
-                        <mat-divider></mat-divider>
-                        <h1 class="mt-3 alert alert-info d-flex align-items-center justify-content-center">
-                            <mat-icon color="primary" class="me-3">info</mat-icon>
-                            Important instructions
+                        <p tabindex="0" [attr.aria-label]="quiz?.description">{{ quiz?.description }}</p>
+                        <mat-divider aria-hidden="true"></mat-divider>
+                        <h1 class="mt-3 alert alert-info d-flex align-items-center justify-content-center" tabindex="0" [attr.aria-label]="'IMPORTANT_INSTRUCTIONS' | translate">
+                            <mat-icon color="primary" class="me-3" aria-hidden="true">info</mat-icon>
+                            {{ 'IMPORTANT_INSTRUCTIONS' | translate }}
                         </h1>
                         <ul>
-                            <li>You must answer all the questions</li>
-                            <li>You must submit the quiz within <b>{{ quiz.numberOfQuestions * 2 }} minutes</b> (2 minutes per question)</li>
-                            <li>You can attempt the quiz as many times as you want</li>
-                            <li>There are <b>{{ quiz?.numberOfQuestions }} questions</b> in this quiz</li>
-                            <li>
-                                Each question is worth <b>{{ quiz.maxMarks / quiz.numberOfQuestions }}</b> marks out of <b>{{ quiz.maxMarks }} total marks</b>.
+                            <li tabindex="0">{{ 'ANSWER_ALL_QUESTIONS' | translate }}</li>
+                            <li tabindex="0">{{ 'SUBMIT_WITHIN' | translate }} <b>{{ quiz.numberOfQuestions * 2 }} {{ 'MINUTES' | translate }}</b> ({{ 'TWO_MINUTES_PER_QUESTION' | translate }})</li>
+                            <li tabindex="0">{{ 'ATTEMPT_AS_MANY_TIMES' | translate }}</li>
+                            <li tabindex="0">{{ 'THERE_ARE' | translate }} <b>{{ quiz?.numberOfQuestions }} {{ 'QUESTIONS' | translate }}</b> {{ 'IN_THIS_QUIZ' | translate }}</li>
+                            <li tabindex="0">
+                                {{ 'EACH_QUESTION_WORTH' | translate }} <b>{{ quiz.maxMarks / quiz.numberOfQuestions }}</b> {{ 'MARKS_OUT_OF' | translate }} <b>{{ quiz.maxMarks }} {{ 'TOTAL_MARKS' | translate }}</b>.
                                 <br>
-                                There is no negative marking</li>
-                            <li>All questions are multiple-choice (MCQ)</li>
+                                {{ 'NO_NEGATIVE_MARKING' | translate }}
+                            </li>
+                            <li tabindex="0">{{ 'ALL_MCQ' | translate }}</li>
                         </ul>
-                        <mat-divider></mat-divider>
+                        <mat-divider aria-hidden="true"></mat-divider>
                         <ul class="mt-2">
-                            <li>Click <b>Start Test</b> to begin the quiz.</li>
-                            <li>The timer will start as soon as you click the button.</li>
-                            <li>You cannot resume the quiz if it is interrupted for any reason.</li>
-                            <li>Click <b>Next</b> to move to the next question.</li>
-                            <li>Click <b>Submit</b> to finish and submit your quiz.</li>
-                            <li>A detailed report will be generated as a PDF after completion.</li>
+                            <li tabindex="0">{{ 'CLICK_START_TEST' | translate }}</li>
+                            <li tabindex="0">{{ 'TIMER_STARTS_ON_CLICK' | translate }}</li>
+                            <li tabindex="0">{{ 'CANNOT_RESUME_IF_INTERRUPTED' | translate }}</li>
+                            <li tabindex="0">{{ 'CLICK_NEXT_FOR_NEXT_QUESTION' | translate }}</li>
+                            <li tabindex="0">{{ 'CLICK_SUBMIT_TO_FINISH' | translate }}</li>
+                            <li tabindex="0">{{ 'PDF_REPORT_AFTER_COMPLETION' | translate }}</li>
                         </ul>
                     </mat-card-content>
                     <mat-card-actions class="mt-3 d-flex align-items-center justify-content-center">
-                        <button mat-raised-button color="primary">
-                            <mat-icon class="me-2">play_arrow</mat-icon>
-                            Start Quiz
+                        <button mat-raised-button color="primary"
+                                [attr.aria-label]="'START_QUIZ' | translate"
+                                role="button">
+                            <mat-icon class="me-2" aria-hidden="true">play_arrow</mat-icon>
+                            {{ 'START_QUIZ' | translate }}
                         </button>
                     </mat-card-actions>
                 </mat-card>

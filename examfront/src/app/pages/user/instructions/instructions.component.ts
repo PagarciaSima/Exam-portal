@@ -29,6 +29,9 @@ export class InstructionsComponent implements OnInit {
     });
   }
 
+  /**
+   * Fetches quiz details using the QuizService and handles success and error scenarios.
+   */
   loadQuizDetails(): void {
     this.quizService.getQuiz(this.qId).subscribe({
       next: (quiz) => {
