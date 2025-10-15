@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { slideIn } from 'src/app/animations/animations';
 import { Quiz } from 'src/app/model/Quiz';
@@ -26,7 +26,8 @@ export class LoadQuizComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private notificationService: NotificationService,
     private quizService: QuizService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -98,5 +99,14 @@ export class LoadQuizComponent implements OnInit {
   truncateDescription(desc: string, limit: number = 100): string {
     if (!desc) return '';
     return desc.length > limit ? desc.substring(0, limit) + '...' : desc;
+  }
+
+  /**
+   * Starts the quiz with the given ID.
+   * @param qId The ID of the quiz to start.
+   * Navigates to the instructions page for the quiz.
+   */
+  startQuiz(qId: number): void {
+    this.router.navigate(['/user-dashboard/instructions', qId]);
   }
 }

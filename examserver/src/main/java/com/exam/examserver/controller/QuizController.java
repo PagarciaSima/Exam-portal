@@ -74,36 +74,51 @@ public class QuizController {
     }
     
     /**
-     * Retrieve quizzes in a paginated and alphabetically ordered manner.
+     * Retrieves a paginated list of quizzes, optionally filtered by search term and/or category.
+     * <p>
+     * This endpoint supports the following use cases:
+     * <ul>
+     *   <li>If {@code categoryId} is provided, only quizzes from that category are returned.</li>
+     *   <li>If {@code search} is provided, quizzes are filtered by matching the search term in
+     *       the title, description, max marks, or number of questions.</li>
+     *   <li>If both {@code categoryId} and {@code search} are provided, results are filtered by
+     *       category and search term.</li>
+     *   <li>If neither parameter is provided, all quizzes are returned paginated.</li>
+     * </ul>
      *
-     * <p>This endpoint returns a page of quizzes sorted by their title in ascending order.
-     * Clients can specify the page number and the number of quizzes per page using query parameters.
-     * The response includes pagination metadata such as total pages, total elements, and current page.</p>
-     *
-     * <p>Example request:</p>
-     * <pre>
-     * GET /quiz/paged?page=0&size=10
-     * </pre>
-     *
-     * @param page the zero-based page index (default is 0)
-     * @param size the number of quizzes per page (default is 10)
-     * @return a {@link ResponseEntity} containing a {@link Page} of {@link Quiz} objects
-     *         with pagination metadata
+     * @param page the page number to retrieve (0-based). Defaults to 0.
+     * @param size the number of quizzes per page. Defaults to 10.
+     * @param search optional search term to filter quizzes by title, description, max marks, or number of questions.
+     * @param categoryId optional category ID to filter quizzes by a specific category.
+     * @return a {@link ResponseEntity} containing a {@link Page} of {@link Quiz} matching the provided filters.
      */
     @GetMapping("/paged")
     public ResponseEntity<?> getQuizzesPaged(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String search) {
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) Boolean active
+    		) {
 
         Page<Quiz> quizzes;
 
-        if (search != null && !search.isBlank()) {
-            String trimmed = search.trim();
-            LOGGER.debug("Search present -> using requested page {} for search '{}'", page, trimmed);
-            quizzes = quizService.searchQuizzesPaged(trimmed, page, size);
+        if (categoryId != null) {
+            // con filtro de categoría
+            if (search != null && !search.isBlank()) {
+                LOGGER.debug("Search '{}' with category {} -> page {}", search, categoryId, page);
+                quizzes = quizService.searchQuizByCategoryPaged(categoryId, search.trim(), page, size, active);
+            } else {
+                LOGGER.debug("Category {} -> page {}", categoryId, page);
+                quizzes = quizService.getQuizByCategoryPaged(categoryId, page, size, active);
+            }
         } else {
-            quizzes = quizService.getQuizzesPaged(page, size);
+            // sin filtro de categoría
+            if (search != null && !search.isBlank()) {
+                quizzes = quizService.searchQuizzesPaged(search.trim(), page, size, active);
+            } else {
+                quizzes = quizService.getQuizzesPaged(page, size, active);
+            }
         }
 
         return ResponseEntity.ok(quizzes);

@@ -140,11 +140,14 @@ public class QuizServiceImpl implements IQuizService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<Quiz> getQuizzesPaged(int page, int size) {
+    public Page<Quiz> getQuizzesPaged(int page, int size, Boolean active) {
         LOGGER.info("Fetching quizzes paginated: page {}, size {}, ordered by title ASC", page, size);
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "title"));
-
+        
+        if(null != active) {
+        	return quizRepository.findAllByActive(active, pageable);
+        }
         return quizRepository.findAll(pageable);
     }
 
@@ -248,6 +251,61 @@ public class QuizServiceImpl implements IQuizService {
         LOGGER.info("Search returned {} questions out of total {}", result.getNumberOfElements(), result.getTotalElements());
         return result;
     }
+    
+    /**
+     * Searches quizzes within a specific category by a given search term and returns a paginated result.
+     * <p>
+     * The search includes matching the term against the quiz's title, description, max marks, or number of questions.
+     * The results are sorted alphabetically by title and manually paginated according to the requested page and size.
+     * 
+     * @param categoryId the ID of the category to filter quizzes
+     * @param term the search term to filter quizzes within the category
+     * @param page the page number to retrieve (0-based)
+     * @param size the number of quizzes per page
+     * @return a {@link Page} of {@link Quiz} containing the quizzes that match the search term within the specified category
+     */
+	@Override
+    @Transactional(readOnly = true)
+	public Page<Quiz> searchQuizByCategoryPaged(Long categoryId, String term, int page, int size, Boolean active) {
+		LOGGER.info("Searching quizzes paginated by term '{}' (page {}, size {})", term, page, size);
+
+        List<Quiz> results = quizRepository.searchQuizByCategory(categoryId, term);
+
+        // Ordenar por título alfabéticamente
+        results.sort((a, b) -> a.getTitle().compareToIgnoreCase(b.getTitle()));
+
+        // Calcular paginación manual
+        int start = Math.min(page * size, results.size());
+        int end = Math.min(start + size, results.size());
+        List<Quiz> paged = results.subList(start, end);
+
+        return new PageImpl<>(paged, PageRequest.of(page, size), results.size());
+	}
+	
+	/**
+	 * Retrieves a paginated list of quizzes belonging to a specific category, ordered alphabetically by title.
+	 * <p>
+	 * This method uses the repository to fetch quizzes filtered by the given category ID and applies
+	 * pagination with the requested page number and size.
+	 * 
+	 * @param categoryId the ID of the category to filter quizzes by
+	 * @param page the page number to retrieve (0-based)
+	 * @param size the number of quizzes per page
+	 * @return a {@link Page} of {@link Quiz} containing quizzes for the specified category, paginated and sorted by title ascending
+	 */
+	@Override
+    @Transactional(readOnly = true)
+	public Page<Quiz> getQuizByCategoryPaged(Long categoryId, int page, int size, Boolean active) {
+	    LOGGER.info("Fetching quizzes for category {} paginated: page {}, size {}, ordered by title ASC",
+	                categoryId, page, size);
+
+	    Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "title"));
+	    if (active != null) {
+	        return quizRepository.findAllByCategory_CidAndActive(categoryId, active, pageable);
+	    } else {
+	        return quizRepository.findAllByCategory_Cid(categoryId, pageable);
+	    }
+	}
 
 
 }

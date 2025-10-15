@@ -1,0 +1,61 @@
+<div class="bootstrap-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-card class="mt-4">
+                    <mat-card-header class="alert alert-warning w-100 d-flex align-items-center justify-content-center">
+                        <mat-icon color="warn" class="me-3">warning</mat-icon>
+                        <div>
+                            <mat-card-title>
+                                Read the instructions of this page carefully
+                            </mat-card-title>
+                            <mat-card-subtitle class="pb-2">
+                                One step more to go
+                            </mat-card-subtitle>
+                        </div>
+                    </mat-card-header>
+                    <mat-card-content class="mt-3">
+                        <h3 class="d-flex align-items-center justify-content-start mb-3">
+                            <img src="assets/img/quiz.gif"
+                                alt="Quiz avatar"
+                                style="width:40px; height:40px; border-radius:50%; margin-right:12px;">
+                            <b>{{ quiz?.title }}</b>
+                        </h3>
+                        <p>{{ quiz?.description }}</p>
+                        <mat-divider></mat-divider>
+                        <h1 class="mt-3 alert alert-info d-flex align-items-center justify-content-center">
+                            <mat-icon color="primary" class="me-3">info</mat-icon>
+                            Important instructions
+                        </h1>
+                        <ul>
+                            <li>You must answer all the questions</li>
+                            <li>You must submit the quiz within <b>{{ quiz.numberOfQuestions * 2 }} minutes</b> (2 minutes per question)</li>
+                            <li>You can attempt the quiz as many times as you want</li>
+                            <li>There are <b>{{ quiz?.numberOfQuestions }} questions</b> in this quiz</li>
+                            <li>
+                                Each question is worth <b>{{ quiz.maxMarks / quiz.numberOfQuestions }}</b> marks out of <b>{{ quiz.maxMarks }} total marks</b>.
+                                <br>
+                                There is no negative marking</li>
+                            <li>All questions are multiple-choice (MCQ)</li>
+                        </ul>
+                        <mat-divider></mat-divider>
+                        <ul class="mt-2">
+                            <li>Click <b>Start Test</b> to begin the quiz.</li>
+                            <li>The timer will start as soon as you click the button.</li>
+                            <li>You cannot resume the quiz if it is interrupted for any reason.</li>
+                            <li>Click <b>Next</b> to move to the next question.</li>
+                            <li>Click <b>Submit</b> to finish and submit your quiz.</li>
+                            <li>A detailed report will be generated as a PDF after completion.</li>
+                        </ul>
+                    </mat-card-content>
+                    <mat-card-actions class="mt-3 d-flex align-items-center justify-content-center">
+                        <button mat-raised-button color="primary">
+                            <mat-icon class="me-2">play_arrow</mat-icon>
+                            Start Quiz
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

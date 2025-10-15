@@ -6,7 +6,7 @@ public class PasswordEncoderUtil {
 
     public static void main(String[] args) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String rawPassword = "admin"; 
+        String rawPassword = "user"; 
         String encodedPassword = encoder.encode(rawPassword);
 
         System.out.println("Contraseña original: " + rawPassword);

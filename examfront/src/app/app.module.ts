@@ -49,6 +49,7 @@ import { SearcherComponent } from './shared/searcher/searcher.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { SidebarUserComponent } from './pages/user/sidebar-user/sidebar-user.component';
 import { LoadQuizComponent } from './pages/user/load-quiz/load-quiz.component';
+import { InstructionsComponent } from './pages/user/instructions/instructions.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -79,7 +80,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SearcherComponent,
     SidebarUserComponent,
     SidebarUserComponent,
-    LoadQuizComponent
+    LoadQuizComponent,
+    InstructionsComponent
   ],
   imports: [
     BrowserModule,
