@@ -169,5 +169,6 @@
   "SELECT_CATEGORY": "Select Category",
   "ALL_QUIZZES": "All Quizzes",
   "VIEW": "View",
-  "START": "Start"
+  "START": "Start",
+  "ALL_AVAILABLE_QUIZZES": "All Available Quizzes"
 }

@@ -169,5 +169,6 @@
   "SELECT_CATEGORY": "Seleccionar Categoría",
   "ALL_QUIZZES": "Todos los Cuestionarios",
   "VIEW": "Ver",
-  "START": "Iniciar"
+  "START": "Iniciar",
+  "ALL_AVAILABLE_QUIZZES": "Todos los Cuestionarios Disponibles"
 }

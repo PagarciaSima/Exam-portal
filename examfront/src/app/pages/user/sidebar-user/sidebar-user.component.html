@@ -23,7 +23,7 @@
         </div>
 
         <!-- Categories -->
-        <button *ngFor="let category of categories" mat-list-item routerLink=""
+        <button *ngFor="let category of categories" mat-list-item [routerLink]="['/user-dashboard', category.cid]"
             aria-labelledby="sidebar-menu-label profile-label" role="button" [attr.aria-label]="'PROFILE' | translate">
             <mat-icon matListIcon aria-hidden="true">quiz</mat-icon>
             <span matLine id="profile-label">{{ category.title }}</span>
