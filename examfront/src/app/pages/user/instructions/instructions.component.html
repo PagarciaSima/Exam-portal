@@ -1,4 +1,4 @@
-<div class="bootstrap-wrapper" role="main" [attr.aria-label]="'INSTRUCTIONS_SECTION' | translate">
+<div class="bootstrap-wrapper" role="main" [attr.aria-label]="'INSTRUCTIONS_SECTION' | translate" [@slideIn]>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -52,7 +52,9 @@
                     <mat-card-actions class="mt-3 d-flex align-items-center justify-content-center">
                         <button mat-raised-button color="primary"
                                 [attr.aria-label]="'START_QUIZ' | translate"
-                                role="button">
+                                role="button"
+                                (click)="startQuiz(quiz.qId)"
+                        >
                             <mat-icon class="me-2" aria-hidden="true">play_arrow</mat-icon>
                             {{ 'START_QUIZ' | translate }}
                         </button>

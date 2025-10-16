@@ -1,0 +1,6 @@
+<main [@slideIn] class="container d-flex flex-column justify-content-center align-items-center min-vh-100" role="main" aria-labelledby="not-found-title">
+  <img src="assets/img/not-found.png" alt="{{ 'NOT_FOUND_IMAGE_ALT' | translate }}" class="not-found-img mb-4" role="img" aria-describedby="not-found-title not-found-desc">
+  <h1 id="not-found-title" class="mb-2" tabindex="-1">{{ 'NOT_FOUND_TITLE' | translate }}</h1>
+  <p id="not-found-desc" class="mb-3">{{ 'NOT_FOUND_DESC' | translate }}</p>
+  <button class="btn btn-primary" (click)="goBack()" [attr.aria-label]="'NOT_FOUND_BUTTON_ARIA' | translate">{{ 'NOT_FOUND_BUTTON' | translate }}</button>
+</main>

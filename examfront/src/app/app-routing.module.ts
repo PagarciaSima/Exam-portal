@@ -17,6 +17,8 @@ import { ViewQuizQuestionsComponent } from './pages/admin/view-quiz-questions/vi
 import { AddQuestionComponent } from './pages/admin/add-question/add-question.component';
 import { LoadQuizComponent } from './pages/user/load-quiz/load-quiz.component';
 import { InstructionsComponent } from './pages/user/instructions/instructions.component';
+import { StartComponent } from './pages/user/start/start.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -111,6 +113,12 @@ const routes: Routes = [
         path: 'instructions/:qId',
         component: InstructionsComponent,
         data: { animation: 'InstructionsPage' }
+      },
+      {
+        path: 'start/:qId',
+        component: StartComponent,
+        data: { animation: 'StartPage' },
+        canActivate: [NormalGuard]
       }
     ]
   },
@@ -118,6 +126,10 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
   }
 ];
 

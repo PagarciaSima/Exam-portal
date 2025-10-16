@@ -195,5 +195,12 @@
   "CLICK_NEXT_FOR_NEXT_QUESTION": "Click 'Next' for the next question.",
   "CLICK_SUBMIT_TO_FINISH": "Click 'Submit' to finish.",
   "PDF_REPORT_AFTER_COMPLETION": "You will get a PDF report after completion.",
-  "START_QUIZ": "Start Quiz"
+  "START_QUIZ": "Start Quiz",
+  "ONE_STEP_MORE": "One step more",
+  "START_QUIZ_CONFIRMATION": "Are you sure you want to start the quiz?",
+  "NOT_FOUND_IMAGE_ALT": "Not found page illustration, error 404",
+  "NOT_FOUND_TITLE": "404 - Page not found",
+  "NOT_FOUND_DESC": "The URL you entered does not exist.",
+  "NOT_FOUND_BUTTON": "Go back",
+  "NOT_FOUND_BUTTON_ARIA": "Go back to previous page"
 }

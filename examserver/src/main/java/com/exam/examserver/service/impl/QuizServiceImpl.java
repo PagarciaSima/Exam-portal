@@ -1,5 +1,6 @@
 package com.exam.examserver.service.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
@@ -212,10 +213,14 @@ public class QuizServiceImpl implements IQuizService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<Quiz> searchQuizzesPaged(String term, int page, int size) {
+    public Page<Quiz> searchQuizzesPaged(String term, int page, int size, Boolean active) {
         LOGGER.info("Searching quizzes paginated by term '{}' (page {}, size {})", term, page, size);
-
-        List<Quiz> results = quizRepository.searchQuizzes(term);
+        List<Quiz> results = new ArrayList<>();
+        if(null == active) {
+        	results = quizRepository.searchQuizzes(term);
+        } else {
+        	results = quizRepository.searchQuizzesByActive(term, active);
+        }
 
         // Ordenar por título alfabéticamente
         results.sort((a, b) -> a.getTitle().compareToIgnoreCase(b.getTitle()));

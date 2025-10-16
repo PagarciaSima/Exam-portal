@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { slideIn } from 'src/app/animations/animations';
 import { Quiz } from 'src/app/model/Quiz';
 import { NotificationService } from 'src/app/services/notification.service';
 import { QuizService } from 'src/app/services/quiz.service';
@@ -8,7 +9,10 @@ import { QuizService } from 'src/app/services/quiz.service';
 @Component({
   selector: 'app-instructions',
   templateUrl: './instructions.component.html',
-  styleUrls: ['./instructions.component.css']
+  styleUrls: ['./instructions.component.css'],
+  animations: [
+    slideIn
+  ]
 })
 export class InstructionsComponent implements OnInit {
 
@@ -19,7 +23,8 @@ export class InstructionsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private quizService: QuizService,
     private notificationService: NotificationService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -44,5 +49,19 @@ export class InstructionsComponent implements OnInit {
         );
       }
     });
+  }
+
+  /**
+   * Navigates to the start page for the quiz with the given ID.
+   * @param qId The ID of the quiz to start.
+   */
+  async startQuiz(qId: number): Promise<void> {
+    const confirmed = await this.notificationService.confirm(
+      this.translateService.instant('START_QUIZ_CONFIRMATION'),
+      this.translateService.instant('START_QUIZ')
+    );
+    if (confirmed) {
+      this.router.navigate(['/user-dashboard/start', qId]);
+    }
   }
 }

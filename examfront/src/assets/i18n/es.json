@@ -195,5 +195,12 @@
   "CLICK_NEXT_FOR_NEXT_QUESTION": "Haz clic en 'Siguiente' para la próxima pregunta.",
   "CLICK_SUBMIT_TO_FINISH": "Haz clic en 'Enviar' para finalizar.",
   "PDF_REPORT_AFTER_COMPLETION": "Recibirás un informe PDF al finalizar.",
-  "START_QUIZ": "Iniciar cuestionario"
+  "START_QUIZ": "Iniciar cuestionario",
+  "ONE_STEP_MORE": "Un paso más",
+  "START_QUIZ_CONFIRMATION": "¿Estás seguro de que quieres iniciar el cuestionario?",
+  "NOT_FOUND_IMAGE_ALT": "Ilustración de página no encontrada, error 404",
+  "NOT_FOUND_TITLE": "404 - Página no encontrada",
+  "NOT_FOUND_DESC": "La URL que has ingresado no existe.",
+  "NOT_FOUND_BUTTON": "Volver atrás",
+  "NOT_FOUND_BUTTON_ARIA": "Volver a la página anterior"
 }

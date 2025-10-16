@@ -50,6 +50,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SidebarUserComponent } from './pages/user/sidebar-user/sidebar-user.component';
 import { LoadQuizComponent } from './pages/user/load-quiz/load-quiz.component';
 import { InstructionsComponent } from './pages/user/instructions/instructions.component';
+import { StartComponent } from './pages/user/start/start.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -81,7 +83,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     SidebarUserComponent,
     SidebarUserComponent,
     LoadQuizComponent,
-    InstructionsComponent
+    InstructionsComponent,
+    StartComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
