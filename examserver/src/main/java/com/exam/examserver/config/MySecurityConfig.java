@@ -42,9 +42,13 @@ public class MySecurityConfig implements WebMvcConfigurer {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()).cors(cors -> cors.configurationSource(corsConfigurationSource))
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/generate-token", "/user/").permitAll()
-						.requestMatchers("/images/**").permitAll().requestMatchers(HttpMethod.OPTIONS, "/**")
-						.permitAll().anyRequest().authenticated())
+				.authorizeHttpRequests(
+						auth -> 
+						auth.requestMatchers("/generate-token", "/user/").permitAll()
+						.requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**", "/actuator/**").permitAll()
+						.requestMatchers("/images/**").permitAll()
+						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+						.anyRequest().authenticated())
 				.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

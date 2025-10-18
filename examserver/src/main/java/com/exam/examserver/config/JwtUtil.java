@@ -1,9 +1,12 @@
 package com.exam.examserver.config;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import javax.crypto.SecretKey;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -11,11 +14,27 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
 
-	private String SECRET_KEY = "ExamPortal123456654321";
+	private String SECRET_KEY = "ExamPortal123456654321ExamPortal123456654321ExamPortal123456654321";
+	
+	/**
+	 * Generates a secure {@link SecretKey} instance from the predefined secret string.
+	 * <p>
+	 * This method converts the secret key string into a byte array using UTF-8 encoding,
+	 * and then derives a valid HMAC-SHA key using {@link io.jsonwebtoken.security.Keys#hmacShaKeyFor(byte[])}.
+	 * The resulting {@code SecretKey} is suitable for signing and verifying JWTs
+	 * using HMAC algorithms such as HS256, HS384, or HS512.
+	 * </p>
+	 *
+	 * @return a securely derived {@link SecretKey} for JWT signing and verification
+	 */
+	private SecretKey getSigningKey() {
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+    }
 
 	/**
 	 * Extracts the username (subject) from the JWT token.
@@ -57,8 +76,12 @@ public class JwtUtil {
 	 * @return the Claims object containing all information in the token
 	 */
 	private Claims extractAllClaims(String token) {
-	    return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-	}
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
 
 	/**
 	 * Checks if the JWT token has expired.
@@ -89,14 +112,14 @@ public class JwtUtil {
 	 * @return the created JWT token as a string
 	 */
 	private String createToken(Map<String, Object> claims, String subject) {
-	    return Jwts.builder()
-	            .setClaims(claims)
-	            .setSubject(subject)
-	            .setIssuedAt(new Date(System.currentTimeMillis()))
-	            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-	            .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
-	            .compact();
-	}
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
 
 	/**
 	 * Validates the JWT token against the given user details.

@@ -25,12 +25,19 @@ import com.exam.examserver.model.jwt.JwtRequest;
 import com.exam.examserver.model.jwt.JwtResponse;
 import com.exam.examserver.model.user.User;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 /**
  * Controller responsible for handling user authentication
  * and JWT token generation.
  */
 @RestController
 @CrossOrigin("*")
+@Tag(name = "Authentication", description = "API for authentication")
 public class AuthenticationController {
 
 	@Autowired
@@ -60,6 +67,52 @@ public class AuthenticationController {
 	 * @return {@link ResponseEntity} containing either a {@link JwtResponse} with the token
 	 *         or an {@link ErrorResponse} with the corresponding error message
 	 */
+	@Operation(
+		    summary = "Authenticate user and generate JWT token",
+		    description = "Validates user credentials and returns a JWT token for authenticated access.",
+		    responses = {
+		        @ApiResponse(
+		            responseCode = "200",
+		            description = "User successfully authenticated. JWT token provided.",
+		            content = @Content(
+		                mediaType = "application/json",
+		                schema = @Schema(implementation = JwtResponse.class)
+		            )
+		        ),
+		        @ApiResponse(
+		            responseCode = "401",
+		            description = "Unauthorized. Invalid username or password.",
+		            content = @Content(
+		                mediaType = "application/json",
+		                schema = @Schema(implementation = ErrorResponse.class)
+		            )
+		        ),
+		        @ApiResponse(
+		            responseCode = "403",
+		            description = "User account is disabled.",
+		            content = @Content(
+		                mediaType = "application/json",
+		                schema = @Schema(implementation = ErrorResponse.class)
+		            )
+		        ),
+		        @ApiResponse(
+		            responseCode = "404",
+		            description = "User not found.",
+		            content = @Content(
+		                mediaType = "application/json",
+		                schema = @Schema(implementation = ErrorResponse.class)
+		            )
+		        ),
+		        @ApiResponse(
+		            responseCode = "500",
+		            description = "Internal server error.",
+		            content = @Content(
+		                mediaType = "application/json",
+		                schema = @Schema(implementation = ErrorResponse.class)
+		            )
+		        )
+		    }
+		)
 	@PostMapping("/generate-token")
 	public ResponseEntity<?> generateToken(@RequestBody JwtRequest jwtRequest) {
 	    LOGGER.info("Attempting authentication for user: {}", jwtRequest.getUsername());
@@ -106,6 +159,28 @@ public class AuthenticationController {
      * @param principal the security principal representing the authenticated user
      * @return the {@link User} entity corresponding to the authenticated username
      */
+	@Operation(
+		    summary = "Get currently authenticated user",
+		    description = "Retrieves the currently authenticated user's information using the Principal object.",
+		    responses = {
+		        @ApiResponse(
+		            responseCode = "200",
+		            description = "Authenticated user retrieved successfully",
+		            content = @Content(
+		                mediaType = "application/json",
+		                schema = @Schema(implementation = User.class)
+		            )
+		        ),
+		        @ApiResponse(
+		            responseCode = "401",
+		            description = "Unauthorized. No valid JWT token provided",
+		            content = @Content(
+		                mediaType = "application/json",
+		                schema = @Schema(implementation = ErrorResponse.class)
+		            )
+		        )
+		    }
+		)
 	@GetMapping("/current-user")
 	public User getCurrentUser(Principal principal) {
 		return ((User)this.userDetailService.loadUserByUsername(principal.getName()));
