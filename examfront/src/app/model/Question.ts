@@ -9,5 +9,6 @@ export interface Question {
   option3: string;
   option4: string;
   answer: string;
+  givenAnswer?: string;
   quiz: Quiz;
 }

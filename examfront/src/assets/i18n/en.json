@@ -202,5 +202,11 @@
   "NOT_FOUND_TITLE": "404 - Page not found",
   "NOT_FOUND_DESC": "The URL you entered does not exist.",
   "NOT_FOUND_BUTTON": "Go back",
-  "NOT_FOUND_BUTTON_ARIA": "Go back to previous page"
+  "NOT_FOUND_BUTTON_ARIA": "Go back to previous page",
+  "INVALID_QUIZ_ID": "Invalid Quiz ID",
+  "UPDATE_CATEGORY_BUTTON": "Update Category",
+  "NEXT": "Siguiente",
+  "BACK": "Atrás",
+  "SUBMIT": "Enviar",
+  "SUBMIT_QUIZ_CONFIRMATION": "Are you sure you want to submit the quiz?"
 }

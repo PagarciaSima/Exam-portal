@@ -1,0 +1,11 @@
+/* start.component.css */
+:host {
+  display: block; /* necesario para que el host acepte height */
+  height: 100%;
+}
+.bootstrap-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

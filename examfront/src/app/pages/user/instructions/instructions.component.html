@@ -29,11 +29,11 @@
                         </h1>
                         <ul>
                             <li tabindex="0">{{ 'ANSWER_ALL_QUESTIONS' | translate }}</li>
-                            <li tabindex="0">{{ 'SUBMIT_WITHIN' | translate }} <b>{{ quiz.numberOfQuestions * 2 }} {{ 'MINUTES' | translate }}</b> ({{ 'TWO_MINUTES_PER_QUESTION' | translate }})</li>
+                            <li tabindex="0">{{ 'SUBMIT_WITHIN' | translate }} <b>{{ quiz?.numberOfQuestions * 2 }} {{ 'MINUTES' | translate }}</b> ({{ 'TWO_MINUTES_PER_QUESTION' | translate }})</li>
                             <li tabindex="0">{{ 'ATTEMPT_AS_MANY_TIMES' | translate }}</li>
                             <li tabindex="0">{{ 'THERE_ARE' | translate }} <b>{{ quiz?.numberOfQuestions }} {{ 'QUESTIONS' | translate }}</b> {{ 'IN_THIS_QUIZ' | translate }}</li>
                             <li tabindex="0">
-                                {{ 'EACH_QUESTION_WORTH' | translate }} <b>{{ quiz.maxMarks / quiz.numberOfQuestions }}</b> {{ 'MARKS_OUT_OF' | translate }} <b>{{ quiz.maxMarks }} {{ 'TOTAL_MARKS' | translate }}</b>.
+                                {{ 'EACH_QUESTION_WORTH' | translate }} <b>{{ quiz?.maxMarks / quiz?.numberOfQuestions }}</b> {{ 'MARKS_OUT_OF' | translate }} <b>{{ quiz?.maxMarks }} {{ 'TOTAL_MARKS' | translate }}</b>.
                                 <br>
                                 {{ 'NO_NEGATIVE_MARKING' | translate }}
                             </li>

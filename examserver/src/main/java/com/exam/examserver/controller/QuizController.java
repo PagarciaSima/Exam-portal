@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.exam.examserver.model.exam.quiz.Quiz;
 import com.exam.examserver.service.IQuizService;
 
+import jakarta.servlet.http.HttpSession;
+
 /**
  * REST controller for managing Quiz entities.
  * Provides endpoints for CRUD operations.
@@ -124,7 +126,6 @@ public class QuizController {
         return ResponseEntity.ok(quizzes);
     }
 
-    
     /**
      * Retrieve a quiz by ID.
      *
@@ -150,5 +151,13 @@ public class QuizController {
         quizService.deleteQuiz(quizId);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/submit/{quizId}/{userId}")
+    public ResponseEntity<?> submitQuiz(@PathVariable Long quizId, @PathVariable Long userId, HttpSession session) {
+        String sessionKey = "quizOrder:" + userId + ":" + quizId;
+        session.removeAttribute(sessionKey);
+        return ResponseEntity.ok("Quiz submitted, session cleared");
+    }
+    
     
 }

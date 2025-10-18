@@ -113,9 +113,12 @@ export class LoginService {
    * Gets the role of the current user.
    * @returns Role string.
    */
-  public getUserRole(): string {
-    let user = this.getUser();
-    return user.authorities[0].authority;
+  public getUserRole(): string | null {
+    const user = this.getUser();
+    if (user && user.authorities && user.authorities.length > 0) {
+      return user.authorities[0].authority;
+    }
+    return null;
   }
 
   /**

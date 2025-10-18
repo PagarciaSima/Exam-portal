@@ -136,4 +136,6 @@ export class ViewQuizQuestionsComponent implements OnInit {
       this.getQuestionsOfQuizPaged();
     }
   }
+
+  
 }

@@ -202,5 +202,11 @@
   "NOT_FOUND_TITLE": "404 - Página no encontrada",
   "NOT_FOUND_DESC": "La URL que has ingresado no existe.",
   "NOT_FOUND_BUTTON": "Volver atrás",
-  "NOT_FOUND_BUTTON_ARIA": "Volver a la página anterior"
+  "NOT_FOUND_BUTTON_ARIA": "Volver a la página anterior",
+  "INVALID_QUIZ_ID": "ID de cuestionario no válido",
+  "UPDATE_CATEGORY_BUTTON": "Actualizar categoría",
+  "NEXT": "Siguiente",
+  "BACK": "Atrás",
+  "SUBMIT": "Enviar",
+  "SUBMIT_QUIZ_CONFIRMATION": "¿Estás seguro de que quieres enviar el cuestionario?"
 }
