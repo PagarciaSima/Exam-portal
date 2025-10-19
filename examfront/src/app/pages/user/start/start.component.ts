@@ -1,6 +1,6 @@
 import { LocationStrategy } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Question } from 'src/app/model/Question';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -33,7 +33,8 @@ export class StartComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private questionService: QuestionService,
     private notificationService: NotificationService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) {
   }
 
@@ -131,6 +132,9 @@ export class StartComponent implements OnInit {
     });
   }
 
+  /**
+   * Submits the quiz, calculates the results, and displays a confirmation dialog before submission.
+   */
   submitQuiz(): void {  
     this.notificationService.confirm(
       this.translateService.instant("SUBMIT_QUIZ_CONFIRMATION"),
@@ -159,8 +163,18 @@ export class StartComponent implements OnInit {
     });
   }
 
-  // Guarda la respuesta cada vez que el usuario selecciona una opción
+  /**
+   * Saves the given answer in a map
+   * @param question The question object containing the answer
+   */
   onAnswerChange(question: Question): void {
     this.answersMap[question.quesId] = question.givenAnswer;
+  }
+
+  /**
+   * Navigates the user to the home page of the user dashboard.
+   */
+  goHome(): void {
+    this.router.navigate(['/user-dashboard/0']);
   }
 }
