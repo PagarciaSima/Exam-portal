@@ -1,10 +1,10 @@
 <div class="bootstrap-wrapper" [@slideIn] role="main">
   <div class="container-fluid mt-5">
-    <h1 class="text-center" tabindex="0" [attr.aria-label]="['ALL_QUIZZES' | translate]">
+    <h1 *ngIf="quizzes.length > 0" class="text-center" tabindex="0" [attr.aria-label]="['ALL_QUIZZES' | translate]">
       {{ 'ALL_AVAILABLE_QUIZZES' | translate }}
     </h1>
     <!-- Searcher -->
-    <div class="search-bar mb-4" role="search" [attr.aria-label]="'SEARCH_QUIZ' | translate">
+    <div *ngIf="quizzes.length > 0" class="search-bar mb-4" role="search" [attr.aria-label]="'SEARCH_QUIZ' | translate">
       <app-search-bar
         [placeholder]="'SEARCH_QUIZ' | translate"
         [ariaLabel]="'SEARCH_QUIZ' | translate"
@@ -63,7 +63,12 @@
     <!-- No Quizzes Found -->
     <div *ngIf="!isLoading && quizzes.length === 0" class="no-results-message" role="alert" aria-live="assertive">
         <mat-icon color="warn" class="no-results-icon">info</mat-icon>
-        <h2 class="no-results-text">{{ 'NO_QUIZZES_FOUND' | translate }}</h2>
+        <ng-container *ngIf="catId === 0; else noCategory">
+          <h2 class="no-results-text">{{ 'NO_QUIZZES_FOUND' | translate }}</h2>
+        </ng-container>
+        <ng-template #noCategory>
+          <h2 class="no-results-text">{{ 'NO_QUIZZES_FOUND_FOR_CATEGORY' | translate }}</h2>
+        </ng-template>
     </div>
 
     <!-- Paginador -->

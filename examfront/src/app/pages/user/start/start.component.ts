@@ -1,5 +1,5 @@
 import { LocationStrategy } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Question } from 'src/app/model/Question';
@@ -21,6 +21,9 @@ export class StartComponent implements OnInit {
   correctAnswers = 0;
   attempted = 0;
   isSubmit = false;
+  timer: number | null = null;
+  totalTime: number = 0;
+  minutesPerQuestion: number = 1;
 
   currentPage = 0;
   pageSize = 7; 
@@ -34,13 +37,10 @@ export class StartComponent implements OnInit {
     private questionService: QuestionService,
     private notificationService: NotificationService,
     private translateService: TranslateService,
-    private router: Router
-  ) {
-  }
+    private router: Router,
+    private ngZone: NgZone
+  ) {}
 
-  /**
-   * Initializes the component by preventing back navigation and loading shuffled questions.
-   */
   ngOnInit(): void {
     this.preventBackButton();
     this.activatedRoute.params.subscribe(params => {
@@ -50,20 +50,31 @@ export class StartComponent implements OnInit {
   }
 
   /**
-   * loads questions and shuffles them
+   * Load questions for the quiz and shuffle them.
    * @param qId 
    */
   loadQuestionsShuffled(qId: number | null): void {
     this.questionService.getQuestionsOfQuiz(qId).subscribe({
       next: (result) => {
+        // Inicializa givenAnswer en cada pregunta
+        result.forEach(q => {
+          if (q.givenAnswer === undefined) q.givenAnswer = '';
+        });
         this.questions = result;
         if (!this.isShuffled) {
           this.shuffledQuestions = this.shuffleArray([...this.questions]);
+          // Por si acaso, inicializa también en el array barajado
+          this.shuffledQuestions.forEach(q => {
+            if (q.givenAnswer === undefined) q.givenAnswer = '';
+          });
           this.isShuffled = true;
         }
         this.totalElements = this.shuffledQuestions.length;
         this.totalPages = Math.ceil(this.totalElements / this.pageSize);
         this.setPage(this.currentPage);
+        this.totalTime = this.totalElements * this.minutesPerQuestion * 60;
+        this.timer = this.totalTime;
+        this.checkTimerForSubmit();
       },
       error: (error) => {
         this.notificationService.error(
@@ -76,9 +87,9 @@ export class StartComponent implements OnInit {
   }
 
   /**
-   * shuffles the questions array
+   * Shuffle the questions in the array.
    * @param array 
-   * @returns 
+   * @returns Shuffled array
    */
   shuffleArray(array: Question[]): Question[] {
     for (let i = array.length - 1; i > 0; i--) {
@@ -89,7 +100,7 @@ export class StartComponent implements OnInit {
   }
 
   /**
-   * Sets the current page of questions to display.
+   * Set the current page of questions to display.
    * @param page The page number to set.
    */
   setPage(page: number): void {
@@ -102,7 +113,7 @@ export class StartComponent implements OnInit {
   }
 
   /**
-   * Navigates to the next page of questions.
+   * Go to the next page of questions.
    */
   nextPage(): void {
     if (this.currentPage < this.totalPages - 1) {
@@ -112,7 +123,7 @@ export class StartComponent implements OnInit {
   }
 
   /**
-   * Navigates to the previous page of questions.
+   * Go to the previous page of questions.
    */
   prevPage(): void {
     if (this.currentPage > 0) {
@@ -122,8 +133,7 @@ export class StartComponent implements OnInit {
   }
 
   /**
-   * Prevents the user from navigating back to the previous page using the browser's back button.
-   * This is done by manipulating the browser's history state.
+   * Prevent the back button from navigating away.
    */
   preventBackButton(): void {
     history.pushState(null, '', location.href);
@@ -133,48 +143,98 @@ export class StartComponent implements OnInit {
   }
 
   /**
-   * Submits the quiz, calculates the results, and displays a confirmation dialog before submission.
+   * Submit the quiz.
+   * @param skipConfirm Whether to skip the confirmation dialog.
+   * @returns void
    */
-  submitQuiz(): void {  
+  submitQuiz(skipConfirm: boolean = false): void {  
+    if (skipConfirm) {
+      this.isSubmit = true;
+      this.finalizeQuiz();
+      return;
+    }
     this.notificationService.confirm(
       this.translateService.instant("SUBMIT_QUIZ_CONFIRMATION"),
       this.translateService.instant('CONFIRM')
     ).then((confirmed) => {
+      console.log("CONFIRMERED:", confirmed);
       if (confirmed) {
-        this.isSubmit = true;
-        this.questions.forEach(q => {
-          if (q.givenAnswer === q.answer) {
-            this.correctAnswers++;
-            let marksSingle = this.questions[0].quiz.maxMarks / this.questions.length;
-            this.marksGot += marksSingle;
-
-            if (q.givenAnswer.trim() === '') {
-              this.attempted++;
-            }
-
-            console.log("Correct Answers: " + this.correctAnswers);
-            console.log("Marks Got: " + this.marksGot);
-          }
-          if (q.givenAnswer.trim() !== '') {
-            this.attempted++;
-          }
+        this.ngZone.run(() => {
+          this.isSubmit = true;
+          console.log("isSubmit:", this.isSubmit);
+          this.finalizeQuiz();
         });
       }
     });
   }
 
   /**
-   * Saves the given answer in a map
-   * @param question The question object containing the answer
+   * Finalize the quiz by calculating results.
+   */
+  private finalizeQuiz(): void {
+    this.correctAnswers = 0;
+    this.marksGot = 0;
+    this.attempted = 0;
+
+    // Sincroniza las respuestas del mapa a las preguntas
+    this.shuffledQuestions.forEach(q => {
+      q.givenAnswer = this.answersMap[q.quesId] || '';
+    });
+
+    // Calcula resultados
+    this.shuffledQuestions.forEach(q => {
+      if (q.givenAnswer === q.answer) {
+        this.correctAnswers++;
+        const marksSingle = q.quiz.maxMarks / this.shuffledQuestions.length;
+        this.marksGot += marksSingle;
+      }
+      if (q.givenAnswer && q.givenAnswer.trim() !== '') {
+        this.attempted++;
+      }
+    });
+
+    this.marksGot = parseFloat(this.marksGot.toFixed(2));
+  }
+
+  /**
+   * Handle changes to the answer for a specific question.
+   * @param question The question whose answer has changed.
    */
   onAnswerChange(question: Question): void {
     this.answersMap[question.quesId] = question.givenAnswer;
   }
 
   /**
-   * Navigates the user to the home page of the user dashboard.
+   * Navigate to the user dashboard home.
    */
   goHome(): void {
     this.router.navigate(['/user-dashboard/0']);
+  }
+
+  /**
+   * Get the formatted timer string in MM:SS format.
+   * @returns Formatted timer string.
+   */
+  get formattedTimer(): string {
+    if (this.timer === null) return '';
+    const minutes = Math.floor(this.timer / 60);
+    const seconds = this.timer % 60;
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  /**
+   * Check the timer and submit the quiz when time runs out.
+   */
+  checkTimerForSubmit(): void {
+    let t = window.setInterval(() => {
+      if (this.timer !== null) {
+        if (this.timer <= 0) {
+          this.submitQuiz(true);
+          clearInterval(t);
+        } else {
+          this.timer--;
+        }
+      }
+    }, 1000);
   }
 }

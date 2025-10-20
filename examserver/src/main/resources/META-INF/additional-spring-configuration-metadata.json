@@ -1,5 +1,12 @@
-{"properties": [{
-  "name": "openapi.server.description",
-  "type": "java.lang.String",
-  "description": "A description for 'openapi.server.description'"
-}]}
+{"properties": [
+  {
+    "name": "openapi.server.description",
+    "type": "java.lang.String",
+    "description": "A description for 'openapi.server.description'"
+  },
+  {
+    "name": "openapi.server.url",
+    "type": "java.lang.String",
+    "description": "A description for 'openapi.server.url'"
+  }
+]}

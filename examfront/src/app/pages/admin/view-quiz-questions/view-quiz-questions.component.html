@@ -1,7 +1,7 @@
 <h1 class="mt20" tabindex="0">{{ 'QUESTIONS' | translate }} {{ qTitle }}</h1>
 
 <!-- Search Bar -->
-<div class="search-bar" role="search" [attr.aria-label]="'SEARCH_QUESTION' | translate">
+<div *ngIf="questions.length > 0;" class="search-bar" role="search" [attr.aria-label]="'SEARCH_QUESTION' | translate">
     <button mat-raised-button color="primary" role="button" class="mb20"
         (click)="addQuestion()" [attr.aria-label]="'ADD_QUESTION' | translate"
     >

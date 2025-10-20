@@ -61,7 +61,7 @@ export class InstructionsComponent implements OnInit {
       this.translateService.instant('START_QUIZ')
     );
     if (confirmed) {
-      this.router.navigate(['/user-dashboard/start', qId]);
+      this.router.navigate(['/start', qId]);
     }
   }
 }

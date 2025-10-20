@@ -1,29 +1,34 @@
-<div class="bootstrap-wrapper mt-5" role="main" *ngIf="!isSubmit">
+<!-- QUIZ SECTION -->
+<div class="bootstrap-wrapper mt-5" role="main" aria-labelledby="quiz-title" *ngIf="!isSubmit">
     <div class="container-fluid">
-    <div class="row" role="region" aria-label="Quiz instructions and questions">
-            <div class="col-md-2">
-                <h3 aria-label="Instructions">Instructions</h3>
+        <div class="row" role="region" aria-labelledby="quiz-title">
+            <h1 id="quiz-title" class="text-center d-flex align-items-center justify-content-center pb-3" style="gap: 16px;">
+                <img src="assets/img/quiz.gif"
+                        alt="{{ 'QUIZ_AVATAR_ALT' | translate }}"
+                        style="width:40px; height:40px; border-radius:50%; margin-right:12px;"
+                        [attr.aria-label]="'QUIZ_AVATAR_ALT' | translate">
+
+                <span [attr.aria-label]="'QUIZ_TITLE' | translate">
+                  {{ 'ONGOING_QUIZ' | translate }}: {{ questions[0]?.quiz?.title }}
+                </span>
+            </h1>
+            <div class="col-xl-2">
+                <h3 [attr.aria-label]="'INSTRUCTIONS' | translate">{{ 'INSTRUCTIONS' | translate }}</h3>
             </div>
-            <div class="col-md-8">
+            <div class="col-xl-7">
                 <ng-container *ngIf="questions.length > 0">
-                    <h1 class="text-center d-flex align-items-center justify-content-center" style="gap: 16px;" aria-label="Quiz title">
-                        <img src="assets/img/quiz.gif"
-                             alt="Quiz avatar"
-                             style="width:40px; height:40px; border-radius:50%; margin-right:12px;"
-                             aria-label="Quiz avatar">
-                        <span aria-label="Quiz title">On going Quiz: {{ questions[0].quiz.title }}</span>
-                    </h1>
-                    <mat-card *ngFor="let question of questions; let i = index" class="mt-2" role="group" [attr.aria-label]="'Question ' + (i + 1)">
+                    
+                    <mat-card *ngFor="let question of questions; let i = index" class="mt-2" role="group" [attr.aria-label]="('QUESTION' | translate) + ' ' + (i + 1)">
                         <!-- Content -->
                         <mat-card-content>
                             <div class="d-flex align-items-center justify-content-center mb-2" style="gap: 12px;">
-                                <img *ngIf="question.image" [src]="question.image" alt="Imagen de la pregunta" style="width:50px; height:50px; object-fit:fill; border-radius:8px;" [attr.aria-label]="'Imagen de la pregunta ' + (i + 1)">
+                                <img *ngIf="question.image" [src]="question.image" alt="{{ 'QUESTION_IMAGE_ALT' | translate }}" style="width:50px; height:50px; object-fit:fill; border-radius:8px;" [attr.aria-label]="('QUESTION_IMAGE_ALT' | translate) + ' ' + (i + 1)">
                                 <p class="mb-0">
-                                    <b>Q {{ currentPage * pageSize + i + 1 }}:</b>
-                                    <span [innerHTML]="question.content" class="ms-2" [attr.aria-label]="'Contenido de la pregunta ' + (currentPage * pageSize + i + 1)"></span>
+                                    <b>{{ 'QUESTION_SHORT' | translate }} {{ currentPage * pageSize + i + 1 }}:</b>
+                                    <span [innerHTML]="question.content" class="ms-2" [attr.aria-label]="('QUESTION_CONTENT' | translate) + ' ' + (currentPage * pageSize + i + 1)"></span>
                                 </p>
                             </div>
-                            <mat-divider class="my-4" role="separator" aria-label="Separador"></mat-divider>
+                            <mat-divider class="my-4" role="separator" aria-label="{{ 'SEPARATOR' | translate }}"></mat-divider>
 
                             <div class="row">
                                 <div class="col-md-5 offset-md-2">
@@ -32,10 +37,9 @@
                                             [value]="question.option1" id="option1-{{question.quesId}}" 
                                             [(ngModel)]="question.givenAnswer"
                                             (change)="onAnswerChange(question)"
-                                            [attr.aria-label]="'Opción 1: ' + question.option1" 
-                                            
+                                            [attr.aria-label]="('OPTION' | translate) + ' 1: ' + question.option1" 
                                         />
-                                        <label class="form-check-label" for="option1-{{question.quesId}}" [attr.aria-label]="'Opción 1: ' + question.option1">
+                                        <label class="form-check-label" for="option1-{{question.quesId}}" [attr.aria-label]="('OPTION' | translate) + ' 1: ' + question.option1">
                                             {{ question.option1 }}
                                         </label>
                                     </div>
@@ -46,9 +50,9 @@
                                             [value]="question.option2" id="option2-{{question.quesId}}" 
                                             [(ngModel)]="question.givenAnswer"
                                             (change)="onAnswerChange(question)"
-                                            [attr.aria-label]="'Opción 2: ' + question.option2" 
+                                            [attr.aria-label]="('OPTION' | translate) + ' 2: ' + question.option2" 
                                         />
-                                        <label class="form-check-label" for="option2-{{question.quesId}}" [attr.aria-label]="'Opción 2: ' + question.option2">
+                                        <label class="form-check-label" for="option2-{{question.quesId}}" [attr.aria-label]="('OPTION' | translate) + ' 2: ' + question.option2">
                                             {{ question.option2 }}
                                         </label>
                                     </div>
@@ -62,9 +66,9 @@
                                             [value]="question.option3" id="option3-{{question.quesId}}" 
                                             [(ngModel)]="question.givenAnswer" 
                                             (change)="onAnswerChange(question)"
-                                            [attr.aria-label]="'Opción 3: ' + question.option3" 
+                                            [attr.aria-label]="('OPTION' | translate) + ' 3: ' + question.option3" 
                                         />
-                                        <label class="form-check-label" for="option3-{{question.quesId}}" [attr.aria-label]="'Opción 3: ' + question.option3">
+                                        <label class="form-check-label" for="option3-{{question.quesId}}" [attr.aria-label]="('OPTION' | translate) + ' 3: ' + question.option3">
                                             {{ question.option3 }}
                                         </label>
                                     </div>
@@ -75,9 +79,9 @@
                                             [value]="question.option4" id="option4-{{question.quesId}}" 
                                             [(ngModel)]="question.givenAnswer" 
                                             (change)="onAnswerChange(question)"
-                                            [attr.aria-label]="'Opción 4: ' + question.option4" 
+                                            [attr.aria-label]="('OPTION' | translate) + ' 4: ' + question.option4" 
                                         />
-                                        <label class="form-check-label" for="option4-{{question.quesId}}" [attr.aria-label]="'Opción 4: ' + question.option4">
+                                        <label class="form-check-label" for="option4-{{question.quesId}}" [attr.aria-label]="('OPTION' | translate) + ' 4: ' + question.option4">
                                             {{ question.option4 }}
                                         </label>
                                     </div>
@@ -90,55 +94,105 @@
                 <div class="row">
                     <!-- QUESTION BUTTONS -->
                     <div class="d-flex justify-content-center mt-4 col-md-4 offset-md-2" *ngIf="questions.length > 0">
-                        <button mat-raised-button color="accent" class="me-2" (click)="prevPage()" [disabled]="currentPage === 0" aria-label="Página anterior">
+                        <button mat-raised-button color="accent" class="me-2" (click)="prevPage()" [disabled]="currentPage === 0" aria-label="{{ 'PREVIOUS_PAGE' | translate }}">
                             {{ 'BACK' | translate }}
                         </button>
-                        <span class="align-self-center mx-2" aria-label="Página actual">{{ currentPage + 1 }} / {{ totalPages }}</span>
-                        <button mat-raised-button color="accent" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1" aria-label="Página siguiente">
+                        <span class="align-self-center mx-2 fit-content" aria-label="{{ 'CURRENT_PAGE' | translate }}">{{ currentPage + 1 }} / {{ totalPages }}</span>
+                        <button mat-raised-button class="fit-content" color="accent" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1" aria-label="{{ 'NEXT_PAGE' | translate }}">
                             {{ 'NEXT' | translate }}
                         </button>
                     </div>
                     <div class="d-flex justify-content-center mt-4 col-md-4 mr-auto" *ngIf="questions.length > 0">
-                        <button mat-raised-button color="primary" (click)="submitQuiz()" aria-label="Enviar respuestas del quiz">
+                        <button mat-raised-button color="primary" (click)="submitQuiz()" aria-label="{{ 'SUBMIT_QUIZ' | translate }}">
                             {{ 'SUBMIT' | translate }}
                         </button>
                     </div>
                 </div>
                     
             </div>
-            <div class="col-md-2">
-
+            <!-- Progress Spinner -->
+            <div class="col-xl-3 text-center">
+               <mat-card class="mt-4 mt-xl-2">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <h3 [attr.aria-label]="'PROGRESS' | translate">{{ 'PROGRESS' | translate }}</h3>
+                        </mat-card-title>
+                        <mat-card-subtitle [attr.aria-label]="'QUIZ_AUTO_SUBMIT' | translate">
+                            {{ 'QUIZ_AUTO_SUBMIT' | translate }}
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <h2 class="mt-2">
+                            <mat-icon color="accent" [attr.aria-label]="'TIME_ICON_ALT' | translate" style="vertical-align: middle;"
+                                class="me-2">
+                                timer
+                            </mat-icon>
+                            <b>{{ 'TIME_LEFT' | translate }}</b> {{ formattedTimer }}
+                        </h2>
+                        <mat-spinner 
+                            color="accent" 
+                            class="mx-auto mt-3"
+                            mode="determinate"
+                            [value]="timer !== null && totalTime > 0 ? (timer / totalTime) * 100 : 0"
+                        >
+                        </mat-spinner>
+                    </mat-card-content>
+               </mat-card>
             </div>
         </div>
     </div>
 </div>
 
-<!-- SHOW RESULT -->
- <div class="bootstrap-wrapper" *ngIf="isSubmit">
+<!-- SHOW RESULT SECTION -->
+<div class="bootstrap-wrapper" *ngIf="isSubmit">
     <div class="row w-100" style="height: 100vh;">
-        <div class="col-md-6 offset-md-3">
-            <mat-card>
-                <mat-card-header class="my-3 d-flex justify-content-center">
+        <div class="col-md-6 offset-md-3 my-auto">
+            <mat-card aria-live="polite">
+                <mat-card-header class="my-3 d-flex justify-content-center align-items-center" style="gap: 16px;">
                     <mat-card-title>
-                        <h2>Quiz Result</h2>
+                        <h2>{{ 'QUIZ_RESULT' | translate }}</h2>
                     </mat-card-title>
+                    
                 </mat-card-header>
                 <mat-card-content class="text-center">
-                    <h3><b>Marks Obtained: </b>{{ marksGot }}</h3>
-                    <h3><b>Correct Answers: </b>{{ correctAnswers }}</h3>
-                    <h3><b>Attempted Questions: </b>{{ attempted }}</h3>
+                    <ng-container *ngIf="marksGot >= (shuffledQuestions[0]?.quiz?.maxMarks * 0.5); else failImage">
+                        <div class="d-flex flex-column align-items-center mb-4">
+                            <img src="assets/img/check.png"
+                                alt="Aprobado"
+                                style="width:48px; height:48px;"
+                                [attr.aria-label]="'PASS' | translate"
+                            />
+                            <span class="mt-2" style="font-size: 1.2em; color: green; font-weight: bold;">
+                                {{ 'PASS' | translate }}
+                            </span>
+                        </div>
+                    </ng-container>
+                    <ng-template #failImage>
+                        <div class="d-flex flex-column align-items-center mb-4">
+                            <img src="assets/img/uncheck.png"
+                                alt="Suspenso"
+                                style="width:48px; height:48px;"
+                                [attr.aria-label]="'FAIL' | translate"
+                            />
+                            <span class="mt-2" style="font-size: 1.2em; color: red; font-weight: bold;">
+                                {{ 'FAIL' | translate }}
+                            </span>
+                        </div>
+                    </ng-template>
+                    <h3><b>{{ 'MARKS_OBTAINED' | translate }}</b> {{ marksGot }}</h3>
+                    <h3><b>{{ 'CORRECT_ANSWERS' | translate }}</b> {{ correctAnswers }} / {{ shuffledQuestions.length }}</h3>
+                    <h3><b>{{ 'ATTEMPTED_QUESTIONS' | translate }}</b> {{ attempted }}</h3>
                 </mat-card-content>
-                <mat-card-actions class="d-flex justify-content-center">
+                <mat-card-actions class="d-flex justify-content-center mb-3">
                     <button mat-raised-button color="primary" class="mt-3">
-                      print results
+                      {{ 'PRINT_RESULTS' | translate }}
                     </button>
                     <button mat-raised-button color="accent" class="mt-3 ms-3"
-                        (click)="goHome()" aria-label="Go to home page"
-                    >
-                        Home
+                        (click)="goHome()" [attr.aria-label]="'GO_HOME' | translate">
+                        {{ 'HOME' | translate }}
                     </button>
                 </mat-card-actions>
             </mat-card>
         </div>
     </div>
- </div>
+</div>

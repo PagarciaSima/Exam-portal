@@ -43,7 +43,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: WelcomeComponent,
+        component: HomeComponent,
         data: { animation: 'WelcomePage' }
       },
       {
@@ -105,6 +105,11 @@ const routes: Routes = [
     canActivate: [NormalGuard],
     children: [
       {
+        path: '',
+        component: HomeComponent,
+        data: { animation: 'WelcomePage' }
+      },
+      {
         path: ':catId',
         component: LoadQuizComponent,
         data: { animation: 'LoadQuizPage' }
@@ -113,19 +118,19 @@ const routes: Routes = [
         path: 'instructions/:qId',
         component: InstructionsComponent,
         data: { animation: 'InstructionsPage' }
-      },
-      {
-        path: 'start/:qId',
-        component: StartComponent,
-        data: { animation: 'StartPage' },
-        canActivate: [NormalGuard]
       }
     ]
   },
   {
+    path: 'start/:qId',
+    component: StartComponent,
+    canActivate: [NormalGuard], // si quieres protegerla igual que el dashboard
+    data: { animation: 'StartQuizPage' }
+  },
+  {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    component: HomeComponent,
+    data: { animation: 'WelcomePage' }
   },
   {
     path: '**',
