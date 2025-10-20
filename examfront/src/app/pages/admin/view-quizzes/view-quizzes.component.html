@@ -13,7 +13,7 @@
 </div>
 
 <div [@slideIn] class="quiz-cards-container container-fluid" *ngIf="!isLoading && quizzes.length > 0">
-    <div class="row gx-4 gy-4"> <!-- Bootstrap row with gutters -->
+    <div class="row gx-4 gy-4"> 
         <div [ngClass]="quizzes.length === 1 ? 'col-12' : 'col-12 col-xl-6 px-3'" *ngFor="let q of quizzes">
             <mat-card class="mt-2" role="region" [attr.aria-label]="q.title">
 
@@ -67,7 +67,7 @@
                         <span class="quiz-info-chip ml10 mb-2" aria-label="{{ ('ATTEMPTS' | translate) + ' ' + q.title }}">
                             {{ 'ATTEMPTS' | translate }}
                         </span>
-                        <!-- Estado activo/desactivado abajo -->
+                        <!-- State active/inactive -->
                         <span class="quiz-info-chip ml10 mr10 mb-2" aria-label="{{ q.active ? ('ACTIVE' | translate) : ('DISABLED' | translate) }}"
                             style="display: flex; align-items: center; justify-content: center;"
                         >

@@ -26,7 +26,7 @@ mat-card {
     color 0.25s ease;
   box-shadow: 0 2px 8px rgba(63,81,181,0.08);
   border-radius: 25px;
-  margin: 0; /* Elimina margen lateral para que Bootstrap lo gestione */
+  margin: 0; 
 }
 
 .card-icon {
@@ -96,7 +96,7 @@ mat-card:hover mat-card-content {
   }
   .quiz-actions {
     flex-direction: column;
-    align-items: center; /* <-- Cambia de stretch a center */
+    align-items: center; 
     gap: 12px;
     width: 100%;
   }
@@ -147,7 +147,6 @@ mat-card:hover mat-card-content {
   cursor: default;
 }
 
-/* Responsive: chips full width on mobile */
 @media (max-width: 600px) {
   .quiz-info-chip {
     width: 100%;

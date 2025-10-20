@@ -1,4 +1,3 @@
-/* Avatar redondo con borde */
 .quiz-avatar img {
     background: #fff;
     border-radius: 50%;
@@ -8,7 +7,6 @@
     object-fit: cover;
 }
 
-/* Card header con fondo y color */
 mat-card-header {
     background-color: rgba(3, 113, 179, 0.5);
     padding: 15px;
@@ -16,7 +14,6 @@ mat-card-header {
     color: white;
 }
 
-/* Card general */
 mat-card {
     border-radius: 25px;
     min-width: 300px;
@@ -43,20 +40,19 @@ mat-card-subtitle {
 
 .truncate {
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Número de líneas antes de truncar */
-  line-clamp: 3; /* Propiedad estándar */
+  -webkit-line-clamp: 3; 
+  line-clamp: 3; 
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
-  max-height: 4.5em; /* Ajusta según el tamaño de fuente */
+  max-height: 4.5em; 
 }
 
 .no-results-icon {
     width: fit-content;
 }
 
-/* Responsive */
 @media (max-width: 600px) {
     mat-card-header {
         padding: 10px;

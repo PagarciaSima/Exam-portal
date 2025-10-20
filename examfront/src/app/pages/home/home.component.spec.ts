@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'; // <-- Importa aquí
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -9,7 +10,10 @@ describe('HomeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ HomeComponent ],
-      imports: [ TranslateModule.forRoot() ] // <-- Agrega esto
+      imports: [
+        TranslateModule.forRoot(),
+        NoopAnimationsModule 
+      ]
     })
     .compileComponents();
   });

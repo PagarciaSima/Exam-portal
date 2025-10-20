@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
 
   user: User = null;
   isEditMode = false;
-  private originalUser: User = null;
+  originalUser: User = null;
 
   constructor(
     private loginService: LoginService,

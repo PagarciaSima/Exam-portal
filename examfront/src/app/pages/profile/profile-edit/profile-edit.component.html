@@ -39,7 +39,7 @@
             <span *ngIf="lastNameInput.errors?.required">{{ 'LASTNAME_REQUIRED' | translate }}</span>
         </mat-error>
     </mat-form-field>
-    <!-- Teléfono -->
+    <!-- Phone -->
     <mat-form-field appearance="outline" style="width:100%;margin-bottom:12px;">
         <mat-label>{{ 'PHONE' | translate }}</mat-label>
         <input
@@ -77,7 +77,7 @@
             <span *ngIf="emailInput.errors?.pattern">{{ 'EMAIL_INVALID' | translate }}</span>
         </mat-error>
     </mat-form-field>
-    <!-- Estado habilitado -->
+    <!-- State enabled -->
     <mat-slide-toggle
         [(ngModel)]="user.enabled"
         name="enabled"
@@ -86,7 +86,7 @@
         [attr.aria-checked]="user.enabled">
         {{ user.enabled ? ('ENABLED' | translate) : ('DISABLED' | translate) }}
     </mat-slide-toggle>
-    <!-- Rol -->
+    <!-- Role -->
     <div style="margin-bottom:12px; display: flex; align-items: center;">
         <strong>{{ 'ROLE' | translate }}:</strong>
         <span class="ml10" style="display: inline-flex; align-items: center; gap: 5px;">
@@ -98,11 +98,11 @@
             {{ user.authorities[0].authority === 'ADMIN' ? ('ADMIN' | translate) : ('USER' | translate) }}
         </span>
     </div>
-    <!-- ID de usuario -->
+    <!-- User ID -->
     <div style="margin-bottom:12px;">
         <strong>{{ 'USER_ID' | translate }}:</strong> Exam{{ user.id }}
     </div>
-    <!-- Botones de acción -->
+    <!-- action buttons -->
     <mat-card-actions class="text-center mt20" style="display: flex; justify-content: center; gap: 12px;">
         <button
             mat-raised-button

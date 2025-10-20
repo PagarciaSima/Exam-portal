@@ -1,6 +1,5 @@
-/* start.component.css */
 :host {
-  display: block; /* necesario para que el host acepte height */
+  display: block; 
   height: 100%;
 }
 .bootstrap-wrapper {

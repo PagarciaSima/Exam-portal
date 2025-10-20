@@ -1,21 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 
 import { ViewQuizzesComponent } from './view-quizzes.component';
 import { QuizService } from '../../../services/quiz.service';
 import { NotificationService } from '../../../services/notification.service';
-import { TranslateService } from '@ngx-translate/core';
-
-// Mock para TranslatePipe
-@Pipe({ name: 'translate' })
-class MockTranslatePipe implements PipeTransform {
-  transform(value: string): string {
-    return value;
-  }
-}
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Mock para NotificationService
 class MockNotificationService {
@@ -26,17 +20,6 @@ class MockNotificationService {
   }
   success(message: string, title: string) {}
   error(message: string, title: string) {}
-}
-
-// Mock para TranslateService
-class MockTranslateService {
-  instant(key: string): string {
-    return key;
-  }
-  use(lang: string) {}
-  get(key: string) {
-    return of(key);
-  }
 }
 
 // Mock para Router
@@ -52,20 +35,21 @@ describe('ViewQuizzesComponent', () => {
   let quizService: QuizService;
   let notificationService: NotificationService;
   let router: Router;
-  let translateService: TranslateService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ 
-        ViewQuizzesComponent,
-        MockTranslatePipe
+      declarations: [ ViewQuizzesComponent ],
+      imports: [
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
+        MatSnackBarModule,
+        BrowserAnimationsModule
       ],
-      imports: [HttpClientTestingModule],
       providers: [
         QuizService,
         { provide: NotificationService, useClass: MockNotificationService },
-        { provide: TranslateService, useClass: MockTranslateService },
-        { provide: Router, useClass: MockRouter }
+        { provide: Router, useClass: MockRouter },
+        TranslateService
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
@@ -78,7 +62,6 @@ describe('ViewQuizzesComponent', () => {
     quizService = TestBed.inject(QuizService);
     notificationService = TestBed.inject(NotificationService);
     router = TestBed.inject(Router);
-    translateService = TestBed.inject(TranslateService);
 
     spyOn(quizService, 'getQuizzesPaged').and.returnValue(of({
       content: [],

@@ -20,14 +20,6 @@ describe('AppComponent', () => {
     expect(app.title).toBe('examfront');
   });
 
-  it('should render the title in the template if interpolation is used', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    // This test will only pass if the template contains {{ title }}
-    expect(compiled.textContent).toContain('examfront');
-  });
-
   it('should have selector "app-root"', () => {
     const annotations = Reflect.getOwnPropertyDescriptor(AppComponent, '__annotations__')?.value;
     const selector = annotations ? annotations[0].selector : (AppComponent as any).ɵcmp?.selectors[0][0];

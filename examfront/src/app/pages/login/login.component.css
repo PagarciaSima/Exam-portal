@@ -2,9 +2,9 @@
   width: 120px;     
   height: 120px;   
   border-radius: 50%; 
-  object-fit: cover;  /* Recorta si no es exactamente cuadrada */
+  object-fit: cover;  
   display: block;
-  margin: 0 auto 20px auto; /* Centrado horizontal y margen inferior */
+  margin: 0 auto 20px auto; 
 }
 
 .full-width {
@@ -19,12 +19,12 @@
 
 .login-wrapper {
   display: flex;
-  justify-content: center; /* centra horizontalmente */
-  align-items: center;     /* centra verticalmente */
-  height:  calc(100vh - 65px);;           /* ocupa toda la altura de la ventana */
+  justify-content: center;
+  align-items: center;    
+  height:  calc(100vh - 65px);;           
 }
 
 mat-card {
-  width: 500px;     /* ajusta el ancho */
-  padding: 20px;    /* espacio interno */
+  width: 500px;    
+  padding: 20px;    
 }

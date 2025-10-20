@@ -31,7 +31,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 
 import { ViewCategoriesComponent } from './pages/admin/view-categories/view-categories.component';
-import { WelcomeComponent } from './pages/admin/welcome/welcome.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
@@ -70,7 +69,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserDashboardComponent,
     ProfileComponent,
     SidebarComponent,
-    WelcomeComponent,
     ViewCategoriesComponent,
     AddCategoryComponent,
     ViewQuizzesComponent,

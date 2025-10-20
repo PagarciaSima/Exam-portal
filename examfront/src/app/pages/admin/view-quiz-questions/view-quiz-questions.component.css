@@ -1,9 +1,7 @@
-/* Centrar solo el título y la respuesta */
 h1 {
     text-align: center;
 }
 
-/* Centrar solo la respuesta */
 .answer-block p {
     display: flex;
     align-items: center;
@@ -11,7 +9,6 @@ h1 {
     gap: 8px;
 }
 
-/* Eliminar centrado de preguntas y opciones */
 mat-card-content {
     display: block;
 }

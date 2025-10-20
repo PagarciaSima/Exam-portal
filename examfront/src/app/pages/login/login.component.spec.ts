@@ -106,7 +106,7 @@ describe('LoginComponent', () => {
     component.loginData = { username: 'user', password: 'pass' };
     component.formSubmit();
 
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['user-dashboard']);
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['user-dashboard', 0]);
   });
 
   it('should call generateToken and handle successful login as OTHER', () => {
@@ -180,7 +180,7 @@ describe('LoginComponent', () => {
   it('should redirect NORMAL user', () => {
     const user = { authorities: [{ authority: 'NORMAL' }] };
     (component as any).redirectUser(user as any);
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['user-dashboard']);
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['user-dashboard', 0]);
   });
 
   it('should logout for unknown authority', () => {

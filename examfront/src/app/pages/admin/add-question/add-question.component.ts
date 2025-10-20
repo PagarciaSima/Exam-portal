@@ -145,7 +145,6 @@ export class AddQuestionComponent implements OnInit {
   * Resets the form and question state to initial values.
   */ 
   private resetState() {
-    this.questionForm.resetForm();
     this.question = {
       content: '',
       option1: '',
@@ -153,8 +152,12 @@ export class AddQuestionComponent implements OnInit {
       option3: '',
       option4: '',
       answer: '',
-      quiz: { qId: this.qId } as Quiz
+      quiz: { qId: this.qId } as any
     };
+    this.imageFile = null; 
+    if (this.questionForm) {
+      this.questionForm.resetForm();
+    }
   }
 
   // Maneja el cambio de archivo

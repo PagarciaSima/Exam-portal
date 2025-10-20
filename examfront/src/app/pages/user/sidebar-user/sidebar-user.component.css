@@ -1,4 +1,3 @@
-/* Separar iconos del texto y alinear verticalmente */
 button[mat-list-item] {
     display: flex;
     align-items: center;

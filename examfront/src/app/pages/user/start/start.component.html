@@ -1,4 +1,4 @@
-<!-- QUIZ SECTION -->
+<!-- Quiz section -->
 <div class="bootstrap-wrapper mt-5" role="main" aria-labelledby="quiz-title" *ngIf="!isSubmit">
     <div class="container-fluid">
         <div class="row" role="region" aria-labelledby="quiz-title">
@@ -92,7 +92,7 @@
                 </ng-container>
                     
                 <div class="row">
-                    <!-- QUESTION BUTTONS -->
+                    <!-- Question buttons -->
                     <div class="d-flex justify-content-center mt-4 col-md-4 offset-md-2" *ngIf="questions.length > 0">
                         <button mat-raised-button color="accent" class="me-2" (click)="prevPage()" [disabled]="currentPage === 0" aria-label="{{ 'PREVIOUS_PAGE' | translate }}">
                             {{ 'BACK' | translate }}
@@ -143,7 +143,7 @@
     </div>
 </div>
 
-<!-- SHOW RESULT SECTION -->
+<!-- Show result section -->
 <div class="bootstrap-wrapper" *ngIf="isSubmit">
     <div class="row w-100" style="height: 100vh;">
         <div class="col-md-6 offset-md-3 my-auto">

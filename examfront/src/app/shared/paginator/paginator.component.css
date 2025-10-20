@@ -4,12 +4,12 @@
   align-items: center;
   gap: 4px;
   margin: 16px 0;
-  flex-wrap: wrap; /* Permite que los botones bajen si no hay espacio */
+  flex-wrap: wrap; 
 }
 
 .paginator-container button[mat-button][color="accent"] {
   font-weight: bold;
-  border-bottom: 2px solid #ff4081; /* color accent por defecto */
+  border-bottom: 2px solid #ff4081; 
 }
 
 .paginator-container button[mat-button]:disabled {

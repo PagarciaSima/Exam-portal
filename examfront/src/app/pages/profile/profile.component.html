@@ -14,7 +14,7 @@
                             role="img"
                             style="border-radius: 50%;">
 
-                        <!-- Botón de editar dentro de la foto, abajo a la izquierda -->
+                        <!-- Edit button inside the photo, bottom left -->
                         <button mat-icon-button
                             color="accent"
                             [matMenuTriggerFor]="profileMenu"
@@ -37,7 +37,7 @@
                 </div>
                 <div class="row mt20">
                     <div class="col-md-10 offset-md-1">
-                        <!-- Vista tabla (no edición) -->
+                        <!-- Table view (no edit) -->
                         <ng-container *ngIf="!isEditMode; else editForm">
                             <table class="table text-center" [attr.aria-label]="'USER_DETAILS' | translate" role="table">
                                 <tr>
@@ -101,7 +101,7 @@
                             </mat-card-actions>
                         </ng-container>
 
-                        <!-- Vista edición (formulario vertical) -->
+                        <!-- Edit view -->
                         <ng-template #editForm>
                             <app-profile-edit
                                 *ngIf="isEditMode"

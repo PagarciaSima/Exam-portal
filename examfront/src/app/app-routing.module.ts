@@ -8,7 +8,6 @@ import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboa
 import { AdminGuard } from './guards/admin.guard';
 import { NormalGuard } from './guards/normal.guard';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { WelcomeComponent } from './pages/admin/welcome/welcome.component';
 import { ViewCategoriesComponent } from './pages/admin/view-categories/view-categories.component';
 import { AddCategoryComponent } from './pages/admin/add-category/add-category.component';
 import { ViewQuizzesComponent } from './pages/admin/view-quizzes/view-quizzes.component';
@@ -122,15 +121,15 @@ const routes: Routes = [
     ]
   },
   {
+    path: '',
+    component: HomeComponent,
+    data: { animation: 'WelcomePage' }
+  },
+  {
     path: 'start/:qId',
     component: StartComponent,
     canActivate: [NormalGuard], // si quieres protegerla igual que el dashboard
     data: { animation: 'StartQuizPage' }
-  },
-  {
-    path: '',
-    component: HomeComponent,
-    data: { animation: 'WelcomePage' }
   },
   {
     path: '**',
