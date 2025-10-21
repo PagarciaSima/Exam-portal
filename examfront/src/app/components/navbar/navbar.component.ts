@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/services/login.service';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from 'src/app/services/language.service';
+import { LoadingService } from 'src/app/services/loading.service';
+import { LoginService } from 'src/app/services/login.service';
 
 /**
  * NavbarComponent is responsible for displaying the application's navigation bar.
@@ -29,7 +30,8 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     public loginService: LoginService,
     private translate: TranslateService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private loadingService: LoadingService
   ) {
     const lang = this.languageService.getLanguage();
     this.translate.setDefaultLang(lang);
@@ -37,9 +39,11 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadingService.show();
     this.loginService.user$.subscribe(user => {
       this.user = user;
       this.isLoggedIn = !!user;
+      this.loadingService.hide();
     });
   }
 

@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { slideIn } from 'src/app/animations/animations';
 import { Category } from 'src/app/model/Category';
 import { CategoryService } from 'src/app/services/category.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-add-category',
@@ -22,7 +23,7 @@ export class AddCategoryComponent implements OnInit {
   public isEditMode: boolean = false;
 
   category: Category = {
-    cid: 0,
+    cid: null,
     title: '',
     description: ''
   };
@@ -32,7 +33,8 @@ export class AddCategoryComponent implements OnInit {
     private notificationService: NotificationService,
     private categoryService: CategoryService,
     private translate: TranslateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
@@ -55,15 +57,18 @@ export class AddCategoryComponent implements OnInit {
    * @returns {void}
    */
   private loadCategory(cId: number) {
+    this.loadingService.show();
     this.categoryService.getCategory(cId).subscribe({
       next: (category) => {
         this.category = category;
+        this.loadingService.hide();
       },
       error: () => {
         this.notificationService.error(
           this.translate.instant('CATEGORY_LOAD_ERROR'),
           this.translate.instant('ERROR')
         );
+        this.loadingService.hide();
       }
     });
   }
@@ -76,6 +81,7 @@ export class AddCategoryComponent implements OnInit {
     // Trim inputs
     this.category.title = this.category.title.trim();
     this.category.description = this.category.description.trim();
+    console.log(this.category);
 
     if (this.isEditMode) {
       this.editCategory();
@@ -124,8 +130,10 @@ export class AddCategoryComponent implements OnInit {
    * this.editCategory();
    */
   private editCategory() {
+    this.loadingService.show();
     this.categoryService.updateCategory(this.category).subscribe({
       next: () => {
+        this.loadingService.hide();
         this.notificationService.success(
           this.translate.instant('CATEGORY_UPDATE_SUCCESS'),
           this.translate.instant('SUCCESS')
@@ -134,6 +142,7 @@ export class AddCategoryComponent implements OnInit {
         this.router.navigate(['/admin/categories']);
       },
       error: () => {
+        this.loadingService.hide();
         this.notificationService.error(
           this.translate.instant('CATEGORY_UPDATE_ERROR'),
           this.translate.instant('ERROR')

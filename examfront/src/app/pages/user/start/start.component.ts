@@ -3,6 +3,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Question } from 'src/app/model/Question';
+import { LoadingService } from 'src/app/services/loading.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { QuestionService } from 'src/app/services/question.service';
 
@@ -38,7 +39,8 @@ export class StartComponent implements OnInit {
     private notificationService: NotificationService,
     private translateService: TranslateService,
     private router: Router,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private loadService: LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -54,16 +56,16 @@ export class StartComponent implements OnInit {
    * @param qId 
    */
   loadQuestionsShuffled(qId: number | null): void {
+    this.loadService.show();
     this.questionService.getQuestionsOfQuiz(qId).subscribe({
       next: (result) => {
-        // Inicializa givenAnswer en cada pregunta
+        this.loadService.hide();
         result.forEach(q => {
           if (q.givenAnswer === undefined) q.givenAnswer = '';
         });
         this.questions = result;
         if (!this.isShuffled) {
           this.shuffledQuestions = this.shuffleArray([...this.questions]);
-          // Por si acaso, inicializa también en el array barajado
           this.shuffledQuestions.forEach(q => {
             if (q.givenAnswer === undefined) q.givenAnswer = '';
           });
@@ -77,6 +79,7 @@ export class StartComponent implements OnInit {
         this.checkTimerForSubmit();
       },
       error: (error) => {
+        this.loadService.hide();
         this.notificationService.error(
           this.translateService.instant("QUESTIONS_LOAD_ERROR"),
           this.translateService.instant("ERROR")

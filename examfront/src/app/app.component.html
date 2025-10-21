@@ -1,3 +1,15 @@
+
+<ngx-loading 
+  [show]="loading"
+  [config]="{
+    backdropBorderRadius: '4px',
+    backdropBackgroundColour: 'rgba(0,0,0,0.5)',   
+    fullScreenBackdrop: true,
+    primaryColour: '#1976d2',                      
+    secondaryColour: '#ffffff',                    
+    tertiaryColour: '#f44336'               
+  }">
+</ngx-loading>
 <app-navbar></app-navbar>
 <div class="page-content">
   <router-outlet></router-outlet>

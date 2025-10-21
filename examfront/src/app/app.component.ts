@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { LoadingService } from './services/loading.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
-  title = 'examfront';
-  
+  loading = false;
+
+  constructor(private loadingService: LoadingService) {
+    this.loadingService.loading$.subscribe(val => this.loading = val);
+  }
 }

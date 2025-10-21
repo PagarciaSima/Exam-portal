@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { TranslateService } from '@ngx-translate/core';
 import { slideIn } from 'src/app/animations/animations';
 import { Question } from 'src/app/model/Question';
 import { Quiz } from 'src/app/model/Quiz';
+import { LoadingService } from 'src/app/services/loading.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { QuestionService } from 'src/app/services/question.service';
-import { TranslateService } from '@ngx-translate/core'; 
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-add-question',
@@ -43,7 +44,8 @@ export class AddQuestionComponent implements OnInit {
     private questionService: QuestionService,
     private notificationService: NotificationService,
     private translate: TranslateService,
-    private router: Router
+    private router: Router,
+    private loadService: LoadingService
   ) { }
 
   ngOnInit(): void {
@@ -64,11 +66,14 @@ export class AddQuestionComponent implements OnInit {
    * @param quesId The ID of the question to load.
    */
   private loadQuestion(quesId: number) {
+    this.loadService.show();
     this.questionService.getQuestion(quesId).subscribe({
       next: (data) => {
         this.question = data;
+        this.loadService.hide();
       },
       error: (error) => {
+        this.loadService.hide();
         const errorMsg = this.translate.instant('QUESTION_LOAD_ERROR');
         const errorTitle = this.translate.instant('ERROR');
         this.notificationService.error(errorMsg, errorTitle);
@@ -102,8 +107,10 @@ export class AddQuestionComponent implements OnInit {
    * Displays success or error notifications based on the outcome of the operation.
    */
   private addNewQuestion() {
+    this.loadService.show();
     this.questionService.addQuestionWithImage(this.question, this.imageFile).subscribe({
       next: () => {
+        this.loadService.hide();
         const successMsg = this.translate.instant('QUESTION_ADD_SUCCESS');
         const successTitle = this.translate.instant('SUCCESS');
         this.notificationService.success(successMsg, successTitle);
@@ -111,6 +118,7 @@ export class AddQuestionComponent implements OnInit {
         this.imageFile = null;
       },
       error: (error) => {
+        this.loadService.hide();
         const errorMsg = this.translate.instant('QUESTION_ADD_ERROR');
         const errorTitle = this.translate.instant('ERROR');
         this.notificationService.error(errorMsg, errorTitle);
@@ -124,15 +132,17 @@ export class AddQuestionComponent implements OnInit {
    * Displays success or error notifications based on the outcome of the operation.
    */
   private updateQuestion() {
-    console.log('Updating question:', this.question);
+    this.loadService.show();
     this.questionService.updateQuestion(this.question).subscribe({
       next: () => {
+        this.loadService.hide();
         const successMsg = this.translate.instant('QUESTION_UPDATE_SUCCESS');
         const successTitle = this.translate.instant('SUCCESS');
         this.notificationService.success(successMsg, successTitle);
         this.router.navigate(['/admin/view-questions', this.qId, this.qTitle]);
       },
       error: (error) => {
+        this.loadService.hide();
         const errorMsg = this.translate.instant('QUESTION_UPDATE_ERROR');
         const errorTitle = this.translate.instant('ERROR');
         this.notificationService.error(errorMsg, errorTitle);

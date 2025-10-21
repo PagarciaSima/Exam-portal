@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { slideIn } from 'src/app/animations/animations';
 import { Category } from 'src/app/model/Category';
 import { Quiz } from 'src/app/model/Quiz';
 import { CategoryService } from 'src/app/services/category.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { TranslateService } from '@ngx-translate/core';
 import { QuizService } from 'src/app/services/quiz.service';
-import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-quiz',
@@ -30,7 +31,8 @@ export class AddQuizComponent implements OnInit {
     private quizService: QuizService,
     private translate: TranslateService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
@@ -50,11 +52,14 @@ export class AddQuizComponent implements OnInit {
    * @param quizId The ID of the quiz to load.
    */
   loadQuiz(quizId: any) {
+    this.loadingService.show();
     this.quizService.getQuiz(quizId).subscribe({
       next: (data) => {
         this.quiz = data;
+        this.loadingService.hide();
       },
       error: (error) => {
+        this.loadingService.hide();
         this.translate.get('QUIZ_LOAD_ERROR').subscribe((msg: string) => {
           this.notificationService.error(msg, this.translate.instant('ERROR'));
         });
@@ -73,11 +78,14 @@ export class AddQuizComponent implements OnInit {
    * @returns void
    */
   loadCategories() {
+    this.loadingService.show();
     this.categoryService.getCategories().subscribe({
       next: (data) => {
         this.categories = data;
+        this.loadingService.hide();
       },
       error: (error) => {
+        this.loadingService.hide();
         this.translate.get('CATEGORY_LOAD_ERROR').subscribe((msg: string) => {
           this.notificationService.error(msg, this.translate.instant('ERROR'));
         });
@@ -108,8 +116,10 @@ export class AddQuizComponent implements OnInit {
    * Displays success or error notifications based on the outcome of the operation.
    */
   private addQuiz() {
+    this.loadingService.show();
     this.quizService.addQuiz(this.quiz).subscribe({
       next: () => {
+        this.loadingService.hide();
         this.translate.get('QUIZ_ADD_SUCCESS').subscribe((msg: string) => {
           this.notificationService.success(msg, this.translate.instant('SUCCESS'));
         });
@@ -118,6 +128,7 @@ export class AddQuizComponent implements OnInit {
         this.router.navigate(['/admin/quizzes']);
       },
       error: (error) => {
+        this.loadingService.hide();
         this.translate.get('QUIZ_ADD_ERROR').subscribe((msg: string) => {
           this.notificationService.error(msg, this.translate.instant('ERROR'));
         });
@@ -133,8 +144,10 @@ export class AddQuizComponent implements OnInit {
    * Navigates back to the quizzes list upon successful update.
    */
   private editQuiz() {
+    this.loadingService.show();
     this.quizService.updateQuiz(this.quiz).subscribe({
       next: () => {
+        this.loadingService.hide();
         this.translate.get('QUIZ_UPDATE_SUCCESS').subscribe((msg: string) => {
           this.notificationService.success(msg, this.translate.instant('SUCCESS'));
         });
@@ -143,6 +156,7 @@ export class AddQuizComponent implements OnInit {
         this.router.navigate(['/admin/quizzes']);
       },
       error: (error) => {
+        this.loadingService.hide();
         this.translate.get('QUIZ_UPDATE_ERROR').subscribe((msg: string) => {
           this.notificationService.error(msg, this.translate.instant('ERROR'));
         });

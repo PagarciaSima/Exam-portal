@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Quiz } from 'src/app/model/Quiz';
-import { NotificationService } from 'src/app/services/notification.service';
-import { QuizService } from 'src/app/services/quiz.service';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { slideIn } from 'src/app/animations/animations';
-import { Router } from '@angular/router';
+import { Quiz } from 'src/app/model/Quiz';
+import { LoadingService } from 'src/app/services/loading.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { QuizService } from 'src/app/services/quiz.service';
 
 @Component({
   selector: 'app-view-quizzes',
@@ -27,7 +28,8 @@ export class ViewQuizzesComponent implements OnInit {
     private quizService: QuizService,
     private notificacionService: NotificationService,
     private translate: TranslateService,
-    private router: Router
+    private router: Router,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
@@ -39,13 +41,16 @@ export class ViewQuizzesComponent implements OnInit {
    * Updates the local `quizzes` array and `totalPages` based on the response.
    */
   loadQuizzesPaged(): void {
+    this.loadingService.show();
     this.quizService.getQuizzesPaged(this.page, this.size, this.searchTerm).subscribe({
       next: (data) => {
         this.quizzes = data.content;
         this.totalPages = data.totalPages;
         this.isLoading = false;
+        this.loadingService.hide();
       },
       error: (error) => {
+        this.loadingService.hide();
         this.notificacionService.error(
           this.translate.instant('QUIZZES_LOAD_ERROR'),
           this.translate.instant('ERROR')
@@ -90,8 +95,10 @@ export class ViewQuizzesComponent implements OnInit {
       this.translate.instant('CONFIRM')
     ).then(confirmed => {
       if (confirmed) {
+        this.loadingService.show();
         this.quizService.deleteQuiz(qId).subscribe({
           next: () => {
+            this.loadingService.hide();
             this.notificacionService.success(
               this.translate.instant('QUIZ_DELETED_SUCCESS'),
               this.translate.instant('SUCCESS')
@@ -99,6 +106,7 @@ export class ViewQuizzesComponent implements OnInit {
             this.quizzes = this.quizzes.filter(q => q.qId !== qId);
           },
           error: (error) => {
+            this.loadingService.hide();
             this.notificacionService.error(
               this.translate.instant('QUIZ_DELETE_ERROR'),
               this.translate.instant('ERROR')
@@ -106,6 +114,8 @@ export class ViewQuizzesComponent implements OnInit {
             console.error('Error deleting quiz:', error);
           }
         });
+      } else {
+        this.loadingService.hide();
       }
     });
   }

@@ -52,6 +52,7 @@ import { SidebarUserComponent } from './pages/user/sidebar-user/sidebar-user.com
 import { StartComponent } from './pages/user/start/start.component';
 import { PaginatorComponent } from './shared/paginator/paginator.component';
 import { SearcherComponent } from './shared/searcher/searcher.component';
+import { NgxLoadingModule } from 'ngx-loading';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -109,6 +110,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSlideToggleModule,
     MatDividerModule,
     MatProgressSpinnerModule,
+    NgxLoadingModule.forRoot({}),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

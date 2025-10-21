@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { slideIn } from 'src/app/animations/animations';
 import { Quiz } from 'src/app/model/Quiz';
+import { LoadingService } from 'src/app/services/loading.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { QuizService } from 'src/app/services/quiz.service';
 
@@ -24,7 +25,8 @@ export class InstructionsComponent implements OnInit {
     private quizService: QuizService,
     private notificationService: NotificationService,
     private translateService: TranslateService,
-    private router: Router
+    private router: Router,
+    private loadingService: LoadingService 
   ) { }
 
   ngOnInit(): void {
@@ -38,11 +40,14 @@ export class InstructionsComponent implements OnInit {
    * Fetches quiz details using the QuizService and handles success and error scenarios.
    */
   loadQuizDetails(): void {
+    this.loadingService.show(); 
     this.quizService.getQuiz(this.qId).subscribe({
       next: (quiz) => {
         this.quiz = quiz;
+        this.loadingService.hide(); 
       },
       error: () => {
+        this.loadingService.hide(); 
         this.notificationService.error(
           this.translateService.instant('QUIZ_LOAD_ERROR'),
           this.translateService.instant('ERROR')

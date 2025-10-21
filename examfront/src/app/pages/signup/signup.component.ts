@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { fadeInUp } from 'src/app/animations/animations';
 import { User } from 'src/app/model/User';
+import { LoadingService } from 'src/app/services/loading.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UserService } from 'src/app/services/user.service';
-import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Component responsible for user signup functionality.
@@ -48,7 +49,8 @@ export class SignupComponent implements OnInit {
     private userService: UserService,
     private notificationService: NotificationService,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private loadingService: LoadingService 
   ) { }
 
   ngOnInit(): void {
@@ -75,6 +77,8 @@ export class SignupComponent implements OnInit {
       return;
     }
 
+    this.loadingService.show(); 
+
     this.userService.addUser(this.user).subscribe({
       next: () => {
         this.notificationService.success(
@@ -82,6 +86,7 @@ export class SignupComponent implements OnInit {
           this.translate.instant('SUCCESS')
         );
         this.router.navigate(['login']);
+        this.loadingService.hide(); 
       },
       error: (err) => {
         console.error(err);
@@ -101,6 +106,7 @@ export class SignupComponent implements OnInit {
             this.translate.instant('ERROR')
           );
         }
+        this.loadingService.hide(); 
       }
     });
   }

@@ -36,7 +36,7 @@
               {{ truncateDescription(quiz.description, 100) }}
             </p>
           </mat-card-content>
-          <mat-card-action class="mt-3 d-flex justify-content-center gap-2 flex-wrap">
+          <mat-card-action class="mt-3 d-flex justify-content-center gap-3 flex-wrap">
             <button mat-raised-button color="primary"
                     (click)="viewQuiz(quiz.qid)"
                     [attr.aria-label]="'Ver el quiz ' + quiz.title">
@@ -47,14 +47,14 @@
                     [attr.aria-label]="'Comenzar el quiz ' + quiz.title">
               {{ 'START' | translate }}
             </button>
-            <button mat-raised-button color="accent"
-                    [attr.aria-label]="'Preguntas: ' + quiz.numberOfQuestions">
+            <span class="quiz-info-chip"
+                    aria-label="{{ ('QUESTIONS' | translate) + ': ' + quiz.numberOfQuestions }}">
               {{ 'QUESTIONS' | translate }}: {{ quiz.numberOfQuestions }}
-            </button>
-            <button mat-button color="accent"
-                    [attr.aria-label]="'Puntaje máximo: ' + quiz.maxMarks">
+            </span>
+            <span class="quiz-info-chip"
+                    aria-label="{{ ('MAX_MARKS' | translate) + ': ' + quiz.maxMarks }}">
               {{ 'MAX_MARKS' | translate }} : {{ quiz.maxMarks }}
-            </button>
+            </span>
           </mat-card-action>
           </mat-card>
         </div>

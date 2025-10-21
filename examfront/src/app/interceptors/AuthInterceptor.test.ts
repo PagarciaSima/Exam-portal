@@ -11,7 +11,9 @@ describe('AuthInterceptor', () => {
     beforeEach(() => {
         loginServiceSpy = jasmine.createSpyObj('LoginService', ['getToken']);
         httpHandlerSpy = jasmine.createSpyObj('HttpHandler', ['handle']);
-        interceptor = new AuthInterceptor(loginServiceSpy);
+        const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+        const notificationServiceSpy = jasmine.createSpyObj('NotificationService', ['success', 'error']);
+        interceptor = new AuthInterceptor(loginServiceSpy, routerSpy, notificationServiceSpy);
     });
 
     it('should add Authorization header when token is present', () => {

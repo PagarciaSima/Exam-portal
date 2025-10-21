@@ -53,6 +53,21 @@ mat-card-subtitle {
     width: fit-content;
 }
 
+.quiz-info-chip {
+  display: inline-block;
+  background: #e3e7f7;
+  color: #3f51b5;
+  border-radius: 16px;
+  padding: 4px 14px;
+  font-size: 0.95em;
+  font-weight: 500;
+  margin-bottom: 4px;
+  box-shadow: 0 1px 4px rgba(63,81,181,0.07);
+  border: 1px solid #c5cae9;
+  letter-spacing: 0.5px;
+  transition: background 0.2s;
+}
+
 @media (max-width: 600px) {
     mat-card-header {
         padding: 10px;

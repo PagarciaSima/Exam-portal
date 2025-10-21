@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Category } from '../model/Category';
 import { environment } from 'src/environments/environment';
+import { Category } from '../model/Category';
 
 /**
  * Service for managing categories.
@@ -34,7 +34,7 @@ export class CategoryService {
    * Add a new category.
    */
   public addCategory(category: Category): Observable<Category> {
-    return this.http.post<Category>(`${this.apiUrl}/`, category);
+    return this.http.post<Category>(`${this.apiUrl}`, category);
   }
 
   /**

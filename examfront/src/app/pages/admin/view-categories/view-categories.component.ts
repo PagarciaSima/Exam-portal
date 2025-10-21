@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { slideIn } from 'src/app/animations/animations';
 import { Category } from 'src/app/model/Category';
 import { CategoryService } from 'src/app/services/category.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { TranslateService } from '@ngx-translate/core'; 
 
 @Component({
   selector: 'app-view-categories',
@@ -26,7 +27,8 @@ export class ViewCategoriesComponent implements OnInit {
     private categoryService: CategoryService,
     private notificationService: NotificationService,
     private router: Router,
-    private translate: TranslateService 
+    private translate: TranslateService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
@@ -42,12 +44,15 @@ export class ViewCategoriesComponent implements OnInit {
    * @returns {void}
    */
   private fetchCategoriesPaged() {
+    this.loadingService.show();
     this.categoryService.getCategoriesPaged(this.page, this.size, this.searchTerm).subscribe({
       next: (data) => {
         this.categories = data.content;
         this.totalPages = data.totalPages;
+        this.loadingService.hide();
       },
       error: () => {
+        this.loadingService.hide();
         this.notificationService.error(
           this.translate.instant('CATEGORIES_LOAD_ERROR'),
           this.translate.instant('ERROR')
@@ -82,9 +87,11 @@ export class ViewCategoriesComponent implements OnInit {
       this.translate.instant('CATEGORY_DELETE_CONFIRM'),
       this.translate.instant('CONFIRM')
     ).then(confirmed => {
+      this.loadingService.show();
       if (confirmed) {
         this.categoryService.deleteCategory(categoryId).subscribe({
           next: () => {
+            this.loadingService.hide();
             this.categories = this.categories.filter(cat => cat.cid !== categoryId);
             this.notificationService.success(
               this.translate.instant('CATEGORY_DELETED_SUCCESS'),
@@ -92,12 +99,15 @@ export class ViewCategoriesComponent implements OnInit {
             );
           },
           error: () => {
+            this.loadingService.hide();
             this.notificationService.error(
               this.translate.instant('CATEGORY_DELETE_ERROR'),
               this.translate.instant('ERROR')
             );
           }
         });
+      } else {
+        this.loadingService.hide();
       }
     });
   }

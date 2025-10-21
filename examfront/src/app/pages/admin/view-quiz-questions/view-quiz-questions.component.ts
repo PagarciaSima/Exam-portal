@@ -6,6 +6,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { QuestionService } from 'src/app/services/question.service';
 import { TranslateService } from '@ngx-translate/core'; 
 import { switchMap } from 'rxjs/operators';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-view-quiz-questions',
@@ -31,7 +32,8 @@ export class ViewQuizQuestionsComponent implements OnInit {
     private questionService: QuestionService,
     private notificationService: NotificationService,
     private router: Router,
-    private translate: TranslateService 
+    private translate: TranslateService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
@@ -50,13 +52,16 @@ export class ViewQuizQuestionsComponent implements OnInit {
    * Displays an error notification if the fetch fails.
    */
   getQuestionsOfQuizPaged(): void {
+    this.loadingService.show();
     this.questionService.getQuestionsOfQuizPaged(this.qId, this.page, this.size, this.searchTerm).subscribe({
       next: (data) => {
+        this.loadingService.hide();
         this.questions = data.content;
         this.totalPages = data.totalPages;
         this.isLoading = false;
       },
       error: (error) => {
+        this.loadingService.hide();
         this.notificationService.error(
           this.translate.instant('QUESTIONS_LOAD_ERROR'),
           this.translate.instant('ERROR')
@@ -78,15 +83,18 @@ export class ViewQuizQuestionsComponent implements OnInit {
    * @param quesId The ID of the question to be deleted.
    */
   deleteQuestion(quesId: number): void {
+    
     this.notificationService.confirm(
       this.translate.instant('QUESTION_DELETE_CONFIRM'),
       this.translate.instant('CONFIRM')
     ).then(confirmed => {
       if (confirmed) {
+        this.loadingService.show();
         this.questionService.deleteQuestion(quesId).pipe(
           switchMap(() => this.questionService.getQuestionsOfQuiz(this.qId))
         ).subscribe({
           next: (questions) => {
+            this.loadingService.hide();
             this.questions = questions;
             this.notificationService.success(
               this.translate.instant('QUESTION_DELETED_SUCCESS'),
@@ -94,6 +102,7 @@ export class ViewQuizQuestionsComponent implements OnInit {
             );
           },
           error: (error) => {
+            this.loadingService.hide();
             this.notificationService.error(
               this.translate.instant('QUESTION_DELETE_ERROR'),
               this.translate.instant('ERROR')
@@ -101,6 +110,8 @@ export class ViewQuizQuestionsComponent implements OnInit {
             console.error('Error deleting question:', error);
           }
         });
+      } else {
+        this.loadingService.hide();
       }
     });
   }
@@ -136,6 +147,5 @@ export class ViewQuizQuestionsComponent implements OnInit {
       this.getQuestionsOfQuizPaged();
     }
   }
-
   
 }

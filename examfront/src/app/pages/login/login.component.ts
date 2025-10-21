@@ -5,6 +5,7 @@ import { fadeInUp } from 'src/app/animations/animations';
 import { JwtRequest } from 'src/app/model/JwtRequest';
 import { JwtResponse } from 'src/app/model/JwtResponse';
 import { User } from 'src/app/model/User';
+import { LoadingService } from 'src/app/services/loading.service';
 import { LoginService } from 'src/app/services/login.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -46,7 +47,8 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private notificationService: NotificationService,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
@@ -63,6 +65,7 @@ export class LoginComponent implements OnInit {
    * - Handles errors during token generation or user retrieval by invoking `handleLoginError`.
    */
   formSubmit() {
+    this.loadingService.show();
     this.loginService.generateToken(this.loginData).subscribe({
       next: (jwtResponse: JwtResponse) => {
         this.notificationService.success(
@@ -70,16 +73,23 @@ export class LoginComponent implements OnInit {
           this.translate.instant('SUCCESS')
         );
         this.loginService.loginUser(jwtResponse.token);
-        
+
         this.loginService.getCurrentUser().subscribe({
           next: (user: User) => {
             this.loginService.setUser(user);
             this.redirectUser(user);
+            this.loadingService.hide();
           },
-          error: (err) => this.handleLoginError(err)
+          error: (err) => {
+            this.handleLoginError(err);
+            this.loadingService.hide();
+          }
         });
       },
-      error: (err) => this.handleLoginError(err)
+      error: (err) => {
+        this.handleLoginError(err);
+        this.loadingService.hide();
+      }
     });
   }
 

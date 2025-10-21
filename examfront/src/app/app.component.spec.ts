@@ -14,12 +14,6 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should have title property set to "examfront"', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toBe('examfront');
-  });
-
   it('should have selector "app-root"', () => {
     const annotations = Reflect.getOwnPropertyDescriptor(AppComponent, '__annotations__')?.value;
     const selector = annotations ? annotations[0].selector : (AppComponent as any).ɵcmp?.selectors[0][0];

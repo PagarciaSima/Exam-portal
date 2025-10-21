@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { User } from 'src/app/model/User';
-import { ProfileChangePasswordComponent } from '../profile-change-password/profile-change-password.component';
 import { MatDialog } from '@angular/material/dialog';
-import { slideIn } from 'src/app/animations/animations';
-import { UserService } from 'src/app/services/user.service';
-import { NotificationService } from 'src/app/services/notification.service';
 import { TranslateService } from '@ngx-translate/core';
+import { slideIn } from 'src/app/animations/animations';
+import { User } from 'src/app/model/User';
+import { LoadingService } from 'src/app/services/loading.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { UserService } from 'src/app/services/user.service';
+import { ProfileChangePasswordComponent } from '../profile-change-password/profile-change-password.component';
 
 @Component({
   selector: 'app-profile-edit',
@@ -26,7 +27,8 @@ export class ProfileEditComponent implements OnInit {
     private dialog: MatDialog,
     private userService: UserService,
     private notificationService: NotificationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private loadingService: LoadingService 
   ) { }
 
   ngOnInit(): void {
@@ -55,12 +57,14 @@ export class ProfileEditComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((newPassword: string | null) => {
       if (newPassword) {
+        this.loadingService.show(); 
         this.userService.updatePassword(this.user.id, newPassword).subscribe({
           next: () => {
             this.notificationService.success(
               this.translate.instant('PASSWORD_CHANGE_SUCCESS'),
               this.translate.instant('SUCCESS')
             );
+            this.loadingService.hide(); 
           },
           error: (err) => {
             console.error('Failed to update password', err);
@@ -68,6 +72,7 @@ export class ProfileEditComponent implements OnInit {
               this.translate.instant('PASSWORD_CHANGE_ERROR'),
               this.translate.instant('ERROR')
             );
+            this.loadingService.hide(); 
           }
         });
       }

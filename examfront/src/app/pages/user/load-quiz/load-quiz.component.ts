@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { slideIn } from 'src/app/animations/animations';
 import { Quiz } from 'src/app/model/Quiz';
+import { LoadingService } from 'src/app/services/loading.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { QuizService } from 'src/app/services/quiz.service';
 
@@ -27,7 +28,8 @@ export class LoadQuizComponent implements OnInit {
     private notificationService: NotificationService,
     private quizService: QuizService,
     private translateService: TranslateService,
-    private router: Router
+    private router: Router,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -45,6 +47,7 @@ export class LoadQuizComponent implements OnInit {
    */
   loadQuizzes(): void {
     this.isLoading = true;
+    this.loadingService.show();
     const obs = this.quizService.getQuizzesPaged(
       this.page,
       this.size,
@@ -58,6 +61,7 @@ export class LoadQuizComponent implements OnInit {
         this.quizzes = data.content;
         this.totalPages = data.totalPages;
         this.isLoading = false;
+        this.loadingService.hide();
       },
       error: () => {
         this.notificationService.error(
@@ -65,6 +69,7 @@ export class LoadQuizComponent implements OnInit {
           this.translateService.instant('ERROR')
         );
         this.isLoading = false;
+        this.loadingService.hide();
       }
     });
   }

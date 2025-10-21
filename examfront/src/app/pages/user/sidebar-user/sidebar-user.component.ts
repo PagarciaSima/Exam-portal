@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { slideIn } from 'src/app/animations/animations';
 import { Category } from 'src/app/model/Category';
 import { CategoryService } from 'src/app/services/category.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { LoginService } from 'src/app/services/login.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -25,7 +26,8 @@ export class SidebarUserComponent implements OnInit {
     private loginService: LoginService,
     private notificationService: NotificationService,
     private translateService: TranslateService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private loadingService: LoadingService
   ) { }
   
   ngOnInit(): void {
@@ -33,15 +35,18 @@ export class SidebarUserComponent implements OnInit {
   }
 
   loadCategories(page: number): void {
+    this.loadingService.show();
     this.categoryService.getCategoriesPaged(page, this.pageSize, this.searchTerm).subscribe({
       next: (res) => {
         this.categories = res.content;
         this.totalPages = res.totalPages;
         this.page = page;
+        this.loadingService.hide();
       },
       error: (err) => {
         this.categories = [];
         this.totalPages = 1;
+        this.loadingService.hide();
       }
     });
   }
