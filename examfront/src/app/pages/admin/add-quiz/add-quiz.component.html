@@ -187,6 +187,47 @@
                     </form>
                 </div>
             </div>
+            <!-- Bootstrap Accordion for Mass Generation and Bulk Upload / for edit mode -->
+            <div class="accordion mt-5" id="quizGenerationAccordion" *ngIf="isEditMode">
+                <!-- Mass Generation by AI -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingAI">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAI" aria-expanded="true" aria-controls="collapseAI">
+                        Mass Generation by AI
+                        </button>
+                    </h2>
+                    
+                    <div id="collapseAI" class="accordion-collapse collapse show" aria-labelledby="headingAI" data-bs-parent="#quizGenerationAccordion">
+                        <div class="accordion-body">
+                        <p>Generate multiple-choice questions for this quiz using AI (Gemini). The generated questions will be downloaded as a JSON file.</p>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            (click)="openModalGenerateQuestionsByAI()"
+                            [disabled]="!quiz.qId"
+                        >
+                            Generate & Download JSON
+                        </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Bulk Upload (.json) -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingBulk">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBulk" aria-expanded="false" aria-controls="collapseBulk">
+                        Bulk Upload (.json)
+                        </button>
+                    </h2>
+                    <div id="collapseBulk" class="accordion-collapse collapse" aria-labelledby="headingBulk" data-bs-parent="#quizGenerationAccordion">
+                        <div class="accordion-body">
+                            <p>Upload a JSON file containing questions for bulk import.</p>
+                            <!-- You can add your file input and upload logic here -->
+                            <input type="file" accept=".json" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </mat-card-content>
 </mat-card>
+

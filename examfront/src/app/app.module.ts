@@ -54,6 +54,7 @@ import { PaginatorComponent } from './shared/paginator/paginator.component';
 import { SearcherComponent } from './shared/searcher/searcher.component';
 import { NgxLoadingModule } from 'ngx-loading';
 import { ReviewQuizComponent } from './pages/user/review-quiz/review-quiz.component';
+import { QuestionGenModalComponentComponent } from './pages/admin/question-gen-modal-component/question-gen-modal-component.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -87,7 +88,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     InstructionsComponent,
     StartComponent,
     NotFoundComponent,
-    ReviewQuizComponent
+    ReviewQuizComponent,
+    QuestionGenModalComponentComponent
   ],
   imports: [
     BrowserModule,

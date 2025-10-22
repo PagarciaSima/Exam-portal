@@ -1,0 +1,24 @@
+<mat-card>
+  <h2 mat-dialog-title>AI Question Generation</h2>
+  <form #form="ngForm" (ngSubmit)="submit(form)" autocomplete="off">
+    <mat-form-field class="w100 mt-3" appearance="outline">
+      <mat-label>Number of Questions</mat-label>
+      <input matInput type="number" name="numOfQuestions" [(ngModel)]="data.numOfQuestions" required min="1" #numOfQuestions="ngModel">
+      <mat-error *ngIf="numOfQuestions.invalid && (numOfQuestions.dirty || numOfQuestions.touched)">
+        Enter a valid number (min 1)
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w100 mt-3" appearance="outline">
+      <mat-label>Image URL (optional)</mat-label>
+      <input matInput name="image" [(ngModel)]="data.image">
+    </mat-form-field>
+    <div class="container text-center mt-3">
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        Generate
+      </button>
+      <button mat-button mat-dialog-close type="button">
+        Cancel
+      </button>
+    </div>
+  </form>
+</mat-card>

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { slideIn } from 'src/app/animations/animations';
@@ -9,6 +10,8 @@ import { CategoryService } from 'src/app/services/category.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { QuizService } from 'src/app/services/quiz.service';
+import { QuestionGenModalComponentComponent } from '../question-gen-modal-component/question-gen-modal-component.component';
+import { QuestionGenerationRequest } from 'src/app/model/QuestionGenerationRequest';
 
 @Component({
   selector: 'app-add-quiz',
@@ -32,7 +35,8 @@ export class AddQuizComponent implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -189,6 +193,32 @@ export class AddQuizComponent implements OnInit {
       active: false,
       category: null
     };
+  }
+
+  openModalGenerateQuestionsByAI() {
+  const questionGenerationRequest: QuestionGenerationRequest = {
+    quizId: this.quiz.qId,
+    numOfQuestions: this.quiz.numberOfQuestions
+  };
+
+  const dialogRef = this.dialog.open(QuestionGenModalComponentComponent, {
+    width: '400px',
+    data: questionGenerationRequest
+  });
+
+  dialogRef.afterClosed().subscribe((result: QuestionGenerationRequest) => {
+      if (result) {
+        this.quizService.generateQuestions(result).subscribe(blob => {
+          // Descargar el archivo
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'questions.json';
+          a.click();
+          window.URL.revokeObjectURL(url);
+        });
+      }
+    });
   }
 }
 

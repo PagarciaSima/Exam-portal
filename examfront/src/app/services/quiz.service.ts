@@ -103,4 +103,15 @@ export class QuizService {
       questions
     );
   }
+
+  /**
+   * Llama al endpoint de generación de preguntas y descarga el JSON.
+   * @param request Datos para la generación de preguntas.
+   * @returns Observable con el blob del archivo JSON.
+   */
+  generateQuestions(request: any): Observable<Blob> {
+    return this.http.post(`${this.apiUrl}/generation/questions`, request, {
+      responseType: 'blob'
+    });
+  }
 }

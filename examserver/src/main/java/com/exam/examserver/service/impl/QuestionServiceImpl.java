@@ -1,6 +1,7 @@
 package com.exam.examserver.service.impl;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -106,5 +107,18 @@ public class QuestionServiceImpl implements IQuestionService {
         }
         questionRepository.deleteById(questionId);
         LOGGER.info("Question with ID {} deleted successfully", questionId);
+    }
+
+    @Override
+    @Transactional
+    public List<Question> saveAll(List<Question> questions) {
+        if (questions == null || questions.isEmpty()) {
+            LOGGER.warn("No questions to save. Received empty list.");
+            return List.of();
+        }
+        LOGGER.info("Saving {} questions", questions.size());
+        List<Question> savedQuestions = questionRepository.saveAll(questions);
+        LOGGER.info("Saved {} questions successfully", savedQuestions.size());
+        return savedQuestions;
     }
 }
