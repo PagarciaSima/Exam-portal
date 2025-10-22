@@ -21,4 +21,9 @@ export class SearcherComponent implements OnInit {
     this.valueChange.emit(newValue);
   }
 
+  clearInput() {
+    this.value = '';
+    this.valueChange.emit(this.value);
+  }
+
 }

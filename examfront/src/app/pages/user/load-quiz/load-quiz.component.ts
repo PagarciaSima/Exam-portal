@@ -114,4 +114,5 @@ export class LoadQuizComponent implements OnInit {
   startQuiz(qId: number): void {
     this.router.navigate(['/user-dashboard/instructions', qId]);
   }
+
 }

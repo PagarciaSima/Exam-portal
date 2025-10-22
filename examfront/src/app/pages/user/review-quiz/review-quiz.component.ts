@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { QuestionAttemptDTO, QuizAttemptDTO } from 'src/app/model/QuestionAttemptDTO';
+import { NotificationService } from 'src/app/services/notification.service';
 import { QuizStateService } from 'src/app/services/quiz-state.service';
 
 @Component({
@@ -15,17 +18,22 @@ export class ReviewQuizComponent implements OnInit {
   score: number = 0;
 
   constructor(
-    private quizState: QuizStateService
+    private quizState: QuizStateService,
+    private notificationService: NotificationService,
+    private translateService: TranslateService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.loadLastQuizAttempts();
   }
 
+  /**
+   * Loads the last quiz attempts of the user and assigns the data to component properties.
+   */
   private loadLastQuizAttempts(): void {
     this.quizState.getLastAttempts().subscribe({
       next: (data: QuizAttemptDTO) => {
-        console.log('Last attempts data:', data);
 
         if (data && data.questions && data.questions.length > 0) {
           this.marksGot = data.marksGot;
@@ -36,8 +44,15 @@ export class ReviewQuizComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error fetching last attempts:', err);
+        this.notificationService.error(
+          this.translateService.instant('FAILED_LOADING_QUESTIONS'),
+          this.translateService.instant('ERROR')
+        );
       }
     });
+  }
+
+  goBack(): void {
+    this.router.navigate(['/user-dashboard', 0]);
   }
 }

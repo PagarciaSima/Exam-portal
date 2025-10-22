@@ -243,7 +243,17 @@ export class StartComponent implements OnInit {
     }, 1000);
   }
 
+  /**
+   * Navigate to the review quiz page.
+   */
   goToReview(): void {
     this.router.navigate(['/review-quiz']);
+  }
+
+  /**
+   * Print the quiz results.
+   */
+  printResults(): void {
+    window.print();
   }
 }

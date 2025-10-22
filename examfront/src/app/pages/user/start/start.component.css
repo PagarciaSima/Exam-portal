@@ -12,3 +12,37 @@
 .fit-content {
   min-width: fit-content;
 }
+
+@media (max-width: 425px) {
+  .result-actions-responsive {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+  .result-actions-responsive button {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+  .print-section, .print-section * {
+    visibility: visible !important;
+  }
+  .print-section {
+    position: absolute !important;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    background: white;
+    z-index: 9999;
+  }
+  .result-actions-responsive {
+    display: none !important;
+  }
+}

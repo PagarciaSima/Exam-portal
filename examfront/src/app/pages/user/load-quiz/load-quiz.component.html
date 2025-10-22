@@ -4,7 +4,7 @@
       {{ 'ALL_AVAILABLE_QUIZZES' | translate }}
     </h1>
     <!-- Searcher -->
-    <div *ngIf="quizzes.length > 0" class="search-bar mb-4" role="search" [attr.aria-label]="'SEARCH_QUIZ' | translate">
+    <div class="search-bar mb-4" role="search" [attr.aria-label]="'SEARCH_QUIZ' | translate">
       <app-search-bar
         [placeholder]="'SEARCH_QUIZ' | translate"
         [ariaLabel]="'SEARCH_QUIZ' | translate"
@@ -37,22 +37,20 @@
             </p>
           </mat-card-content>
           <mat-card-action class="mt-3 d-flex justify-content-center gap-3 flex-wrap">
-            <button mat-raised-button color="primary"
-                    (click)="viewQuiz(quiz.qid)"
-                    [attr.aria-label]="'Ver el quiz ' + quiz.title">
-              {{ 'VIEW' | translate }}
-            </button>
             <button mat-raised-button color="accent"
                     (click)="startQuiz(quiz.qId)"
                     [attr.aria-label]="'Comenzar el quiz ' + quiz.title">
+              <mat-icon class="me-1" aria-hidden="true">play_arrow</mat-icon>
               {{ 'START' | translate }}
             </button>
             <span class="quiz-info-chip"
                     aria-label="{{ ('QUESTIONS' | translate) + ': ' + quiz.numberOfQuestions }}">
+              <mat-icon class="me-1" aria-hidden="true">help_outline</mat-icon>
               {{ 'QUESTIONS' | translate }}: {{ quiz.numberOfQuestions }}
             </span>
             <span class="quiz-info-chip"
                     aria-label="{{ ('MAX_MARKS' | translate) + ': ' + quiz.maxMarks }}">
+              <mat-icon class="me-1" aria-hidden="true">star</mat-icon>
               {{ 'MAX_MARKS' | translate }} : {{ quiz.maxMarks }}
             </span>
           </mat-card-action>

@@ -1,38 +1,55 @@
 <div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-  <div class="col-md-8 mt-5" role="main" aria-labelledby="review-quiz-title">
+    <div class="col-md-8 mt-5" role="main" aria-labelledby="review-quiz-title">
     <h2 id="review-quiz-title" class="text-center mb-4">
         <mat-icon [attr.aria-label]="'REVIEW_QUIZ' | translate " class="me-2" style="vertical-align: middle;">rate_review</mat-icon>
         {{ 'REVIEW_QUIZ' | translate }}
     </h2>
     <div class="text-center mb-3" *ngIf="questions && questions.length" role="region" aria-label="{{ 'QUIZ_RESULT' | translate }}">
-      <div class="row mx-auto">
+        <div class="row mx-auto">
         <span class="me-4 d-flex align-items-center col-md-4 mx-auto mt-2">
-          <mat-icon style="color: gold;" aria-label="{{ 'MARKS_OBTAINED' | translate }}" class="me-2">star</mat-icon>
-          <b>{{ 'MARKS_OBTAINED' | translate }}</b>&nbsp;{{ score }}
+            <mat-icon style="color: gold;" aria-label="{{ 'MARKS_OBTAINED' | translate }}" class="me-2">star</mat-icon>
+            <b>{{ 'MARKS_OBTAINED' | translate }}</b>&nbsp;{{ score }}
         </span>
         <span class="d-flex align-items-center col-md-4 mx-auto mt-2">
-          <mat-icon color="warn" style="color: red;" aria-label="{{ 'FAILED_QUESTIONS' | translate }}" class="me-2">error</mat-icon>
-          <b>{{ 'FAILED_QUESTIONS' | translate }}:&nbsp;</b> {{ questions.length - correctAnswers }}
+            <mat-icon color="warn" style="color: red;" aria-label="{{ 'FAILED_QUESTIONS' | translate }}" class="me-2">error</mat-icon>
+            <b>{{ 'FAILED_QUESTIONS' | translate }}:&nbsp;</b> {{ questions.length - correctAnswers }}
         </span>
-      </div>
+        </div>
     </div>
     <div *ngFor="let q of questions; let i = index" class="card mb-3 shadow-sm" role="region" [attr.aria-label]="('QUESTION' | translate) + ' ' + (i + 1)">
-      <div class="card-body">
-        <p>
-          <b>{{ i + 1 }}. {{ q.content }}</b>
-        </p>
-        <p class="d-flex align-items-center">
-          <span class="ms-3 me-3">
-            <b>{{ 'YOUR_ANSWER' | translate }}:</b>&nbsp;{{ q.givenAnswer ? q.givenAnswer : ('NO_ANSWER' | translate) }}
-          </span>
-          <mat-icon *ngIf="q.givenAnswer === q.answer" class="text-success ml-2" aria-label="{{ 'CORRECT_ANSWER' | translate }}">check_circle</mat-icon>
-          <mat-icon *ngIf="q.givenAnswer !== q.answer" class="text-danger ml-2" aria-label="{{ 'FAIL' | translate }}">cancel</mat-icon>
-        </p>
-        <p *ngIf="q.givenAnswer !== q.answer" class="d-flex align-items-center">
-          <span class="ms-3"><b>{{ 'CORRECT_ANSWER' | translate }}:</b>&nbsp;</span> {{ q.answer }}
-          <mat-icon color="primary" class="ms-3" aria-label="{{ 'CORRECT_ANSWER' | translate }}">check_circle</mat-icon>
-        </p>
-      </div>
+        <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-md-2 text-center" *ngIf="q.image">
+                <img [src]="q.image" alt="Question image" class="img-fluid rounded" style="max-height: 80px;" />
+            </div>
+            <div class="col">
+                <p>
+                    <b>{{ i + 1 }}. {{ q.content }}</b>
+                </p>
+                <p class="d-flex align-items-center">
+                    <span class="ms-3 me-3">
+                        <b>{{ 'YOUR_ANSWER' | translate }}:</b>&nbsp;{{ q.givenAnswer ? q.givenAnswer : ('NO_ANSWER' | translate) }}
+                    </span>
+                    <mat-icon *ngIf="q.givenAnswer === q.answer" class="text-success ml-2" aria-label="{{ 'CORRECT_ANSWER' | translate }}">check_circle</mat-icon>
+                    <mat-icon *ngIf="q.givenAnswer !== q.answer" class="text-danger ml-2" aria-label="{{ 'FAIL' | translate }}">cancel</mat-icon>
+                </p>
+                <p *ngIf="q.givenAnswer !== q.answer" class="d-flex align-items-center">
+                    <span class="ms-3"><b>{{ 'CORRECT_ANSWER' | translate }}:</b>&nbsp;</span> {{ q.answer }}
+                    <mat-icon color="primary" class="ms-3" aria-label="{{ 'CORRECT_ANSWER' | translate }}">check_circle</mat-icon>
+                </p>
+            </div>
+        </div>
+        </div>
     </div>
-  </div>
+    </div>
+    
+</div>
+<!-- All quizzes button-->
+<div class="row w-100">
+    <div class="col text-center mt-4">
+        <button mat-raised-button color="primary" (click)="goBack()">
+            <mat-icon class="me-2">arrow_back</mat-icon>
+            {{ 'BACK_TO_QUIZZES' | translate }}
+        </button>
+    </div>
 </div>

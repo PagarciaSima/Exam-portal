@@ -236,5 +236,7 @@
   "REVIEW_QUIZ": "Review Quiz",
   "YOUR_ANSWER": "Your answer",
   "NO_ANSWER": "No answer",
-  "FAILED_QUESTIONS": "Failed Questions"
+  "FAILED_QUESTIONS": "Failed Questions",
+  "FAILED_LOADING_QUESTIONS": "Failed to load questions. Please try again later",
+  "BACK_TO_QUIZZES": "Back to Quizzes"
 }

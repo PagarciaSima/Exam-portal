@@ -5,9 +5,13 @@
       [placeholder]="placeholder"
       [attr.aria-label]="ariaLabel"
       [(ngModel)]="value"
-      (ngModelChange)="onInputChange($event)">
+      (ngModelChange)="onInputChange($event)"
+    >
     <button mat-icon-button matSuffix aria-label="Buscar">
       <mat-icon>search</mat-icon>
+    </button>
+    <button *ngIf="value" mat-icon-button matSuffix aria-label="Limpiar" (click)="clearInput()">
+      <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
 </div>

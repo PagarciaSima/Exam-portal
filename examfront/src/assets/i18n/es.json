@@ -234,5 +234,7 @@
   "REVIEW_QUIZ": "Revisar cuestionario",
   "YOUR_ANSWER": "Tu respuesta",
   "NO_ANSWER": "Sin respuesta",
-  "FAILED_QUESTIONS": "Preguntas fallidas"
+  "FAILED_QUESTIONS": "Preguntas fallidas",
+  "FAILED_LOADING_QUESTIONS": "Error al cargar las preguntas. Por favor, inténtalo de nuevo más tarde",
+  "BACK_TO_QUIZZES": "Volver a los cuestionarios"
 }

@@ -6,7 +6,7 @@
     </h1>
 
     <!-- Search Bar -->
-    <div *ngIf="categories.length > 0;" class="search-bar" role="search" [attr.aria-label]="'SEARCH_CATEGORY' | translate">
+    <div class="search-bar" role="search" [attr.aria-label]="'SEARCH_CATEGORY' | translate">
       <button mat-raised-button color="primary" (click)="addCategory()" class="mb20">
         <mat-icon>add</mat-icon>
         {{ 'ADD_CATEGORY' | translate }}

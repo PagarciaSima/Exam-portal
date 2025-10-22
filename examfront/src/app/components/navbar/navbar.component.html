@@ -1,11 +1,11 @@
 <mat-toolbar color="primary" class="navbar-toolbar" role="navigation" [attr.aria-label]="'MAIN_NAVIGATION' | translate">
     <div class="brand">
-        <button mat-icon-button (click)="redirectHome()" [attr.aria-label]="'HOME' | translate">
+        <button mat-icon-button class="mb-2" (click)="redirectHome()" [attr.aria-label]="'HOME' | translate">
             <mat-icon aria-hidden="true">menu_book</mat-icon>
         </button>
         <span class="ml10 fs20 brand-text" [attr.aria-label]="'EXAM_PORTAL' | translate">{{ 'EXAM_PORTAL' | translate }}</span>
         <!-- Lenguage selector -->
-        <button mat-icon-button [matMenuTriggerFor]="langMenu" class="ml10 lang-btn" [attr.aria-label]="'SELECT_LANGUAGE' | translate">
+        <button mat-icon-button [matMenuTriggerFor]="langMenu" class="ml10 lang-btn mb-2" [attr.aria-label]="'SELECT_LANGUAGE' | translate">
             <mat-icon aria-hidden="true">language</mat-icon>
         </button>
         <mat-menu #langMenu="matMenu" [attr.aria-label]="'LANGUAGE_MENU' | translate">

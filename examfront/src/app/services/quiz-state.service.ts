@@ -16,6 +16,10 @@ export class QuizStateService {
 
   constructor(private http: HttpClient) {}
 
+  /**
+   * Get the user ID from localStorage.
+   * @returns The user ID or null if not found.
+   */
   getUserId(): number | null {
     console.log('Obteniendo ID de usuario desde localStorage');
     const user = localStorage.getItem('user');
@@ -23,9 +27,13 @@ export class QuizStateService {
     return JSON.parse(user).id;
   }
 
+  /**
+   * Get the last quiz attempts for the user.
+   * @returns An observable of the last quiz attempt DTO.
+   */
   getLastAttempts(): Observable<QuizAttemptDTO> {
     const userId = this.getUserId();
     if (!userId) throw new Error('Usuario no autenticado');
-    return this.http.get<QuizAttemptDTO>(`${this.baseUrl}/quiz-attempts/last/10`);
+    return this.http.get<QuizAttemptDTO>(`${this.baseUrl}/quiz-attempts/last/${userId}`);
   }
 }

@@ -12,10 +12,23 @@
                   {{ 'ONGOING_QUIZ' | translate }}: {{ questions[0]?.quiz?.title }}
                 </span>
             </h1>
-            <div class="col-xl-2">
-                <h3 [attr.aria-label]="'INSTRUCTIONS' | translate">{{ 'INSTRUCTIONS' | translate }}</h3>
+            <!-- Instructions -->
+            <div class="col-xl-3">
+                <mat-card>
+                    <mat-card-content>
+                        <h3 class="text-center" [attr.aria-label]="'INSTRUCTIONS' | translate">
+                            <b>{{ 'INSTRUCTIONS' | translate }}</b>
+                        </h3>
+                        <ul>
+                            <li>Do not refresh the page while taking the quiz.</li>
+                            <li>Do not switch the tabs.</li>
+                            <li>Once submitted, you cannot change your answers.</li>
+                        </ul>
+                    </mat-card-content>
+                </mat-card>
             </div>
-            <div class="col-xl-7">
+            <!-- Content-->
+            <div class="col-xl-6">
                 <ng-container *ngIf="questions.length > 0">
                     
                     <mat-card *ngFor="let question of questions; let i = index" class="mt-2" role="group" [attr.aria-label]="('QUESTION' | translate) + ' ' + (i + 1)">
@@ -90,9 +103,9 @@
                         </mat-card-content>
                     </mat-card>
                 </ng-container>
-                    
-                <div class="row">
-                    <!-- Question buttons -->
+                  
+                 <!-- Question buttons -->
+                <div class="row">                  
                     <div class="d-flex justify-content-center mt-4 col-md-4 offset-md-2" *ngIf="questions.length > 0">
                         <button mat-raised-button color="accent" class="me-2" (click)="prevPage()" [disabled]="currentPage === 0" aria-label="{{ 'PREVIOUS_PAGE' | translate }}">
                             {{ 'BACK' | translate }}
@@ -115,7 +128,9 @@
                <mat-card class="mt-4 mt-xl-2">
                     <mat-card-header>
                         <mat-card-title>
-                            <h3 [attr.aria-label]="'PROGRESS' | translate">{{ 'PROGRESS' | translate }}</h3>
+                            <h3 [attr.aria-label]="'PROGRESS' | translate">
+                                <b>{{ 'PROGRESS' | translate }}</b>
+                            </h3>
                         </mat-card-title>
                         <mat-card-subtitle [attr.aria-label]="'QUIZ_AUTO_SUBMIT' | translate">
                             {{ 'QUIZ_AUTO_SUBMIT' | translate }}
@@ -144,9 +159,9 @@
 </div>
 
 <!-- Show result section -->
-<div class="bootstrap-wrapper" *ngIf="isSubmit">
+<div class="bootstrap-wrapper print-section" *ngIf="isSubmit">
     <div class="row w-100" style="height: 100vh;">
-        <div class="col-md-6 offset-md-3 my-auto">
+        <div class="col-xl-6 offset-xl-3 my-auto">
             <mat-card aria-live="polite">
                 <mat-card-header class="my-3 d-flex justify-content-center align-items-center" style="gap: 16px;">
                     <mat-card-title>
@@ -183,16 +198,19 @@
                     <h3><b>{{ 'CORRECT_ANSWERS' | translate }}</b> {{ correctAnswers }} / {{ shuffledQuestions.length }}</h3>
                     <h3><b>{{ 'ATTEMPTED_QUESTIONS' | translate }}</b> {{ attempted }}</h3>
                 </mat-card-content>
-                <mat-card-actions class="d-flex justify-content-center mb-3">
-                    <button mat-raised-button color="primary" class="mt-3">
-                      {{ 'PRINT_RESULTS' | translate }}
+                <mat-card-actions class="d-flex justify-content-center mb-3 flex-wrap gap-2 result-actions-responsive">
+                    <button mat-raised-button color="primary" class="mt-3" (click)="printResults()">
+                        <mat-icon class="me-2" aria-label="Print icon">print</mat-icon>
+                        {{ 'PRINT_RESULTS' | translate }}
                     </button>
                     <button mat-raised-button color="accent" class="mt-3 ms-3"
                         (click)="goHome()" [attr.aria-label]="'GO_HOME' | translate">
+                        <mat-icon class="me-2" aria-label="Home icon">home</mat-icon>
                         {{ 'HOME' | translate }}
                     </button>
                     <button mat-raised-button color="accent" class="mt-3 ms-3"
                         (click)="goToReview()" [attr.aria-label]="'REVIEW_QUIZ' | translate">
+                        <mat-icon class="me-2" aria-label="Review icon">reviews</mat-icon>
                         {{ 'REVIEW_QUIZ' | translate }}
                     </button>
                 </mat-card-actions>
