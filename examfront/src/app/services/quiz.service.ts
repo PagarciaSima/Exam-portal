@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Quiz } from '../model/Quiz';
+import { Question } from '../model/Question';
 
 @Injectable({
   providedIn: 'root'
@@ -90,6 +91,16 @@ export class QuizService {
     }
     return this.http.get<{ content: Quiz[], totalPages: number, totalElements: number }>(
       `${this.apiUrl}/quiz/paged${params}`
+    );
+  }
+
+  /**
+   * Send quiz answers to backend to calculate result
+   */
+  submitQuiz(questions: Question[]): Observable<{ marksGot: number, correctAnswers: number, attempted: number }> {
+    return this.http.post<{ marksGot: number, correctAnswers: number, attempted: number }>(
+      `${this.apiUrl}/question/eval-quiz`,
+      questions
     );
   }
 }

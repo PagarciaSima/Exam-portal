@@ -191,6 +191,10 @@
                         (click)="goHome()" [attr.aria-label]="'GO_HOME' | translate">
                         {{ 'HOME' | translate }}
                     </button>
+                    <button mat-raised-button color="accent" class="mt-3 ms-3"
+                        (click)="goToReview()" [attr.aria-label]="'REVIEW_QUIZ' | translate">
+                        {{ 'REVIEW_QUIZ' | translate }}
+                    </button>
                 </mat-card-actions>
             </mat-card>
         </div>

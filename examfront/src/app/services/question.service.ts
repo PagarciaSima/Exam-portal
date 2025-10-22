@@ -8,6 +8,9 @@ import { Question } from '../model/Question';
   providedIn: 'root'
 })
 export class QuestionService {
+  evalQuiz(shuffledQuestions: Question[]) {
+    throw new Error('Method not implemented.');
+  }
 
   private apiUrl = environment.apiUrl;
 

@@ -6,6 +6,8 @@ import { Question } from 'src/app/model/Question';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { QuestionService } from 'src/app/services/question.service';
+import { QuizStateService } from 'src/app/services/quiz-state.service';
+import { QuizService } from 'src/app/services/quiz.service';
 
 @Component({
   selector: 'app-start',
@@ -40,7 +42,9 @@ export class StartComponent implements OnInit {
     private translateService: TranslateService,
     private router: Router,
     private ngZone: NgZone,
-    private loadService: LoadingService
+    private loadService: LoadingService,
+    private quizService: QuizService,
+    private quizState: QuizStateService
   ) {}
 
   ngOnInit(): void {
@@ -175,28 +179,26 @@ export class StartComponent implements OnInit {
    * Finalize the quiz by calculating results.
    */
   private finalizeQuiz(): void {
-    this.correctAnswers = 0;
-    this.marksGot = 0;
-    this.attempted = 0;
-
-    // Sincroniza las respuestas del mapa a las preguntas
     this.shuffledQuestions.forEach(q => {
       q.givenAnswer = this.answersMap[q.quesId] || '';
     });
 
-    // Calcula resultados
-    this.shuffledQuestions.forEach(q => {
-      if (q.givenAnswer === q.answer) {
-        this.correctAnswers++;
-        const marksSingle = q.quiz.maxMarks / this.shuffledQuestions.length;
-        this.marksGot += marksSingle;
-      }
-      if (q.givenAnswer && q.givenAnswer.trim() !== '') {
-        this.attempted++;
+    this.loadService.show();
+    this.quizService.submitQuiz(this.shuffledQuestions).subscribe({
+      next: (res) => {
+        this.loadService.hide();
+        this.marksGot = res.marksGot;
+        this.correctAnswers = res.correctAnswers;
+        this.attempted = res.attempted;
+      },
+      error: (err) => {
+        this.loadService.hide();
+        this.notificationService.error(
+          this.translateService.instant("SUBMIT_QUIZ_ERROR"),
+          this.translateService.instant("ERROR")
+        );
       }
     });
-
-    this.marksGot = parseFloat(this.marksGot.toFixed(2));
   }
 
   /**
@@ -239,5 +241,9 @@ export class StartComponent implements OnInit {
         }
       }
     }, 1000);
+  }
+
+  goToReview(): void {
+    this.router.navigate(['/review-quiz']);
   }
 }

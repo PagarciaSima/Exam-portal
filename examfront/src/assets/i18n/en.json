@@ -232,5 +232,9 @@
   "NOT_FOUND_BUTTON_ARIA": "Go back to previous page",
   "NOT_FOUND_DESC": "The URL you entered does not exist.",
   "NOT_FOUND_IMAGE_ALT": "Not found page illustration, error 404",
-  "NOT_FOUND_TITLE": "404 - Page not found"
+  "NOT_FOUND_TITLE": "404 - Page not found",
+  "REVIEW_QUIZ": "Review Quiz",
+  "YOUR_ANSWER": "Your answer",
+  "NO_ANSWER": "No answer",
+  "FAILED_QUESTIONS": "Failed Questions"
 }

@@ -18,6 +18,7 @@ import { InstructionsComponent } from './pages/user/instructions/instructions.co
 import { LoadQuizComponent } from './pages/user/load-quiz/load-quiz.component';
 import { StartComponent } from './pages/user/start/start.component';
 import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
+import { ReviewQuizComponent } from './pages/user/review-quiz/review-quiz.component';
 
 const routes: Routes = [
   {
@@ -118,6 +119,7 @@ const routes: Routes = [
         component: InstructionsComponent,
         data: { animation: 'InstructionsPage' }
       }
+      
     ]
   },
   {
@@ -130,6 +132,11 @@ const routes: Routes = [
     component: StartComponent,
     canActivate: [NormalGuard], // si quieres protegerla igual que el dashboard
     data: { animation: 'StartQuizPage' }
+  },
+  {
+    path: 'review-quiz',
+    component: ReviewQuizComponent,
+    data: { animation: 'ReviewQuizPage' }
   },
   {
     path: '**',

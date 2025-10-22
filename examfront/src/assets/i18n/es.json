@@ -230,5 +230,9 @@
   "NOT_FOUND_BUTTON_ARIA": "Volver a la página anterior",
   "NOT_FOUND_DESC": "La URL que has ingresado no existe.",
   "NOT_FOUND_IMAGE_ALT": "Ilustración de página no encontrada, error 404",
-  "NOT_FOUND_TITLE": "404 - Página no encontrada"
+  "NOT_FOUND_TITLE": "404 - Página no encontrada",
+  "REVIEW_QUIZ": "Revisar cuestionario",
+  "YOUR_ANSWER": "Tu respuesta",
+  "NO_ANSWER": "Sin respuesta",
+  "FAILED_QUESTIONS": "Preguntas fallidas"
 }
