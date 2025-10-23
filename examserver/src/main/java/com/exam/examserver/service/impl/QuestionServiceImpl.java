@@ -108,7 +108,32 @@ public class QuestionServiceImpl implements IQuestionService {
         questionRepository.deleteById(questionId);
         LOGGER.info("Question with ID {} deleted successfully", questionId);
     }
-
+    
+    /**
+     * Persists a list of {@link Question} entities in the database.
+     * <p>
+     * This method performs a bulk save of all questions provided in the input list. 
+     * It logs the number of questions received and the number successfully saved. 
+     * If the input list is {@code null} or empty, the method logs a warning and 
+     * returns an empty list without performing any database operations.
+     * </p>
+     *
+     * <p><b>Transactional:</b> The method is annotated with {@code @Transactional}, 
+     * so all save operations are performed in a single transaction. If any 
+     * save operation fails, the transaction will be rolled back.</p>
+     *
+     * @param questions the list of {@link Question} objects to persist; may not be {@code null}, but can be empty
+     * @return a list of {@link Question} entities that were successfully saved; returns an empty list if input is {@code null} or empty
+     *
+     * @throws DataAccessException if a data access error occurs during the save operation
+     *
+     * <p><b>Logging:</b>
+     * <ul>
+     *   <li>Logs a warning if the input list is empty or null.</li>
+     *   <li>Logs info before saving the questions and after successful persistence.</li>
+     * </ul>
+     * </p>
+     */
     @Override
     @Transactional
     public List<Question> saveAll(List<Question> questions) {

@@ -238,5 +238,19 @@
   "NO_ANSWER": "No answer",
   "FAILED_QUESTIONS": "Failed Questions",
   "FAILED_LOADING_QUESTIONS": "Failed to load questions. Please try again later",
-  "BACK_TO_QUIZZES": "Back to Quizzes"
+  "BACK_TO_QUIZZES": "Back to Quizzes",
+  "QUIZ_MASS_GENERATION_AI": "Mass Generation by AI",
+  "QUIZ_GENERATE_DOWNLOAD_JSON": "Generate & Download JSON",
+  "QUIZ_BULK_UPLOAD_JSON": "Bulk Upload (.json)",
+  "QUIZ_BULK_UPLOAD_DESC": "Upload a JSON file containing questions for bulk import.",
+  "INDICATE_COMMON_IMAGE_PATH": "Indicate a common image path for all questions (optional).",
+  "EXAMPLE": "Example",
+  "ALL_QUESTIONS_USE_THIS_IMAGE": "All generated questions will use this image.",
+  "IMAGE_URL_OPTIONAL": "Image URL (optional)",
+  "QUIZ_BULK_PASTE_JSON": "Or paste the JSON content directly into the text area below.",
+  "QUIZ_BULK_PASTE_JSON_PLACEHOLDER": "Enter the JSON content here...",
+  "QUIZ_PROCESS_BULK_JSON": "Process bulk JSON",
+  "QUESTION_GENERATION_ERROR": "Error generating questions, please try again later.",
+  "QUIZ_BULK_JSON_SUCCESS": "Bulk questions processed successfully.",
+  "QUIZ_BULK_JSON_INVALID": "Invalid JSON format. Please check your input."
 }

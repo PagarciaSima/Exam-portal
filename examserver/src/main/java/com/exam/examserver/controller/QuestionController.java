@@ -37,6 +37,8 @@ import com.exam.examserver.model.user.User;
 import com.exam.examserver.service.IQuestionService;
 import com.exam.examserver.service.IQuizAttemptService;
 import com.exam.examserver.service.IQuizService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -354,6 +356,95 @@ public class QuestionController {
 
         return ResponseEntity.ok(mapResponse);
     }
+    
+    
+    /**
+     * Save multiple questions at once.
+     *
+     * @param questions the list of questions to save
+     * @return the list of saved questions
+     */
+    @Operation(
+            summary = "Save multiple questions",
+            description = "Saves a list of questions at once"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Questions saved successfully",
+                    content = @Content(schema = @Schema(implementation = Question.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid input"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error"
+            )
+    })
+    @PostMapping("/save-all")
+    public ResponseEntity<List<Question>> saveAllQuestions(@RequestBody List<Question> questions) {
+        if (questions == null || questions.isEmpty()) {
+            LOGGER.warn("Received empty list of questions to save");
+            return ResponseEntity.badRequest().build();
+        }
+        try {
+            List<Question> savedQuestions = questionService.saveAll(questions);
+            LOGGER.info("Saved {} questions successfully", savedQuestions.size());
+            return ResponseEntity.ok(savedQuestions);
+        } catch (Exception e) {
+            LOGGER.error("Error saving questions: {}", e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    /**
+     * Receives a JSON file containing a list of questions from the frontend and saves all questions.
+     * <p>
+     * The file is read in-memory and deserialized to a list of {@link Question} objects.
+     * No file is stored on the server; questions are directly persisted using {@link #saveAll(List)}.
+     * </p>
+     *
+     * @param file JSON file uploaded from frontend, containing a list of questions
+     * @return ResponseEntity with saved questions on success, or error message on failure
+     */
+    @PostMapping("/upload-json")
+    public ResponseEntity<?> uploadQuestionsJson(@RequestPart("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            LOGGER.warn("Received empty file for bulk question upload");
+            return ResponseEntity.badRequest().body("File is empty");
+        }
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<Question> questions = objectMapper.readValue(
+                file.getInputStream(),
+                new TypeReference<List<Question>>() {}
+            );
+
+            if (questions.isEmpty()) {
+                LOGGER.warn("Uploaded JSON contains no questions");
+                return ResponseEntity.badRequest().body("JSON file contains no questions");
+            }
+
+            LOGGER.info("Uploading {} questions from JSON file", questions.size());
+            // Persist all questions
+            List<Question> savedQuestions = questionService.saveAll(questions);
+            LOGGER.info("Saved {} questions successfully from JSON file", savedQuestions.size());
+
+            return ResponseEntity.ok(savedQuestions);
+
+        } catch (IOException e) {
+            LOGGER.error("Failed to parse or save questions from JSON file", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body("Error processing JSON file: " + e.getMessage());
+        }
+    }
+
+    
+    
+    
 
     /**
      * Saves the user's attempt for a given quiz along with the answers to each question.
@@ -411,4 +502,6 @@ public class QuestionController {
             LOGGER.error("Failed to save quiz attempt for quiz '{}': {}", currentQuiz.getTitle(), ex.getMessage(), ex);
         }
     }
+    
+   
 }

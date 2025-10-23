@@ -120,4 +120,14 @@ export class QuestionService {
     }
     return this.http.get<{ content: Question[], totalPages: number, totalElements: number }>(url);
   }
+
+  saveAllQuestions(questions: Question[]): Observable<Question[]> {
+    return this.http.post<Question[]>(`${this.apiUrl}/question/save-all`, questions);
+  }
+
+  uploadQuestionsJson(file: File): Observable<Question[]> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<Question[]>(`${this.apiUrl}/question/upload-json`, formData);
+  }
 }

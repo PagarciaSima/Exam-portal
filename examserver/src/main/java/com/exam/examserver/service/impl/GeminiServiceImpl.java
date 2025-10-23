@@ -70,7 +70,7 @@ public class GeminiServiceImpl implements IGeminiService {
                 "contents", List.of(contentObject),
                 "generationConfig", Map.of(
                     "temperature", 0.7,
-                    "maxOutputTokens", 1500
+                    "maxOutputTokens", 10000
                 )
             );
 
@@ -89,7 +89,7 @@ public class GeminiServiceImpl implements IGeminiService {
             Map<String, Object> contentMap = (Map<String, Object>) firstCandidate.get("content");
             List<Map<String, Object>> parts = (List<Map<String, Object>>) contentMap.get("parts");
             String generatedText = (String) parts.get(0).get("text");
-            LOGGER.debug("Generated JSON text: {}", generatedText);
+            LOGGER.info("Generated JSON text: {}", generatedText);
 
             // PARSE RESPONSE JSON
             List<Question> questions = objectMapper.readValue(
@@ -123,7 +123,7 @@ public class GeminiServiceImpl implements IGeminiService {
             LOGGER.info("Returning simplified JSON with {} questions", simplified.size());
 
             // RETURN JSON BYTES
-            return objectMapper.writeValueAsBytes(simplified);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsBytes(simplified);
 
         } catch (Exception e) {
             LOGGER.error("Error generating questions: {}", e.getMessage(), e);
@@ -157,9 +157,10 @@ public class GeminiServiceImpl implements IGeminiService {
               "answer": "<correct option>",
               "quiz": {"qId": %d}
             }
-            Return the response as a JSON array of these objects, without extra text.
-            Make sure that the 'answer' field contains the **full text** of the correct answer, not the option key (like 'option1').
-            Do not include any extra fields like quesId, givenAnswer, and regarding the quiz only provide its qId.
+            Return ONLY a valid JSON array of these objects. 
+			Do NOT include backticks (`), comments, explanations, or extra text. 
+			The JSON should be properly formatted and parseable.
+			Return ONLY a valid JSON array. Do not include explanations, comments, or extra text. The JSON must be parsable.
 
             """.formatted(
                 request.getNumOfQuestions(),

@@ -1,23 +1,38 @@
 <mat-card>
-  <h2 mat-dialog-title>AI Question Generation</h2>
-  <form #form="ngForm" (ngSubmit)="submit(form)" autocomplete="off">
+  <h2 mat-dialog-title id="modal-title">{{ 'QUIZ_MASS_GENERATION_AI' | translate }}</h2>
+  
+  <form #form="ngForm" (ngSubmit)="submit(form)" autocomplete="off" role="form" aria-labelledby="modal-title">
     <mat-form-field class="w100 mt-3" appearance="outline">
-      <mat-label>Number of Questions</mat-label>
-      <input matInput type="number" name="numOfQuestions" [(ngModel)]="data.numOfQuestions" required min="1" #numOfQuestions="ngModel">
-      <mat-error *ngIf="numOfQuestions.invalid && (numOfQuestions.dirty || numOfQuestions.touched)">
-        Enter a valid number (min 1)
+      <mat-label id="num-questions-label">{{ 'NUMBER_OF_QUESTIONS' | translate }}</mat-label>
+      <input matInput type="number" name="numOfQuestions" [(ngModel)]="data.numOfQuestions" required min="1" #numOfQuestions="ngModel"
+        [attr.aria-label]="'NUMBER_OF_QUESTIONS' | translate"
+        [attr.aria-describedby]="'num-questions-label num-questions-error'"
+        autofocus
+        cdkFocusInitial
+        max="20"
+      >
+      <mat-error id="num-questions-error" *ngIf="numOfQuestions.invalid && (numOfQuestions.dirty || numOfQuestions.touched)">
+        {{ 'NUMBER_OF_QUESTIONS' | translate }} (min 1)
       </mat-error>
     </mat-form-field>
+    <div class="alert alert-info mt-2" role="status" aria-live="polite" tabindex="0" id="image-info">
+      {{ 'INDICATE_COMMON_IMAGE_PATH' | translate }}<br>
+      {{ 'EXAMPLE' | translate }}: <code>http://localhost:8080/images/questions/90a1791d-4c1a-4651-881a-df781ebea304_spring-boot.jpeg</code><br>
+      {{ 'ALL_QUESTIONS_USE_THIS_IMAGE' | translate }}
+    </div>
     <mat-form-field class="w100 mt-3" appearance="outline">
-      <mat-label>Image URL (optional)</mat-label>
-      <input matInput name="image" [(ngModel)]="data.image">
+      <mat-label id="image-url-label">{{ 'IMAGE_URL_OPTIONAL' | translate }}</mat-label>
+      <input matInput name="image" [(ngModel)]="data.image"
+        [attr.aria-label]="'IMAGE_URL_OPTIONAL' | translate"
+        [attr.aria-describedby]="'image-url-label image-info'">
     </mat-form-field>
     <div class="container text-center mt-3">
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
-        Generate
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid"
+        [attr.aria-label]="'QUIZ_GENERATE_DOWNLOAD_JSON' | translate">
+        {{ 'QUIZ_GENERATE_DOWNLOAD_JSON' | translate }}
       </button>
-      <button mat-button mat-dialog-close type="button">
-        Cancel
+      <button mat-button mat-dialog-close type="button" [attr.aria-label]="'CANCEL' | translate">
+        {{ 'CANCEL' | translate }}
       </button>
     </div>
   </form>

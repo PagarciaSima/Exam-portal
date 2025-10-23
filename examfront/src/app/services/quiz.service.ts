@@ -111,7 +111,8 @@ export class QuizService {
    */
   generateQuestions(request: any): Observable<Blob> {
     return this.http.post(`${this.apiUrl}/generation/questions`, request, {
-      responseType: 'blob'
+      responseType: 'blob',
+      headers: { 'Content-Type': 'application/json' }
     });
   }
 }

@@ -12,6 +12,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { QuizService } from 'src/app/services/quiz.service';
 import { QuestionGenModalComponentComponent } from '../question-gen-modal-component/question-gen-modal-component.component';
 import { QuestionGenerationRequest } from 'src/app/model/QuestionGenerationRequest';
+import { QuestionService } from 'src/app/services/question.service';
 
 @Component({
   selector: 'app-add-quiz',
@@ -22,11 +23,13 @@ import { QuestionGenerationRequest } from 'src/app/model/QuestionGenerationReque
   ]
 })
 export class AddQuizComponent implements OnInit {
-
+  jsonFile: File | null = null;
   quiz: Quiz = this.setQuizDefaultValue();
   isEditMode: boolean = false;
   categories: Category[] = [];
   @ViewChild('quizForm') quizForm: NgForm;
+  bulkJsonText: string = '';
+  jsonFileSelected: boolean = false;
 
   constructor(
     private categoryService: CategoryService,
@@ -37,6 +40,7 @@ export class AddQuizComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private loadingService: LoadingService,
     private dialog: MatDialog,
+    private questionService: QuestionService
   ) { }
 
   ngOnInit(): void {
@@ -60,13 +64,15 @@ export class AddQuizComponent implements OnInit {
     this.quizService.getQuiz(quizId).subscribe({
       next: (data) => {
         this.quiz = data;
+        console.log(this.quiz)
         this.loadingService.hide();
       },
       error: (error) => {
         this.loadingService.hide();
-        this.translate.get('QUIZ_LOAD_ERROR').subscribe((msg: string) => {
-          this.notificationService.error(msg, this.translate.instant('ERROR'));
-        });
+        this.notificationService.error(
+          this.translate.instant('QUIZ_LOAD_ERROR'),
+          this.translate.instant('ERROR')
+        );
         console.error('Error loading quiz', error);
       }
     });
@@ -90,9 +96,10 @@ export class AddQuizComponent implements OnInit {
       },
       error: (error) => {
         this.loadingService.hide();
-        this.translate.get('CATEGORY_LOAD_ERROR').subscribe((msg: string) => {
-          this.notificationService.error(msg, this.translate.instant('ERROR'));
-        });
+        this.notificationService.error(
+          this.translate.instant('CATEGORY_LOAD_ERROR'),
+          this.translate.instant('ERROR')
+        );
         console.error('Error loading categories', error);
       }
     });
@@ -109,7 +116,7 @@ export class AddQuizComponent implements OnInit {
 
     if (this.isEditMode) {
       this.editQuiz();
-      
+
     } else {
       this.addQuiz();
     }
@@ -124,18 +131,20 @@ export class AddQuizComponent implements OnInit {
     this.quizService.addQuiz(this.quiz).subscribe({
       next: () => {
         this.loadingService.hide();
-        this.translate.get('QUIZ_ADD_SUCCESS').subscribe((msg: string) => {
-          this.notificationService.success(msg, this.translate.instant('SUCCESS'));
-        });
+        this.notificationService.success(
+          this.translate.instant('QUIZ_ADD_SUCCESS'),
+          this.translate.instant('SUCCESS')
+        );
         this.quizForm.resetForm();
         this.quiz = this.setQuizDefaultValue();
         this.router.navigate(['/admin/quizzes']);
       },
       error: (error) => {
         this.loadingService.hide();
-        this.translate.get('QUIZ_ADD_ERROR').subscribe((msg: string) => {
-          this.notificationService.error(msg, this.translate.instant('ERROR'));
-        });
+        this.notificationService.success(
+          this.translate.instant('QUIZ_ADD_ERROR'),
+          this.translate.instant('ERROR')
+        );
         console.error('Error adding quiz', error);
       }
     });
@@ -152,18 +161,21 @@ export class AddQuizComponent implements OnInit {
     this.quizService.updateQuiz(this.quiz).subscribe({
       next: () => {
         this.loadingService.hide();
-        this.translate.get('QUIZ_UPDATE_SUCCESS').subscribe((msg: string) => {
-          this.notificationService.success(msg, this.translate.instant('SUCCESS'));
-        });
+
+        this.notificationService.success(
+          this.translate.instant('QUIZ_UPDATE_SUCCESS'),
+          this.translate.instant('SUCCESS')
+        );
         this.quizForm.resetForm();
         this.quiz = this.setQuizDefaultValue();
         this.router.navigate(['/admin/quizzes']);
       },
       error: (error) => {
         this.loadingService.hide();
-        this.translate.get('QUIZ_UPDATE_ERROR').subscribe((msg: string) => {
-          this.notificationService.error(msg, this.translate.instant('ERROR'));
-        });
+        this.notificationService.error(
+          this.translate.instant('QUIZ_UPDATE_ERROR'),
+          this.translate.instant('ERROR')
+        );
         console.error('Error updating quiz', error);
       }
     });
@@ -195,28 +207,135 @@ export class AddQuizComponent implements OnInit {
     };
   }
 
+  /**
+   * Opens a modal dialog to generate questions using AI for the current quiz.
+   * After the dialog is closed, if a result is returned, it sends a request to generate questions
+   * and downloads the resulting JSON file.
+   */
   openModalGenerateQuestionsByAI() {
-  const questionGenerationRequest: QuestionGenerationRequest = {
-    quizId: this.quiz.qId,
-    numOfQuestions: this.quiz.numberOfQuestions
-  };
+    let image = '';
+    if (Array.isArray(this.quiz.questions) && this.quiz.questions.length > 0) {
+      image = this.quiz.questions[0].image || '';
+    }
 
-  const dialogRef = this.dialog.open(QuestionGenModalComponentComponent, {
-    width: '400px',
-    data: questionGenerationRequest
-  });
+    const questionGenerationRequest: QuestionGenerationRequest = {
+      quizId: this.quiz.qId,
+      numOfQuestions: this.quiz.numberOfQuestions,
+      image: image
+    };
 
-  dialogRef.afterClosed().subscribe((result: QuestionGenerationRequest) => {
+    const dialogRef = this.dialog.open(QuestionGenModalComponentComponent, {
+      width: '400px',
+      data: questionGenerationRequest
+    });
+
+    dialogRef.afterClosed().subscribe((result: QuestionGenerationRequest) => {
       if (result) {
-        this.quizService.generateQuestions(result).subscribe(blob => {
-          // Descargar el archivo
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'questions.json';
-          a.click();
-          window.URL.revokeObjectURL(url);
+        this.loadingService.show();
+        this.quizService.generateQuestions(result).subscribe({
+          next: (blob) => {
+            this.loadingService.hide();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'questions.json';
+            a.click();
+            window.URL.revokeObjectURL(url);
+          },
+          error: () => {
+            this.loadingService.hide();
+            this.notificationService.error(
+              this.translate.instant('QUESTION_GENERATION_ERROR'),
+              this.translate.instant('ERROR')
+            );
+          }
         });
+      }
+    });
+  }
+
+  /**
+   * Handles the selection of a JSON file for bulk question upload.
+   * @param event 
+   */
+  onJsonFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.jsonFileSelected = true;
+      this.jsonFile = input.files[0];
+    } else {
+      this.jsonFileSelected = false;
+      this.jsonFile = null;
+    }
+  }
+
+  /**
+   * Processes bulk JSON input for questions, either from a selected file or pasted text.
+   * Calls the appropriate method based on the source of the JSON data.
+   */
+  processBulkJson() {
+    if (this.jsonFileSelected && this.jsonFile) {
+      this.processBulkJsonFromFile();
+    } else if (this.bulkJsonText) {
+      this.processBulkJsonFromPastedText();
+    }
+  }
+
+  /**
+   * Processes bulk JSON input pasted as text.
+   * Parses the JSON and sends it to the backend service to save the questions.
+   * Displays success or error notifications based on the outcome of the operation.
+   */
+  private processBulkJsonFromPastedText() {
+    try {
+      const questions = JSON.parse(this.bulkJsonText);
+      this.loadingService.show();
+      this.questionService.saveAllQuestions(questions).subscribe({
+        next: (savedQuestions) => {
+          this.quiz.questions = savedQuestions;
+          this.notificationService.success(
+            this.translate.instant('QUIZ_BULK_JSON_SUCCESS'),
+            this.translate.instant('SUCCESS')
+          );
+          this.bulkJsonText = '';
+          this.loadingService.hide();
+        },
+        error: (e) => {
+          this.notificationService.error(
+            this.translate.instant('QUIZ_BULK_JSON_INVALID'),
+            this.translate.instant('ERROR')
+          );
+          this.loadingService.hide();
+        }
+      });
+    } catch (e) {
+      this.notificationService.error(
+        this.translate.instant('QUIZ_BULK_JSON_INVALID'),
+        this.translate.instant('ERROR')
+      );
+    }
+  }
+
+  private processBulkJsonFromFile() {
+    this.loadingService.show();
+    this.questionService.uploadQuestionsJson(this.jsonFile).subscribe({
+      next: (questions) => {
+        this.quiz.questions = questions;
+        this.notificationService.success(
+          this.translate.instant('QUIZ_BULK_JSON_SUCCESS'),
+          this.translate.instant('SUCCESS')
+        );
+        this.bulkJsonText = '';
+        this.jsonFileSelected = false;
+        this.jsonFile = null;
+        this.loadingService.hide();
+      },
+      error: (e) => {
+        this.notificationService.error(
+          this.translate.instant('QUIZ_BULK_JSON_INVALID'),
+          this.translate.instant('ERROR')
+        );
+        this.loadingService.hide();
       }
     });
   }

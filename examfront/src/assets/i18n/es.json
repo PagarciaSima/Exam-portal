@@ -236,5 +236,20 @@
   "NO_ANSWER": "Sin respuesta",
   "FAILED_QUESTIONS": "Preguntas fallidas",
   "FAILED_LOADING_QUESTIONS": "Error al cargar las preguntas. Por favor, inténtalo de nuevo más tarde",
-  "BACK_TO_QUIZZES": "Volver a los cuestionarios"
+  "BACK_TO_QUIZZES": "Volver a los cuestionarios",
+  "QUIZ_MASS_GENERATION_AI": "Generación masiva por IA",
+  "QUIZ_GENERATE_DOWNLOAD_JSON": "Generar y descargar JSON",
+  "QUIZ_BULK_UPLOAD_JSON": "Carga masiva (.json)",
+  "QUIZ_BULK_UPLOAD_DESC": "Sube un archivo JSON con preguntas para importar en bloque.",
+  "INDICATE_COMMON_IMAGE_PATH": "Indica una ruta de imagen común para todas las preguntas (opcional).",
+  "EXAMPLE": "Ejemplo",
+  "ALL_QUESTIONS_USE_THIS_IMAGE": "Todas las preguntas generadas usarán esta imagen.",
+  "IMAGE_URL_OPTIONAL": "URL de la imagen (opcional)",
+  "QUIZ_BULK_PASTE_JSON": "O pega el contenido JSON directamente en el área de texto a continuación.",
+  "QUIZ_BULK_PASTE_JSON_PLACEHOLDER": "Introduce el contenido JSON aquí...",
+  "QUIZ_PROCESS_BULK_JSON": "Procesar JSON masivo",
+  "QUESTION_GENERATION_ERROR": "Error al generar preguntas, inténtalo de nuevo más tarde.",
+  "QUIZ_BULK_JSON_SUCCESS": "Preguntas importadas con éxito desde JSON.",
+  "QUIZ_BULK_JSON_INVALID": "El JSON proporcionado no es válido. Por favor, revísalo e inténtalo de nuevo."
+
 }

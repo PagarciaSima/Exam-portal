@@ -7,114 +7,70 @@
         <div class="bootstrap-wrapper">
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <form #quizForm="ngForm" aria-labelledby="add-quiz-title"
-                        (ngSubmit)="formSubmit()" autocomplete="on"
-                    >
+                    <form #quizForm="ngForm" aria-labelledby="add-quiz-title" (ngSubmit)="formSubmit()"
+                        autocomplete="on">
                         <!-- Quiz Title -->
                         <mat-form-field class="w100 mt20" appearance="outline">
                             <mat-label id="quiz-title-label">{{ 'QUIZ_TITLE_LABEL' | translate }}</mat-label>
-                            <input
-                                type="text"
-                                name="title"
-                                matInput
-                                [placeholder]="'QUIZ_TITLE_PLACEHOLDER' | translate"
-                                required
-                                autofocus
-                                [(ngModel)]="quiz.title"
-                                #title="ngModel"
-                                aria-required="true"
-                                aria-describedby="quiz-title-error"
-                                aria-labelledby="quiz-title-label"
-                                [attr.aria-label]="'QUIZ_TITLE_LABEL' | translate"
-                            >
-                            <mat-error
-                                id="quiz-title-error"
-                                *ngIf="title.invalid && (title.dirty || title.touched)"
-                                role="alert"
-                                [attr.aria-label]="'QUIZ_TITLE_REQUIRED' | translate"
-                            >
+                            <input type="text" name="title" matInput
+                                [placeholder]="'QUIZ_TITLE_PLACEHOLDER' | translate" required autofocus
+                                [(ngModel)]="quiz.title" #title="ngModel" aria-required="true"
+                                aria-describedby="quiz-title-error" aria-labelledby="quiz-title-label"
+                                [attr.aria-label]="'QUIZ_TITLE_LABEL' | translate">
+                            <mat-error id="quiz-title-error" *ngIf="title.invalid && (title.dirty || title.touched)"
+                                role="alert" [attr.aria-label]="'QUIZ_TITLE_REQUIRED' | translate">
                                 {{ 'QUIZ_TITLE_REQUIRED' | translate }}
                             </mat-error>
                         </mat-form-field>
-                        
+
                         <!-- Quiz Description -->
                         <mat-form-field class="w100 mt20" appearance="outline">
-                            <mat-label id="quiz-description-label">{{ 'QUIZ_DESCRIPTION_LABEL' | translate }}</mat-label>
-                            <textarea
-                                name="description"
-                                matInput
-                                rows="15"
-                                [placeholder]="'QUIZ_DESCRIPTION_PLACEHOLDER' | translate"
-                                required
-                                [(ngModel)]="quiz.description"
-                                #description="ngModel"
-                                aria-required="true"
-                                aria-describedby="quiz-description-error"
-                                aria-labelledby="quiz-description-label"
-                                [attr.aria-label]="'QUIZ_DESCRIPTION_LABEL' | translate"
-                            ></textarea>
-                            <mat-error
-                                id="quiz-description-error"
-                                *ngIf="description.invalid && (description.dirty || description.touched)"
-                                role="alert"
-                                [attr.aria-label]="'QUIZ_DESCRIPTION_REQUIRED' | translate"
-                            >
+                            <mat-label id="quiz-description-label">{{ 'QUIZ_DESCRIPTION_LABEL' | translate
+                                }}</mat-label>
+                            <textarea name="description" matInput rows="15"
+                                [placeholder]="'QUIZ_DESCRIPTION_PLACEHOLDER' | translate" required
+                                [(ngModel)]="quiz.description" #description="ngModel" aria-required="true"
+                                aria-describedby="quiz-description-error" aria-labelledby="quiz-description-label"
+                                [attr.aria-label]="'QUIZ_DESCRIPTION_LABEL' | translate"></textarea>
+                            <mat-error id="quiz-description-error"
+                                *ngIf="description.invalid && (description.dirty || description.touched)" role="alert"
+                                [attr.aria-label]="'QUIZ_DESCRIPTION_REQUIRED' | translate">
                                 {{ 'QUIZ_DESCRIPTION_REQUIRED' | translate }}
                             </mat-error>
                         </mat-form-field>
-                        
+
                         <!-- Max Marks & Number of Questions -->
                         <div class="row mt20">
                             <div class="col-md-6">
                                 <mat-form-field class="w100" appearance="outline">
-                                    <mat-label id="quiz-max-marks-label">{{ 'QUIZ_MAX_MARKS_LABEL' | translate }}</mat-label>
-                                    <input
-                                        type="number"
-                                        name="maxMarks"
-                                        matInput
-                                        [placeholder]="'QUIZ_MAX_MARKS_PLACEHOLDER' | translate"
-                                        required
-                                        min="1"
-                                        [(ngModel)]="quiz.maxMarks"
-                                        #maxMarks="ngModel"
-                                        aria-required="true"
-                                        aria-describedby="quiz-max-marks-error"
-                                        aria-labelledby="quiz-max-marks-label"
-                                        [attr.aria-label]="'QUIZ_MAX_MARKS_LABEL' | translate"
-                                    >
-                                    <mat-error
-                                        id="quiz-max-marks-error"
-                                        *ngIf="maxMarks.invalid && (maxMarks.dirty || maxMarks.touched)"
-                                        role="alert"
-                                        [attr.aria-label]="'QUIZ_MAX_MARKS_REQUIRED' | translate"
-                                    >
+                                    <mat-label id="quiz-max-marks-label">{{ 'QUIZ_MAX_MARKS_LABEL' | translate
+                                        }}</mat-label>
+                                    <input type="number" name="maxMarks" matInput
+                                        [placeholder]="'QUIZ_MAX_MARKS_PLACEHOLDER' | translate" required min="1"
+                                        [(ngModel)]="quiz.maxMarks" #maxMarks="ngModel" aria-required="true"
+                                        aria-describedby="quiz-max-marks-error" aria-labelledby="quiz-max-marks-label"
+                                        [attr.aria-label]="'QUIZ_MAX_MARKS_LABEL' | translate">
+                                    <mat-error id="quiz-max-marks-error"
+                                        *ngIf="maxMarks.invalid && (maxMarks.dirty || maxMarks.touched)" role="alert"
+                                        [attr.aria-label]="'QUIZ_MAX_MARKS_REQUIRED' | translate">
                                         {{ 'QUIZ_MAX_MARKS_REQUIRED' | translate }}
                                     </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="col-md-6">
                                 <mat-form-field class="w100" appearance="outline">
-                                    <mat-label id="quiz-number-of-questions-label">{{ 'QUIZ_NUMBER_OF_QUESTIONS_LABEL' | translate }}</mat-label>
-                                    <input
-                                        type="number"
-                                        name="numberOfQuestions"
-                                        matInput
-                                        [placeholder]="'QUIZ_NUMBER_OF_QUESTIONS_PLACEHOLDER' | translate"
-                                        required
-                                        min="1"
-                                        [(ngModel)]="quiz.numberOfQuestions"
-                                        #numberOfQuestions="ngModel"
-                                        aria-required="true"
-                                        aria-describedby="quiz-number-of-questions-error"
+                                    <mat-label id="quiz-number-of-questions-label">{{ 'QUIZ_NUMBER_OF_QUESTIONS_LABEL' |
+                                        translate }}</mat-label>
+                                    <input type="number" name="numberOfQuestions" matInput
+                                        [placeholder]="'QUIZ_NUMBER_OF_QUESTIONS_PLACEHOLDER' | translate" required
+                                        min="1" [(ngModel)]="quiz.numberOfQuestions" #numberOfQuestions="ngModel"
+                                        aria-required="true" aria-describedby="quiz-number-of-questions-error"
                                         aria-labelledby="quiz-number-of-questions-label"
-                                        [attr.aria-label]="'QUIZ_NUMBER_OF_QUESTIONS_LABEL' | translate"
-                                    >
-                                    <mat-error
-                                        id="quiz-number-of-questions-error"
+                                        [attr.aria-label]="'QUIZ_NUMBER_OF_QUESTIONS_LABEL' | translate">
+                                    <mat-error id="quiz-number-of-questions-error"
                                         *ngIf="numberOfQuestions.invalid && (numberOfQuestions.dirty || numberOfQuestions.touched)"
                                         role="alert"
-                                        [attr.aria-label]="'QUIZ_NUMBER_OF_QUESTIONS_REQUIRED' | translate"
-                                    >
+                                        [attr.aria-label]="'QUIZ_NUMBER_OF_QUESTIONS_REQUIRED' | translate">
                                         {{ 'QUIZ_NUMBER_OF_QUESTIONS_REQUIRED' | translate }}
                                     </mat-error>
                                 </mat-form-field>
@@ -122,64 +78,39 @@
                         </div>
 
                         <!-- Active Toggle -->
-                        <mat-slide-toggle
-                            name="active"
-                            [(ngModel)]="quiz.active"
-                            [attr.aria-label]="'QUIZ_ACTIVE_TOGGLE' | translate"
-                            color="primary"
-                            class="mt20 mb10"
-                        >
+                        <mat-slide-toggle name="active" [(ngModel)]="quiz.active"
+                            [attr.aria-label]="'QUIZ_ACTIVE_TOGGLE' | translate" color="primary" class="mt20 mb10">
                             {{ 'QUIZ_ACTIVE' | translate }}
                         </mat-slide-toggle>
 
                         <!-- Category Selection -->
                         <mat-form-field class="w100 mt20" appearance="outline">
                             <mat-label id="quiz-category-label">{{ 'QUIZ_CATEGORY_LABEL' | translate }}</mat-label>
-                            <mat-select
-                                name="category"
-                                [(ngModel)]="quiz.category"
-                                #category="ngModel"
-                                required
-                                aria-required="true"
-                                aria-describedby="quiz-category-error"
+                            <mat-select name="category" [(ngModel)]="quiz.category" #category="ngModel" required
+                                aria-required="true" aria-describedby="quiz-category-error"
                                 aria-labelledby="quiz-category-label"
                                 [attr.aria-label]="'QUIZ_CATEGORY_LABEL' | translate"
-                                (blur)="category.control.markAsTouched()"
-                            >
+                                (blur)="category.control.markAsTouched()">
                                 <mat-option [value]="null">{{ 'SELECT_CATEGORY' | translate }}</mat-option>
                                 <mat-option *ngFor="let category of categories" [value]="category">
                                     {{ category.title }}
                                 </mat-option>
                             </mat-select>
-                            <mat-error
-                                id="quiz-category-error"
-                                *ngIf="category.invalid && (category.dirty || category.touched)"
-                                role="alert"
-                                [attr.aria-label]="'QUIZ_CATEGORY_REQUIRED' | translate"
-                            >
+                            <mat-error id="quiz-category-error"
+                                *ngIf="category.invalid && (category.dirty || category.touched)" role="alert"
+                                [attr.aria-label]="'QUIZ_CATEGORY_REQUIRED' | translate">
                                 {{ 'QUIZ_CATEGORY_REQUIRED' | translate }}
                             </mat-error>
                         </mat-form-field>
 
                         <!-- Form Buttons -->
                         <div class="container text-center mt20">
-                            <button
-                                type="submit"
-                                mat-raised-button
-                                color="primary"
-                                [disabled]="quizForm.invalid"
-                                [attr.aria-label]="isEditMode ? ('EDIT_QUIZ' | translate) : ('ADD_QUIZ' | translate)"
-                            >
+                            <button type="submit" mat-raised-button color="primary" [disabled]="quizForm.invalid"
+                                [attr.aria-label]="isEditMode ? ('EDIT_QUIZ' | translate) : ('ADD_QUIZ' | translate)">
                                 {{ isEditMode ? ('EDIT_QUIZ' | translate) : ('ADD_QUIZ' | translate) }}
                             </button>
-                            <button
-                                type="reset"
-                                mat-raised-button
-                                color="accent"
-                                class="ml10"
-                                (click)="quizForm.resetForm()"
-                                [attr.aria-label]="'RESET' | translate"
-                            >
+                            <button type="reset" mat-raised-button color="accent" class="ml10"
+                                (click)="quizForm.resetForm()" [attr.aria-label]="'RESET' | translate">
                                 {{ 'RESET' | translate }}
                             </button>
                         </div>
@@ -188,46 +119,96 @@
                 </div>
             </div>
             <!-- Bootstrap Accordion for Mass Generation and Bulk Upload / for edit mode -->
-            <div class="accordion mt-5" id="quizGenerationAccordion" *ngIf="isEditMode">
+            <div class="accordion mt-5" id="quizGenerationAccordion" *ngIf="isEditMode" role="region" aria-labelledby="quiz-generation-title">
+                <h2 id="quiz-generation-title" class="visually-hidden">{{ 'QUIZ_MASS_GENERATION_AI' | translate }} &amp; {{ 'QUIZ_BULK_UPLOAD_JSON' | translate }}</h2>
                 <!-- Mass Generation by AI -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingAI">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAI" aria-expanded="true" aria-controls="collapseAI">
-                        Mass Generation by AI
-                        </button>
-                    </h2>
-                    
-                    <div id="collapseAI" class="accordion-collapse collapse show" aria-labelledby="headingAI" data-bs-parent="#quizGenerationAccordion">
-                        <div class="accordion-body">
-                        <p>Generate multiple-choice questions for this quiz using AI (Gemini). The generated questions will be downloaded as a JSON file.</p>
-                        <button
+                <div class="accordion-item" role="group" aria-labelledby="headingAI">
+                    <h3 class="accordion-header" id="headingAI">
+                        <button class="accordion-button collapsed"
                             type="button"
-                            class="btn btn-primary"
-                            (click)="openModalGenerateQuestionsByAI()"
-                            [disabled]="!quiz.qId"
-                        >
-                            Generate & Download JSON
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseAI"
+                            aria-expanded="true"
+                            aria-controls="collapseAI"
+                            aria-label="{{ 'QUIZ_MASS_GENERATION_AI' | translate }}">
+                            {{ 'QUIZ_MASS_GENERATION_AI' | translate }}
                         </button>
+                    </h3>
+                    <div id="collapseAI"
+                        class="accordion-collapse collapse show"
+                        aria-labelledby="headingAI"
+                        data-bs-parent="#quizGenerationAccordion"
+                        role="region"
+                        aria-label="{{ 'QUIZ_MASS_GENERATION_AI' | translate }}">
+                        <div class="accordion-body d-flex align-items-center gap-3">
+                            <img src="assets/img/ai.png"
+                                alt="{{ 'QUIZ_MASS_GENERATION_AI' | translate }}"
+                                style="width:32px; height:32px; object-fit:contain; border-radius:8px;"
+                                aria-label="{{ 'QUIZ_MASS_GENERATION_AI' | translate }}">
+                            <button type="button"
+                                class="btn btn-primary"
+                                (click)="openModalGenerateQuestionsByAI()"
+                                [disabled]="!quiz.qId"
+                                aria-label="{{ 'QUIZ_GENERATE_DOWNLOAD_JSON' | translate }}">
+                                {{ 'QUIZ_GENERATE_DOWNLOAD_JSON' | translate }}
+                            </button>
                         </div>
                     </div>
                 </div>
                 <!-- Bulk Upload (.json) -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingBulk">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBulk" aria-expanded="false" aria-controls="collapseBulk">
-                        Bulk Upload (.json)
+                <div class="accordion-item" role="group" aria-labelledby="headingBulk">
+                    <h3 class="accordion-header" id="headingBulk">
+                        <button class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseBulk"
+                            aria-expanded="false"
+                            aria-controls="collapseBulk"
+                            aria-label="{{ 'QUIZ_BULK_UPLOAD_JSON' | translate }}">
+                            {{ 'QUIZ_BULK_UPLOAD_JSON' | translate }}
                         </button>
-                    </h2>
-                    <div id="collapseBulk" class="accordion-collapse collapse" aria-labelledby="headingBulk" data-bs-parent="#quizGenerationAccordion">
+                    </h3>
+                    <div id="collapseBulk"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingBulk"
+                        data-bs-parent="#quizGenerationAccordion"
+                        role="region"
+                        aria-label="{{ 'QUIZ_BULK_UPLOAD_JSON' | translate }}"
+                    >
+                        <!-- Processing JSON Section -->
                         <div class="accordion-body">
-                            <p>Upload a JSON file containing questions for bulk import.</p>
-                            <!-- You can add your file input and upload logic here -->
-                            <input type="file" accept=".json" class="form-control">
+                            <p aria-label="{{ 'QUIZ_BULK_UPLOAD_DESC' | translate }}">{{ 'QUIZ_BULK_UPLOAD_DESC' | translate }}</p>
+                            <input type="file"
+                                accept=".json"
+                                class="form-control mb-3"
+                                aria-label="{{ 'QUIZ_BULK_UPLOAD_JSON' | translate }}"
+                                [disabled]="bulkJsonText"
+                                (change)="onJsonFileSelected($event)">
+                            <label for="bulkJsonPaste" class="form-label mt-3" aria-label="{{ 'QUIZ_BULK_PASTE_JSON' | translate }}">
+                                {{ 'QUIZ_BULK_PASTE_JSON' | translate }}
+                            </label>
+                            <textarea id="bulkJsonPaste"
+                                class="form-control"
+                                rows="6"
+                                [(ngModel)]="bulkJsonText"
+                                placeholder="{{ 'QUIZ_BULK_PASTE_JSON_PLACEHOLDER' | translate }}"
+                                aria-label="{{ 'QUIZ_BULK_PASTE_JSON' | translate }}"
+                                [disabled]="jsonFileSelected"></textarea>
+                           <button type="button"
+                                mat-raised-button
+                                color="accent"
+                                class="mt-3"
+                                (click)="processBulkJson()"
+                                [disabled]="!bulkJsonText && !jsonFileSelected"
+                                aria-label="{{ 'QUIZ_PROCESS_BULK_JSON' | translate }}">
+                                <mat-icon aria-hidden="true" style="margin-right: 6px;">data_object</mat-icon>
+                                {{ 'QUIZ_PROCESS_BULK_JSON' | translate }}
+                            </button>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </mat-card-content>
 </mat-card>
-
