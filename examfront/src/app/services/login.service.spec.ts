@@ -20,7 +20,6 @@ describe('LoginService', () => {
     lastName: 'User',
     email: 'testuser@example.com',
     phone: '1234567890'
-    // add other required User fields if needed
   };
 
   beforeEach(() => {

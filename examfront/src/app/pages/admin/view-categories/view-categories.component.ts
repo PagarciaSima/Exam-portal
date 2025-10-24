@@ -119,7 +119,7 @@ export class ViewCategoriesComponent implements OnInit {
    * @returns {void}
    */
   onSearch() {
-    this.page = 0; // Reset to first page on new search
+    this.page = 0;
     this.fetchCategoriesPaged();
   }
 
@@ -138,7 +138,7 @@ export class ViewCategoriesComponent implements OnInit {
 
   onSearchTermChange(term: string) {
     this.searchTerm = term;
-    this.page = 0; // Reset to first page on new search
+    this.page = 0; 
     this.fetchCategoriesPaged();
   }
 }

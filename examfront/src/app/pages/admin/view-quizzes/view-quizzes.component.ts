@@ -19,7 +19,7 @@ export class ViewQuizzesComponent implements OnInit {
 
   quizzes: Quiz[] = [];
   page = 0;
-  size = 5;
+  size = 6;
   totalPages = 1;
   searchTerm: string = '';
   isLoading: boolean = true;
@@ -143,7 +143,7 @@ export class ViewQuizzesComponent implements OnInit {
    */
   onSearchTermChange(term: string) {
     this.searchTerm = term;
-    this.page = 0; // Reset to first page on new search
+    this.page = 0; 
     this.loadQuizzesPaged();
   }
 

@@ -16,7 +16,7 @@ describe('NotFoundComponent', () => {
       declarations: [NotFoundComponent],
       imports: [
         BrowserAnimationsModule,
-        TranslateModule.forRoot() // <-- Añade esto
+        TranslateModule.forRoot() 
       ],
       providers: [
         { provide: Location, useValue: locationSpy },

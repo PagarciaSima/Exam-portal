@@ -32,7 +32,6 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(authReq).pipe(
             catchError((err: HttpErrorResponse) => {
                 if (err.status === 401 && err.error?.error === 'JWT Token has expired') {
-                    // Redirigir al login
                     this.loginService.logout(); 
                     this.router.navigate(['/login']);
                     this.notificationService.warning('Session has expired. Please log in again.', 'Session Expired');

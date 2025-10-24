@@ -39,7 +39,7 @@ export class QuizService {
    * });
    */
   public getQuizzes(): Observable<Quiz[]> {
-    return this.http.get<Quiz[]>(`${this.apiUrl}/quiz/`);
+    return this.http.get<Quiz[]>(`${this.apiUrl}/quiz`);
   }
 
   /**

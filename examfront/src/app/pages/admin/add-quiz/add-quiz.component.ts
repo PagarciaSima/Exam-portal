@@ -64,7 +64,6 @@ export class AddQuizComponent implements OnInit {
     this.quizService.getQuiz(quizId).subscribe({
       next: (data) => {
         this.quiz = data;
-        console.log(this.quiz)
         this.loadingService.hide();
       },
       error: (error) => {
@@ -110,7 +109,6 @@ export class AddQuizComponent implements OnInit {
    * Calls the appropriate method based on the current mode (add or edit).
    */
   public formSubmit() {
-    // Trim text fields before submit
     if (this.quiz.title) this.quiz.title = this.quiz.title.trim();
     if (this.quiz.description) this.quiz.description = this.quiz.description.trim();
 

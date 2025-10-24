@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'translate' })
 class MockTranslatePipe implements PipeTransform {
   transform(value: string): string {
-    return value; // simplemente devuelve la clave sin traducir
+    return value; 
   }
 }
 

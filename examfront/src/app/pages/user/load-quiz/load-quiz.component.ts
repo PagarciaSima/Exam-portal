@@ -35,7 +35,6 @@ export class LoadQuizComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.catId = +params['catId'] || 0;
-      console.log("Cargando quizzes de la categoría:", this.catId);
       this.page = 0; 
       this.loadQuizzes();
     });

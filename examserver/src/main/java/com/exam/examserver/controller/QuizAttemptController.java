@@ -1,5 +1,6 @@
 package com.exam.examserver.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exam.examserver.model.dto.PopularQuizStatsDTO;
 import com.exam.examserver.model.dto.QuizAttemptDTO;
 import com.exam.examserver.model.user.User;
 import com.exam.examserver.service.IQuizAttemptService;
@@ -73,6 +75,52 @@ public class QuizAttemptController {
         return lastAttempt
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.noContent().build());
+    }
+    
+    /**
+     * Retrieves a list of quizzes ordered by the total number of attempts (most attempted first).
+     *
+     * @return a {@link ResponseEntity} containing a list of {@link PopularQuizStatsDTO}.
+     *         Returns HTTP 200 (OK) even if the list is empty.
+     */
+    @Operation(
+        summary = "Get quizzes with most attempts",
+        description = "Fetches all quizzes ordered by the total number of attempts in descending order",
+        responses = {
+            @ApiResponse(
+                responseCode = "200",
+                description = "Successfully retrieved quizzes with most attempts",
+                content = @Content(schema = @Schema(implementation = PopularQuizStatsDTO.class))
+            )
+        }
+    )
+    @GetMapping("/top-attempts")
+    public ResponseEntity<List<PopularQuizStatsDTO>> getTopQuizzesByAttempts() {
+        List<PopularQuizStatsDTO> topAttempts = attemptService.getTopQuizzesByAttempts();
+        return ResponseEntity.ok(topAttempts);
+    }
+
+    /**
+     * Retrieves a list of quizzes ordered by the average score (highest first).
+     *
+     * @return a {@link ResponseEntity} containing a list of {@link PopularQuizStatsDTO}.
+     *         Returns HTTP 200 (OK) even if the list is empty.
+     */
+    @Operation(
+        summary = "Get quizzes with highest average score",
+        description = "Fetches all quizzes ordered by their average score in descending order",
+        responses = {
+            @ApiResponse(
+                responseCode = "200",
+                description = "Successfully retrieved quizzes with highest average score",
+                content = @Content(schema = @Schema(implementation = PopularQuizStatsDTO.class))
+            )
+        }
+    )
+    @GetMapping("/top-average")
+    public ResponseEntity<List<PopularQuizStatsDTO>> getTopQuizzesByAverage() {
+        List<PopularQuizStatsDTO> topAverage = attemptService.getTopQuizzesByAverageScore();
+        return ResponseEntity.ok(topAverage);
     }
 
 }

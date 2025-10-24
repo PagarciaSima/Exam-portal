@@ -20,7 +20,7 @@ describe('AddQuestionComponent', () => {
         MatSnackBarModule,
         TranslateModule.forRoot(),
         FormsModule,
-        BrowserAnimationsModule // <-- Añade esto
+        BrowserAnimationsModule 
       ],
       providers: [
         {
@@ -104,7 +104,6 @@ describe('AddQuestionComponent', () => {
       quiz: { qId: 1 } as any
     };
     component.imageFile = new File([''], 'test.png');
-    // Mock del formulario
     component.questionForm = {
       resetForm: jasmine.createSpy('resetForm')
     } as any;

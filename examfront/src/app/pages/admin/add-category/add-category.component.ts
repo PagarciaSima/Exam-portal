@@ -78,10 +78,8 @@ export class AddCategoryComponent implements OnInit {
    * Calls the appropriate method based on the current mode (add or edit).
    */
   public formSubmit() {
-    // Trim inputs
     this.category.title = this.category.title.trim();
     this.category.description = this.category.description.trim();
-    console.log(this.category);
 
     if (this.isEditMode) {
       this.editCategory();

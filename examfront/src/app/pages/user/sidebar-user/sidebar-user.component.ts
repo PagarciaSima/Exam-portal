@@ -34,6 +34,12 @@ export class SidebarUserComponent implements OnInit {
     this.loadCategories(this.page);
   }
 
+  /**
+   * Loads a paginated list of categories from the server.
+   * Updates the local `categories` array and `totalPages` based on the response.
+   *
+   * @param {number} page - The page number to load.  
+   */
   loadCategories(page: number): void {
     this.loadingService.show();
     this.categoryService.getCategoriesPaged(page, this.pageSize, this.searchTerm).subscribe({
@@ -51,16 +57,29 @@ export class SidebarUserComponent implements OnInit {
     });
   }
 
+  /**
+   * Navigates to a specific page of categories.
+   * @param {number} page - The page number to navigate to
+   *
+   */
   goToPage(page: number): void {
     this.loadCategories(page);
   }
 
+  /**
+   * Handles changes to the search term and reloads categories.
+   * @param {string} term - The new search term
+   * 
+   */
   onSearchTermChange(term: string): void {
     this.searchTerm = term;
-    this.page = 0; // Reset to first page on new search
+    this.page = 0; 
     this.loadCategories(this.page);
   }
 
+  /**
+   * Logs out the current user and shows a success notification.
+   */
   logout() {
     this.loginService.logout();
     const message = this.translateService.instant('LOGOUT.SUCCESS');

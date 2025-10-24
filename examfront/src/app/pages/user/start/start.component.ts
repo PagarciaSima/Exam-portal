@@ -164,11 +164,9 @@ export class StartComponent implements OnInit {
       this.translateService.instant("SUBMIT_QUIZ_CONFIRMATION"),
       this.translateService.instant('CONFIRM')
     ).then((confirmed) => {
-      console.log("CONFIRMERED:", confirmed);
       if (confirmed) {
         this.ngZone.run(() => {
           this.isSubmit = true;
-          console.log("isSubmit:", this.isSubmit);
           this.finalizeQuiz();
         });
       }

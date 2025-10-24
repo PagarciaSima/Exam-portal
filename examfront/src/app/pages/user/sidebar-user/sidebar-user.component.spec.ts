@@ -11,7 +11,6 @@ import { of, throwError } from 'rxjs';
 
 import { SidebarUserComponent } from './sidebar-user.component';
 
-// Mock TranslatePipe to avoid errors in template
 @Pipe({ name: 'translate' })
 class MockTranslatePipe implements PipeTransform {
   transform(value: string): string {
@@ -119,8 +118,6 @@ describe('SidebarUserComponent', () => {
     component.loadCategories(2);
     expect(categoryServiceSpy.getCategoriesPaged).toHaveBeenCalledWith(2, 12, 'test');
   });
-
-  // Additional tests
 
   it('should not call loadCategories if goToPage is called with same page', () => {
     spyOn(component, 'loadCategories');

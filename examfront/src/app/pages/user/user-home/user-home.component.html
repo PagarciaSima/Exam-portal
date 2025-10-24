@@ -1,4 +1,4 @@
-<div class="container mt-5" @slideIn [attr.aria-label]="'Página principal de usuario'">
+<div class="mt-5" @slideIn [attr.aria-label]="'Página principal de usuario'">
     <div class="row">
         <div class="col-12 text-center mb-4">
             <h2 [attr.aria-label]="'Bienvenido ' + (userName ? userName : '')">{{ 'WELCOME' | translate }}{{ userName ? ', ' + userName : '' }}</h2>
@@ -13,7 +13,7 @@
     </div>
     <div class="row mt-5">
         <div class="col-12 text-center mb-3">
-            <h4 [attr.aria-label]="'Listado de categorías de quizzes'">{{ 'ALL_AVAILABLE_QUIZZES' | translate }}</h4>
+            <h4 [attr.aria-label]="'Listado de categorías de quizzes'">{{ 'SEARCH_QUIZ_BY_CATEGORY' | translate }}</h4>
             <app-search-bar
             [(value)]="searchCategory"
             placeholder="Buscar categoría..."

@@ -56,7 +56,6 @@ export class AddQuestionComponent implements OnInit {
     if (this.quesId) {
       this.isEditMode = true;
       this.loadQuestion(this.quesId);
-      console.log('Edit mode for question ID:', this.quesId);
     }
   }
 
@@ -87,7 +86,6 @@ export class AddQuestionComponent implements OnInit {
    * Calls the appropriate method based on the current mode (add or edit).
    */
   formSubmit() {
-    // Trim all string inputs before submit
     this.question.content = this.question.content.trim();
     this.question.option1 = this.question.option1.trim();
     this.question.option2 = this.question.option2.trim();
@@ -170,7 +168,10 @@ export class AddQuestionComponent implements OnInit {
     }
   }
 
-  // Maneja el cambio de archivo
+  /**
+   * Maneja el cambio de archivo para la imagen de la pregunta.
+   * @param event 
+   */
   onImageSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {

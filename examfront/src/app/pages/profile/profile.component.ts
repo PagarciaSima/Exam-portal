@@ -120,7 +120,6 @@ export class ProfileComponent implements OnInit {
       this.userService.uploadProfilePicture(this.user.id, file).subscribe({
         next: (response) => {
           if (response.profileUrl) {
-            // Add param to force image refresh / cache busting
             this.user.profile = response.profileUrl + '?t=' + new Date().getTime();
             this.notificationService.success(
               this.translate.instant('PROFILE_PHOTO_UPLOAD_SUCCESS'),

@@ -60,8 +60,7 @@ describe('ProfileEditComponent', () => {
       id: 1,
       username: 'test',
       email: 'test@test.com',
-      authorities: [{}], // <-- agrega esta línea
-      // agrega aquí otras propiedades si el template las usa
+      authorities: [{}], 
     } as any;
     fixture.detectChanges();
   });
@@ -105,13 +104,11 @@ describe('ProfileEditComponent', () => {
   });
 
   it('should not call updatePassword if no password is returned', () => {
-    // Inicializa todas las propiedades usadas en el template
     component.user = {
       id: 1,
       username: 'test',
       email: 'test@test.com',
-      authorities: [{}], // <-- agrega esta línea
-      // agrega aquí otras propiedades si el template las usa
+      authorities: [{}], 
     } as any;
     mockDialog.open.and.returnValue({
       afterClosed: () => of(null)

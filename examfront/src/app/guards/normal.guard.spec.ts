@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing'; // <--- Importa esto
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { NormalGuard } from './normal.guard';
 
@@ -8,7 +8,7 @@ describe('NormalGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule] // <--- Añadido
+      imports: [HttpClientTestingModule] 
     });
     guard = TestBed.inject(NormalGuard);
   });

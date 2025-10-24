@@ -132,7 +132,7 @@ export class ViewQuizQuestionsComponent implements OnInit {
    */
   onSearchTermChange(term: string) {
     this.searchTerm = term;
-    this.page = 0; // Reinicia la paginación al buscar
+    this.page = 0; 
     this.getQuestionsOfQuizPaged();
   }
 

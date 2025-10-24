@@ -255,6 +255,19 @@
   "FLIP_CARD": "Voltear tarjeta",               
   "CLOSE": "Cerrar",
   "REVIEW_LAST_ATTEMPT": "Revisar último intento",
-  "WELCOME": "Bienvenido"
+  "WELCOME": "Bienvenido",
+  "ALL_QUIZES": "Todos los Cuestionarios",
+  "ADMIN_HOME_SECTION": "Admin Home Section",
+  "QUIZ_CATEGORY_CHART": "Quiz Category Chart",
+  "QUIZ_CATEGORY_CHART_TITLE": "Quizzes by Category",
+  "QUIZ_CATEGORY_BAR_CHART": "Bar chart of quizzes by category",
+  "QUIZ_STATUS_CHART_TITLE": "Active/Inactive Quizzes",
+  "QUIZ_STATUS_DOUGHNUT_CHART": "Doughnut chart of quiz status",
+  "TOP_ATTEMPTED_QUIZZES_TITLE": "Most Attempted Quizzes",
+  "ACTIVE_QUIZZES": "Cuestionarios Activos",
+  "INACTIVE_QUIZZES": "Cuestionarios Inactivos",
+  "SEARCH_QUIZ_BY_CATEGORY": "Buscar Cuestionario por Categoría",
+  "QUIZ_STATUS_LABEL": "Estado del Cuestionario"
+
 
 }

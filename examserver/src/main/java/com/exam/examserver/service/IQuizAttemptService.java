@@ -3,6 +3,7 @@ package com.exam.examserver.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.exam.examserver.model.dto.PopularQuizStatsDTO;
 import com.exam.examserver.model.dto.QuizAttemptDTO;
 import com.exam.examserver.model.exam.quiz.Quiz;
 import com.exam.examserver.model.exam.quizattempt.QuizAttempt;
@@ -14,4 +15,6 @@ public interface IQuizAttemptService {
 	List<QuizAttempt> findByUserAndQuizOrderByAttemptDateAsc(User user, Quiz currentQuiz);
 	void deleteAttempt(QuizAttempt oldest);
 	Optional<QuizAttemptDTO> getLastAttempt(User user);
+	List<PopularQuizStatsDTO> getTopQuizzesByAttempts();
+	List<PopularQuizStatsDTO> getTopQuizzesByAverageScore();
 }

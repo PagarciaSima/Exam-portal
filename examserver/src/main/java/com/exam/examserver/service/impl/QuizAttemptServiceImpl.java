@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.exam.examserver.model.dto.PopularQuizStatsDTO;
 import com.exam.examserver.model.dto.QuestionAttemptDTO;
 import com.exam.examserver.model.dto.QuizAttemptDTO;
 import com.exam.examserver.model.exam.quiz.Quiz;
@@ -210,5 +211,61 @@ public class QuizAttemptServiceImpl implements IQuizAttemptService{
             throw ex;
         }
     }
+    
+    /**
+     * Retrieves a list of quizzes ordered by the total number of attempts in descending order.
+     *
+     * <p>This method queries the repository for all quizzes, counts how many times each quiz
+     * has been attempted, and returns the results as a list of {@link PopularQuizStatsDTO}.
+     * The list is sorted from the most attempted quiz to the least attempted.</p>
+     *
+     * <p>Logs are generated for both the start of the operation and the number of quizzes retrieved.
+     * Any exception encountered during repository access is logged and rethrown.</p>
+     *
+     * @return a {@link List} of {@link PopularQuizStatsDTO} representing quizzes with the most attempts;
+     *         the list may be empty if there are no quiz attempts
+     * @throws RuntimeException if an error occurs while accessing the repository
+     */
+    @Override
+    public List<PopularQuizStatsDTO> getTopQuizzesByAttempts() {
+        try {
+            LOGGER.info("Fetching quizzes with most attempts");
+            List<PopularQuizStatsDTO> result = repo.findTopQuizzesByAttempts();
+            LOGGER.debug("Retrieved {} quizzes with most attempts", result.size());
+            return result;
+        } catch (Exception ex) {
+            LOGGER.error("Error fetching top quizzes by attempts: {}", ex.getMessage(), ex);
+            throw ex;
+        }
+    }
+
+    /**
+     * Retrieves a list of quizzes ordered by the average score in descending order.
+     *
+     * <p>This method queries the repository for all quizzes, calculates the average score
+     * obtained for each quiz across all attempts, and returns the results as a list of
+     * {@link PopularQuizStatsDTO}. The list is sorted from the highest average score to
+     * the lowest.</p>
+     *
+     * <p>Logs are generated for both the start of the operation and the number of quizzes retrieved.
+     * Any exception encountered during repository access is logged and rethrown.</p>
+     *
+     * @return a {@link List} of {@link PopularQuizStatsDTO} representing quizzes with the highest average score;
+     *         the list may be empty if there are no quiz attempts
+     * @throws RuntimeException if an error occurs while accessing the repository
+     */
+    @Override
+    public List<PopularQuizStatsDTO> getTopQuizzesByAverageScore() {
+        try {
+            LOGGER.info("Fetching quizzes with highest average score");
+            List<PopularQuizStatsDTO> result = repo.findTopQuizzesByAverageScore();
+            LOGGER.debug("Retrieved {} quizzes with highest average score", result.size());
+            return result;
+        } catch (Exception ex) {
+            LOGGER.error("Error fetching top quizzes by average score: {}", ex.getMessage(), ex);
+            throw ex;
+        }
+    }
+
 
 }

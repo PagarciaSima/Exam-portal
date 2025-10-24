@@ -7,6 +7,7 @@ import { UserService } from './user.service';
 import { map, switchMap } from 'rxjs/operators';
 import { LoginService } from './login.service';
 import { QuizAttemptDTO } from '../model/QuestionAttemptDTO';
+import { PopularQuizStatsDTO } from '../model/PopularQuizStatsDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,13 @@ export class QuizStateService {
     const userId = this.getUserId();
     if (!userId) throw new Error('Usuario no autenticado');
     return this.http.get<QuizAttemptDTO>(`${this.baseUrl}/quiz-attempts/last/${userId}`);
+  }
+
+  getTopQuizzesByAttempts() {
+    return this.http.get<PopularQuizStatsDTO[]>(`${this.baseUrl}/quiz-attempts/top-attempts`);
+  }
+
+  getTopQuizzesByAverage() {
+    return this.http.get<PopularQuizStatsDTO[]>(`${this.baseUrl}/quiz-attempts/top-average`);
   }
 }

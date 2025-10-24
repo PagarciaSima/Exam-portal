@@ -3,7 +3,6 @@ import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 
 import { DashboardComponent } from './dashboard.component';
 
-// Mock para TranslatePipe
 @Pipe({ name: 'translate' })
 class MockTranslatePipe implements PipeTransform {
   transform(value: string): string {
@@ -33,13 +32,10 @@ describe('DashboardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // Ejemplo de test adicional: verifica que el método ngOnInit se llama
   it('should call ngOnInit', () => {
     spyOn(component, 'ngOnInit').and.callThrough();
     component.ngOnInit();
     expect(component.ngOnInit).toHaveBeenCalled();
   });
 
-  // Si tienes métodos públicos, agrégalos aquí
-  // it('should ...', () => { ... });
 });

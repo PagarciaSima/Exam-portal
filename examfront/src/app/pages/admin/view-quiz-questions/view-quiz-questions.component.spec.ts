@@ -9,7 +9,6 @@ import { TranslateModule, TranslateService, TranslatePipe } from '@ngx-translate
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-// Mock para TranslatePipe
 class MockTranslatePipe extends TranslatePipe {
   transform(value: string): string {
     return value;
@@ -25,13 +24,11 @@ describe('ViewQuizQuestionsComponent', () => {
   let translateServiceSpy: jasmine.SpyObj<TranslateService>;
 
   beforeEach(async () => {
-    // Crear spies más robustos
     questionServiceSpy = jasmine.createSpyObj('QuestionService', [
       'getQuestionsOfQuiz',
       'getQuestionsOfQuizPaged',
       'deleteQuestion'
     ], {
-      // Añadir propiedades observables si son necesarias
     });
 
     notificationServiceSpy = jasmine.createSpyObj('NotificationService', [
@@ -44,7 +41,6 @@ describe('ViewQuizQuestionsComponent', () => {
       'get', 'instant', 'use', 'setDefaultLang', 'addLangs', 'getBrowserLang', 'getLangs'
     ]);
     
-    // Configurar el spy para que siempre devuelva un observable
     translateServiceSpy.get.and.returnValue(of('translated-text'));
     translateServiceSpy.instant.and.returnValue('translated-text');
     translateServiceSpy.use.and.returnValue(of('en'));
@@ -54,12 +50,12 @@ describe('ViewQuizQuestionsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        MatSnackBarModule, // Importar módulo de Material para NotificationService
-        TranslateModule.forRoot() // Mantener el módulo de translate
+        MatSnackBarModule,
+        TranslateModule.forRoot()
       ],
       declarations: [
         ViewQuizQuestionsComponent,
-        MockTranslatePipe // Usar el mock en lugar del pipe real
+        MockTranslatePipe
       ],
       providers: [
         { provide: QuestionService, useValue: questionServiceSpy },
@@ -74,7 +70,7 @@ describe('ViewQuizQuestionsComponent', () => {
         },
         { provide: TranslateService, useValue: translateServiceSpy }
       ],
-      schemas: [NO_ERRORS_SCHEMA] // Ignorar elementos desconocidos en el template
+      schemas: [NO_ERRORS_SCHEMA] 
     }).compileComponents();
   });
 
@@ -82,11 +78,9 @@ describe('ViewQuizQuestionsComponent', () => {
     fixture = TestBed.createComponent(ViewQuizQuestionsComponent);
     component = fixture.componentInstance;
     
-    // Configurar datos iniciales antes de detectChanges
     component.qId = 1;
     component.qTitle = 'Test Quiz';
     
-    // Configurar respuestas por defecto para los servicios
     questionServiceSpy.getQuestionsOfQuizPaged.and.returnValue(of({
       content: [],
       totalPages: 1,
@@ -110,7 +104,6 @@ describe('ViewQuizQuestionsComponent', () => {
   });
 
   it('should call getQuestionsOfQuizPaged on ngOnInit', () => {
-    // El método ya se llama en el beforeEach debido a fixture.detectChanges()
     expect(questionServiceSpy.getQuestionsOfQuizPaged)
       .toHaveBeenCalledWith(1, 0, 7, '');
   });
@@ -147,12 +140,10 @@ describe('ViewQuizQuestionsComponent', () => {
     component.totalPages = 2;
     spyOn(component, 'getQuestionsOfQuizPaged');
     
-    // Página negativa
     component.goToPage(-1);
     expect(component.page).not.toBe(-1);
     expect(component.getQuestionsOfQuizPaged).not.toHaveBeenCalled();
     
-    // Página mayor que totalPages
     component.goToPage(5);
     expect(component.page).not.toBe(5);
     expect(component.getQuestionsOfQuizPaged).not.toHaveBeenCalled();

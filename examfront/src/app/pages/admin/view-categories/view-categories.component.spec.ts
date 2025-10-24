@@ -17,7 +17,7 @@ describe('ViewCategoriesComponent', () => {
         HttpClientTestingModule,
         TranslateModule.forRoot(),
         MatSnackBarModule,
-        BrowserAnimationsModule // <-- Añade esto
+        BrowserAnimationsModule 
       ],
       providers: [ TranslateService ],
       schemas: [NO_ERRORS_SCHEMA]

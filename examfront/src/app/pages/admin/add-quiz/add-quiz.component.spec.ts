@@ -24,7 +24,6 @@ describe('AddQuizComponent', () => {
   let activatedRouteSpy: any;
 
   beforeEach(async () => {
-    // Mock observables requeridos por TranslatePipe
     const onLangChangeSubject = new Subject();
 
     translateServiceMock = jasmine.createSpyObj('TranslateService', [
@@ -36,8 +35,7 @@ describe('AddQuizComponent', () => {
       onDefaultLangChange: new Subject().asObservable()
     });
 
-    // Configura los métodos del mock
-    translateServiceMock.get.and.callFake((key: string) => of(key)); // <-- CAMBIO AQUÍ
+    translateServiceMock.get.and.callFake((key: string) => of(key));
     translateServiceMock.instant.and.callFake((key: string) => key);
     translateServiceMock.use.and.returnValue(of('en'));
     translateServiceMock.getBrowserLang.and.returnValue('en');
@@ -83,14 +81,12 @@ describe('AddQuizComponent', () => {
     fixture.detectChanges();
   });
 
-  // ... otros tests se mantienen igual ...
 
-  // Tests corregidos para manejar errores de traducción
   it('should call notificationService.error if addQuiz fails and translation fails', fakeAsync(() => {
     quizServiceSpy.addQuiz.and.returnValue(throwError(() => new Error('error')));
     
     (component as any).addQuiz();
-    tick(); // Espera a que se completen las operaciones asíncronas
+    tick(); 
     
     expect(notificationServiceSpy.error).toHaveBeenCalledWith('QUIZ_ADD_ERROR', 'ERROR');
   }));
@@ -99,7 +95,7 @@ describe('AddQuizComponent', () => {
     quizServiceSpy.updateQuiz.and.returnValue(throwError(() => new Error('error')));
     
     (component as any).editQuiz();
-    tick(); // Espera a que se completen las operaciones asíncronas
+    tick(); 
     
     expect(notificationServiceSpy.error).toHaveBeenCalledWith('QUIZ_UPDATE_ERROR', 'ERROR');
   }));
@@ -108,7 +104,7 @@ describe('AddQuizComponent', () => {
     quizServiceSpy.getQuiz.and.returnValue(throwError(() => new Error('ERROR')));
     
     component.loadQuiz(1);
-    tick(); // Espera a que se completen las operaciones asíncronas
+    tick(); 
     
     expect(notificationServiceSpy.error).toHaveBeenCalledWith('QUIZ_LOAD_ERROR', 'ERROR');
   }));
@@ -117,7 +113,7 @@ describe('AddQuizComponent', () => {
     categoryServiceSpy.getCategories.and.returnValue(throwError(() => new Error('error')));
     
     component.loadCategories();
-    tick(); // Espera a que se completen las operaciones asíncronas
+    tick(); 
 
     expect(notificationServiceSpy.error).toHaveBeenCalledWith('CATEGORY_LOAD_ERROR', 'ERROR');
   }));

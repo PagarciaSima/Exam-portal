@@ -3,7 +3,7 @@ import { SidebarComponent } from './sidebar.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // <-- Importante
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -13,10 +13,10 @@ describe('SidebarComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [SidebarComponent],
       imports: [
-        HttpClientTestingModule, // Para LoginService
-        MatSnackBarModule,       // Para NotificationService
-        TranslateModule.forRoot(),// Para TranslateService
-        BrowserAnimationsModule  // <-- Para @slideIn
+        HttpClientTestingModule, 
+        MatSnackBarModule,
+        TranslateModule.forRoot(),
+        BrowserAnimationsModule
       ]
     }).compileComponents();
   });

@@ -1,1 +1,63 @@
-<p>admin-home works!</p>
+<div class="mt-5" @slideIn [attr.aria-label]="'ADMIN_HOME_SECTION' | translate" role="main">
+    <div class="row">
+        <div class="col-12 text-center mb-4">
+            <h2 [attr.aria-label]="('WELCOME' | translate) + (userName ? ', ' + userName : '')" id="admin-home-title" tabindex="0">
+                {{ 'WELCOME' | translate }}{{ userName ? ', ' + userName : '' }}
+            </h2>
+            <p [attr.aria-label]="'ALL_QUIZZES' | translate" id="admin-home-desc" tabindex="0">
+                {{ 'ALL_QUIZZES' | translate }}
+            </p>
+        </div>
+        <div class="col-12" style="min-height: 400px;" [attr.aria-label]="'QUIZ_CATEGORY_CHART' | translate" role="region" aria-labelledby="quiz-category-chart-title">
+            <mat-card>
+                <mat-card-title class="text-center mb-4" id="quiz-category-chart-title">{{ 'QUIZ_CATEGORY_CHART_TITLE' | translate }}</mat-card-title>
+                <mat-card-content>
+                    <div style="height:400px;">
+                        <canvas baseChart
+                            height="400"
+                            [data]="{ labels: quizCategoryLabels, datasets: quizCategoryData }"
+                            [options]="quizCategoryChartOptions"
+                            chartType="bar"
+                            [attr.aria-label]="'QUIZ_CATEGORY_BAR_CHART' | translate">
+                        </canvas>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6" role="region" aria-labelledby="quiz-status-chart-title">
+            <mat-card class="equal-height-card">
+                <mat-card-title class="text-center" id="quiz-status-chart-title">{{ 'QUIZ_STATUS_CHART_TITLE' | translate }}</mat-card-title>
+                <mat-card-content>
+                    <div class="chartContainer d-flex justify-content-center px-5 py-5">
+                        <canvas id="canvas-doughnut" [attr.aria-label]="'QUIZ_STATUS_DOUGHNUT_CHART' | translate"></canvas>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-md-6" *ngIf="topAttemptQuizzes.length > 0" role="region" aria-labelledby="top-attempt-quizzes-title"
+            
+        >
+            <mat-card class="equal-height-card">
+                <mat-card-title class="text-center mb-4" id="top-attempt-quizzes-title">{{ 'TOP_ATTEMPTED_QUIZZES_TITLE' | translate }}</mat-card-title>
+                <mat-card-content>
+                    <table class="table table-sm" aria-describedby="top-attempt-quizzes-title">
+                        <thead>
+                            <tr>
+                                <th scope="col">{{ 'QUIZ_TITLE' | translate }}</th>
+                                <th scope="col">{{ 'ATTEMPTS' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let quiz of topAttemptQuizzes">
+                                <td tabindex="0" [attr.aria-label]="quiz.quizTitle">{{ quiz.quizTitle }}</td>
+                                <td tabindex="0" [attr.aria-label]="('ATTEMPTS' | translate) + ': ' + quiz.totalAttempts">{{ quiz.totalAttempts }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { FormsModule } from '@angular/forms'; // <-- Agrega esto
+import { FormsModule } from '@angular/forms'; 
 import { SignupComponent } from './signup.component';
 import { UserService } from 'src/app/services/user.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -19,7 +19,6 @@ describe('SignupComponent', () => {
   let translateServiceSpy: jasmine.SpyObj<TranslateService>;
 
   beforeEach(async () => {
-    // Crear un Subject para onLangChange
     const onLangChangeSubject = new Subject();
 
     translateServiceSpy = jasmine.createSpyObj('TranslateService', [

@@ -82,6 +82,14 @@ export class CategoryService {
   }
 
   /**
+   * Get the count of quizzes by category.
+   * @returns An observable with the count of  quizzes for each category.
+   */
+  getQuizCountByCategory(): Observable<CategoryQuizCountResponseDTO[]> {
+    return this.http.get<CategoryQuizCountResponseDTO[]>(`${environment.apiUrl}/category/quizzes/count`);
+  }
+
+  /**
    * Get all active quizzes for a specific category.
    * @param categoryId The ID of the category to retrieve quizzes for.
    * @returns An observable with the list of active quizzes for the specified category.

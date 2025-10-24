@@ -11,7 +11,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// Mock para NotificationService
 class MockNotificationService {
   showSuccess(message: string) {}
   showError(message: string) {}
@@ -22,7 +21,6 @@ class MockNotificationService {
   error(message: string, title: string) {}
 }
 
-// Mock para Router
 class MockRouter {
   navigate(commands: any[]) {
     return Promise.resolve(true);

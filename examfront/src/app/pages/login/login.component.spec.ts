@@ -11,7 +11,6 @@ import { TranslateService } from '@ngx-translate/core';
 
 class MockTranslateService {
   instant(key: string) {
-    // Simulate translation keys for error/success
     if (key === 'LOGIN_SUCCESS') return 'Login successful';
     if (key === 'SUCCESS') return 'Success';
     if (key === 'LOGIN_FAILED') return 'Invalid credentials';
@@ -53,7 +52,7 @@ describe('LoginComponent', () => {
         { provide: TranslateService, useClass: MockTranslateService }
       ]
     })
-    .overrideTemplate(LoginComponent, '') // Avoid template errors due to missing pipes
+    .overrideTemplate(LoginComponent, '') 
     .compileComponents();
   });
 
@@ -196,8 +195,6 @@ describe('LoginComponent', () => {
     expect(notificationServiceSpy.error).toHaveBeenCalledWith('Invalid credentials', 'Error');
     expect(component.loginData.password).toBe('');
   });
-
-  // Additional tests
 
   it('should not redirect if authorities is empty', () => {
     const user = { authorities: [] };

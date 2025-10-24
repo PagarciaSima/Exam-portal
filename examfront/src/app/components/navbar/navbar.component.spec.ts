@@ -12,20 +12,17 @@ describe('NavbarComponent', () => {
   let translateServiceSpy: jasmine.SpyObj<TranslateService>;
 
   beforeEach(async () => {
-    // Crear un Subject para onLangChange
     const onLangChangeSubject = new Subject();
 
     translateServiceSpy = jasmine.createSpyObj('TranslateService', [
       'get', 'instant', 'use', 'setDefaultLang', 'addLangs', 'getBrowserLang', 
       'getLangs', 'getTranslation', 'stream', 'set'
     ], {
-      // Propiedades del servicio que el pipe necesita
       onLangChange: onLangChangeSubject.asObservable(),
       onTranslationChange: new Subject().asObservable(),
       onDefaultLangChange: new Subject().asObservable()
     });
 
-    // Configurar los spies
     translateServiceSpy.get.and.returnValue(of('translated-text'));
     translateServiceSpy.instant.and.returnValue('translated-text');
     translateServiceSpy.use.and.returnValue(of('en'));
@@ -38,7 +35,6 @@ describe('NavbarComponent', () => {
       declarations: [ NavbarComponent ],
       imports: [ 
         HttpClientTestingModule,
-        // Importar TranslateModule sin forRoot para testing
         TranslateModule.forRoot(),
         MatMenuModule
       ],

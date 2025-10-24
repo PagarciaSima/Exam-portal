@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core'; // <--- Importa esto
+import { TranslateModule } from '@ngx-translate/core'; 
 
 import { ProfileChangePasswordComponent } from './profile-change-password.component';
 
@@ -12,7 +12,7 @@ describe('ProfileChangePasswordComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ ProfileChangePasswordComponent ],
       imports: [
-        TranslateModule.forRoot() // <--- Necesario para la pipe 'translate'
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
