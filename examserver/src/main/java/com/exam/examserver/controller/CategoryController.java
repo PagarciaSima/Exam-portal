@@ -1,11 +1,13 @@
 package com.exam.examserver.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exam.examserver.model.dto.CategoryQuizCountResponseDTO;
 import com.exam.examserver.model.exam.category.Category;
+import com.exam.examserver.model.exam.quiz.Quiz;
 import com.exam.examserver.service.ICategoryService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -238,4 +242,131 @@ public class CategoryController {
 		categoryService.deleteCategory(categoryId);
 		return ResponseEntity.ok().build();
 	}
+	
+	@Operation(
+	    summary = "Get quiz count for all categories",
+	    description = "Returns a list of all categories along with the number of quizzes associated with each one",
+	    responses = {
+	        @ApiResponse(
+	            responseCode = "200",
+	            description = "Successfully retrieved quiz counts",
+	            content = @Content(
+	                mediaType = "application/json",
+	                schema = @Schema(
+	                    implementation = CategoryQuizCountResponseDTO.class,
+	                    example = "[{\"categoryId\":1,\"categoryTitle\":\"Java\",\"quizCount\":5}, {\"categoryId\":2,\"categoryTitle\":\"Spring Boot\",\"quizCount\":3}]"
+	                )
+	            )
+	        ),
+	        @ApiResponse(
+	            responseCode = "500",
+	            description = "Internal server error"
+	        )
+	    }
+	)
+	@GetMapping("/quizzes/count")
+	public ResponseEntity<List<CategoryQuizCountResponseDTO>> getQuizCountForAllCategories() {
+	    LOGGER.info("Received request to get quiz count for all categories");
+
+	    Set<Category> categories = categoryService.getCategories();
+
+	    List<CategoryQuizCountResponseDTO> result = categories.stream().map(category -> {
+	        CategoryQuizCountResponseDTO dto = new CategoryQuizCountResponseDTO();
+	        dto.setCategoryId(category.getCid());
+	        dto.setCategoryTitle(category.getTitle());
+	        dto.setQuizCount((category.getQuizzes() != null) ? category.getQuizzes().size() : 0);
+	        return dto;
+	    }).toList();
+
+	    LOGGER.info("Returning quiz count for {} categories", result.size());
+	    return ResponseEntity.ok(result);
+	}
+	
+	
+	@Operation(
+		    summary = "Get active quiz count for all categories",
+		    description = "Returns a list of all categories along with the number of active quizzes associated with each one",
+		    responses = {
+		        @ApiResponse(
+		            responseCode = "200",
+		            description = "Successfully retrieved active quiz counts",
+		            content = @Content(
+		                mediaType = "application/json",
+		                schema = @Schema(
+		                    implementation = CategoryQuizCountResponseDTO.class,
+		                    example = "[{\"categoryId\":1,\"categoryTitle\":\"Java\",\"quizCount\":3}, {\"categoryId\":2,\"categoryTitle\":\"Spring Boot\",\"quizCount\":2}]"
+		                )
+		            )
+		        ),
+		        @ApiResponse(
+		            responseCode = "500",
+		            description = "Internal server error"
+		        )
+		    }
+		)
+		@GetMapping("/quizzes/count/active")
+		public ResponseEntity<List<CategoryQuizCountResponseDTO>> getActiveQuizCountForAllCategories() {
+		    LOGGER.info("Received request to get active quiz count for all categories");
+
+		    Set<Category> categories = categoryService.getCategories();
+
+		    List<CategoryQuizCountResponseDTO> result = categories.stream().map(category -> {
+		        CategoryQuizCountResponseDTO dto = new CategoryQuizCountResponseDTO();
+		        dto.setCategoryId(category.getCid());
+		        dto.setCategoryTitle(category.getTitle());
+		        int activeQuizCount = (category.getQuizzes() != null) 
+		                ? (int) category.getQuizzes().stream().filter(Quiz::isActive).count()
+		                : 0;
+		        dto.setQuizCount(activeQuizCount);
+		        return dto;
+		    }).toList();
+
+		    LOGGER.info("Returning active quiz count for {} categories", result.size());
+		    return ResponseEntity.ok(result);
+		}
+
+		@Operation(
+			    summary = "Get active quizzes by category ID",
+			    description = "Returns a list of all active quizzes for the specified category ID",
+			    responses = {
+			        @ApiResponse(
+			            responseCode = "200",
+			            description = "Successfully retrieved active quizzes for the category",
+			            content = @Content(
+			                mediaType = "application/json",
+			                schema = @Schema(
+			                    implementation = Quiz.class,
+			                    example = "[{\"id\":1,\"title\":\"Java Basics Quiz\",\"description\":\"Test your basic Java knowledge\",\"active\":true}]"
+			                )
+			            )
+			        ),
+			        @ApiResponse(
+			            responseCode = "404",
+			            description = "Category not found"
+			        ),
+			        @ApiResponse(
+			            responseCode = "500",
+			            description = "Internal server error"
+			        )
+			    }
+		)
+		@GetMapping("/quizzes/active/{categoryId}")
+		public ResponseEntity<List<Quiz>> getActiveQuizzesByCategory(@PathVariable Long categoryId) {
+		    LOGGER.info("Received request to get active quizzes for category ID: {}", categoryId);
+
+		    Category category = categoryService.getCategory(categoryId);
+		    if (category == null) {
+		        LOGGER.warn("Category with ID {} not found", categoryId);
+		        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		    }
+
+		    List<Quiz> activeQuizzes = category.getQuizzes().stream()
+		            .filter(Quiz::isActive)
+		            .toList();
+
+		    LOGGER.info("Returning {} active quizzes for category '{}'", activeQuizzes.size(), category.getTitle());
+		    return ResponseEntity.ok(activeQuizzes);
+		}
+
+
 }

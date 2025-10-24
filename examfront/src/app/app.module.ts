@@ -55,6 +55,10 @@ import { SearcherComponent } from './shared/searcher/searcher.component';
 import { NgxLoadingModule } from 'ngx-loading';
 import { ReviewQuizComponent } from './pages/user/review-quiz/review-quiz.component';
 import { QuestionGenModalComponentComponent } from './pages/admin/question-gen-modal-component/question-gen-modal-component.component';
+import { NgChartsModule } from 'ng2-charts';
+import { UserHomeComponent } from './pages/user/user-home/user-home.component';
+import { AdminHomeComponent } from './pages/admin/admin-home/admin-home.component';
+import { RedirectHomeComponent } from './pages/redirect-home/redirect-home.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -89,7 +93,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     StartComponent,
     NotFoundComponent,
     ReviewQuizComponent,
-    QuestionGenModalComponentComponent
+    QuestionGenModalComponentComponent,
+    UserHomeComponent,
+    AdminHomeComponent,
+    RedirectHomeComponent
   ],
   imports: [
     BrowserModule,
@@ -112,6 +119,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSelectModule,
     MatDialogModule,
     MatSlideToggleModule,
+    NgChartsModule,
     MatDividerModule,
     MatProgressSpinnerModule,
     NgxLoadingModule.forRoot({}),

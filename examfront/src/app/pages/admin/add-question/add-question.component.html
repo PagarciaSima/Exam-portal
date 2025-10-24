@@ -195,23 +195,31 @@
                         </div>
 
                         <!-- Add Question Button (dentro del form) -->
-                        <div class="container text-center mt-3" style="display: flex; justify-content: center; gap: 16px;">
-                            <button
-                                mat-raised-button
-                                color="primary"
-                                [disabled]="questionForm.invalid"
-                                type="submit"
-                            >
-                                {{ isEditMode ? ('EDIT_QUESTION' | translate) : ('ADD_QUESTION' | translate) }}
-                            </button>
-                            <button
-                                mat-raised-button
-                                color="accent"
-                                [routerLink]="['/admin/view-questions', qId, qTitle]"
-                                type="button"
-                            >
-                                {{ 'BACK_TO_QUIZ' | translate }}
-                            </button>
+                        <div class="container text-center mt-3 px-0">
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                                    <button
+                                        mat-raised-button
+                                        color="primary"
+                                        [disabled]="questionForm.invalid"
+                                        type="submit"
+                                        class="w-100"
+                                    >
+                                        {{ isEditMode ? ('EDIT_QUESTION' | translate) : ('ADD_QUESTION' | translate) }}
+                                    </button>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <button
+                                        mat-raised-button
+                                        color="accent"
+                                        [routerLink]="['/admin/view-questions', qId, qTitle]"
+                                        type="button"
+                                        class="w-100"
+                                    >
+                                        {{ 'BACK_TO_QUIZ' | translate }}
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>

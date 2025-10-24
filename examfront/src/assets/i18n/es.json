@@ -250,6 +250,11 @@
   "QUIZ_PROCESS_BULK_JSON": "Procesar JSON masivo",
   "QUESTION_GENERATION_ERROR": "Error al generar preguntas, inténtalo de nuevo más tarde.",
   "QUIZ_BULK_JSON_SUCCESS": "Preguntas importadas con éxito desde JSON.",
-  "QUIZ_BULK_JSON_INVALID": "El JSON proporcionado no es válido. Por favor, revísalo e inténtalo de nuevo."
+  "QUIZ_BULK_JSON_INVALID": "El JSON proporcionado no es válido. Por favor, revísalo e inténtalo de nuevo.",
+  "SELECT_QUIZ": "Seleccionar cuestionario",          
+  "FLIP_CARD": "Voltear tarjeta",               
+  "CLOSE": "Cerrar",
+  "REVIEW_LAST_ATTEMPT": "Revisar último intento",
+  "WELCOME": "Bienvenido"
 
 }

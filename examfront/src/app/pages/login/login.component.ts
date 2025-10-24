@@ -108,7 +108,7 @@ export class LoginComponent implements OnInit {
     if (authorities.includes("ADMIN")) {
       this.router.navigate(['admin']);
     } else if (authorities.includes("NORMAL")) {
-      this.router.navigate(['user-dashboard', 0]);
+      this.router.navigate(['user-dashboard']);
     } else {
       this.loginService.logout();
     }

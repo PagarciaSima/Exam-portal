@@ -252,5 +252,10 @@
   "QUIZ_PROCESS_BULK_JSON": "Process bulk JSON",
   "QUESTION_GENERATION_ERROR": "Error generating questions, please try again later.",
   "QUIZ_BULK_JSON_SUCCESS": "Bulk questions processed successfully.",
-  "QUIZ_BULK_JSON_INVALID": "Invalid JSON format. Please check your input."
+  "QUIZ_BULK_JSON_INVALID": "Invalid JSON format. Please check your input.",
+  "SELECT_QUIZ": "Select Quiz",
+  "FLIP_CARD": "Flip Card",
+  "CLOSE": "Close",
+  "REVIEW_LAST_ATTEMPT": "Review Last Attempt",
+  "WELCOME": "Welcome"
 }

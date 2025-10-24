@@ -1,53 +1,60 @@
-<div class="container mt-5" @fadeInUp>
+<div class="container mt-5" @slideIn [attr.aria-label]="'Página principal de usuario'">
     <div class="row">
         <div class="col-12 text-center mb-4">
-            <h2>{{ 'WELCOME' | translate }}{{ userName ? ', ' + userName : '' }}</h2>
-            <p>{{ 'ALL_AVAILABLE_QUIZZES' | translate }}</p>
+            <h2 [attr.aria-label]="'Bienvenido ' + (userName ? userName : '')">{{ 'WELCOME' | translate }}{{ userName ? ', ' + userName : '' }}</h2>
+            <p [attr.aria-label]="'Listado de todos los quizzes disponibles'">{{ 'ALL_AVAILABLE_QUIZZES' | translate }}</p>
         </div>
-        <div class="12" style="min-height: 400px;">
+        <div class="12" style="min-height: 400px;" [attr.aria-label]="'Gráfico de quizzes por categoría'">
             <canvas baseChart [data]="{ labels: barChartLabels, datasets: barChartData }" [options]="barChartOptions"
-                chartType="bar">
+                chartType="bar"
+                [attr.aria-label]="'Gráfico de barras de quizzes por categoría'">
             </canvas>
         </div>
     </div>
     <div class="row mt-5">
         <div class="col-12 text-center mb-3">
-            <h4>{{ 'ALL_AVAILABLE_QUIZZES' | translate }}</h4>
+            <h4 [attr.aria-label]="'Listado de categorías de quizzes'">{{ 'ALL_AVAILABLE_QUIZZES' | translate }}</h4>
             <app-search-bar
             [(value)]="searchCategory"
             placeholder="Buscar categoría..."
-            ariaLabel="Buscar categoría">
+            [attr.aria-label]="'Buscar categoría'">
             </app-search-bar>
         </div>
         <ng-container *ngFor="let cat of filteredCategories">
-            <div class="col-md-4 pb-3" *ngIf="barChartData[0].data[barChartLabels.indexOf(cat)] > 0">
-                <div class="flip-card" [class.flipped]="flipStates[cat]">
+            <div class="col-md-4 pb-3" *ngIf="barChartData[0].data[barChartLabels.indexOf(cat)] > 0"
+                [attr.aria-label]="'Categoría ' + cat">
+                <div class="flip-card" [class.flipped]="flipStates[cat]" [attr.aria-label]="'Tarjeta de categoría ' + cat">
                     <div class="flip-card-inner">
                         <!-- Anverso -->
-                        <mat-card class="flip-card-front">
+                        <mat-card class="flip-card-front" [attr.aria-label]="'Información de la categoría ' + cat">
                             <mat-card-title>{{ cat }}</mat-card-title>
                             <mat-card-content>
-                                <span class="badge bg-primary">
+                                <span class="badge bg-primary"
+                                    [attr.aria-label]="'Cantidad de quizzes en ' + cat + ': ' + barChartData[0].data[barChartLabels.indexOf(cat)]">
                                     {{ barChartData[0].data[barChartLabels.indexOf(cat)] }}
                                     {{ barChartData[0].data[barChartLabels.indexOf(cat)] === 1 ? ('QUIZ_TITLE' | translate) : ('QUIZZES' | translate) }}
                                 </span>
-                                <div class="mt-4 text-muted truncate-description" *ngIf="quizzesByCategory[cat]?.length">
+                                <div class="mt-4 text-muted truncate-description" *ngIf="quizzesByCategory[cat]?.length"
+                                    [attr.aria-label]="'Descripción del primer quiz de ' + cat">
                                     {{ quizzesByCategory[cat][0]?.description }}
                                 </div>
                             </mat-card-content>
                             <button mat-icon-button color="primary" (click)="toggleFlip(cat)"
-                                style="position:absolute;top:10px;right:10px;">
+                                style="position:absolute;top:10px;right:10px;"
+                                [attr.aria-label]="'Ver quizzes de ' + cat">
                                 <mat-icon>flip</mat-icon>
                             </button>
                         </mat-card>
 
                         <!-- Reverso -->
-                        <mat-card class="flip-card-back">
+                        <mat-card class="flip-card-back" [attr.aria-label]="'Seleccionar quiz de ' + cat">
                             <mat-card-content>
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>{{ 'SELECT_QUIZ' | translate }}</mat-label>
-                                    <mat-select [(ngModel)]="selectedQuiz[cat]">
-                                        <mat-option *ngFor="let quiz of quizzesByCategory[cat]" [value]="quiz.qId">
+                                    <mat-select [(ngModel)]="selectedQuiz[cat]"
+                                        [attr.aria-label]="'Seleccionar quiz de ' + cat">
+                                        <mat-option *ngFor="let quiz of quizzesByCategory[cat]" [value]="quiz.qId"
+                                            [attr.aria-label]="quiz.title">
                                             {{ quiz.title }}
                                         </mat-option>
                                     </mat-select>
@@ -55,12 +62,14 @@
                                 <button mat-raised-button color="primary" class="w-100 mb-2"
                                     [disabled]="!selectedQuiz[cat]"
                                     (click)="startQuiz(selectedQuiz[cat])"
+                                    [attr.aria-label]="'Comenzar quiz seleccionado de ' + cat"
                                 >
                                     <mat-icon>play_arrow</mat-icon>
                                     {{ 'START_QUIZ' | translate }}
                                 </button>
                                 <button mat-icon-button color="warn" (click)="closeFlip(cat)"
-                                    style="position:absolute;top:10px;right:10px;">
+                                    style="position:absolute;top:10px;right:10px;"
+                                    [attr.aria-label]="'Cerrar selección de quiz de ' + cat">
                                     <mat-icon>close</mat-icon>
                                 </button>
                             </mat-card-content>

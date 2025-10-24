@@ -9,7 +9,6 @@ import { DashboardComponent } from './pages/admin/dashboard/dashboard.component'
 import { ViewCategoriesComponent } from './pages/admin/view-categories/view-categories.component';
 import { ViewQuizQuestionsComponent } from './pages/admin/view-quiz-questions/view-quiz-questions.component';
 import { ViewQuizzesComponent } from './pages/admin/view-quizzes/view-quizzes.component';
-import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -19,8 +18,16 @@ import { LoadQuizComponent } from './pages/user/load-quiz/load-quiz.component';
 import { StartComponent } from './pages/user/start/start.component';
 import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
 import { ReviewQuizComponent } from './pages/user/review-quiz/review-quiz.component';
+import { UserHomeComponent } from './pages/user/user-home/user-home.component';
+import { RedirectHomeComponent } from './pages/redirect-home/redirect-home.component';
+import { AdminHomeComponent } from './pages/admin/admin-home/admin-home.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: RedirectHomeComponent,
+    pathMatch: 'full'
+  },
   {
     path: 'signup',
     component: SignupComponent,
@@ -31,21 +38,12 @@ const routes: Routes = [
     component: LoginComponent,
     pathMatch: 'full'
   },
-  {
-    path: 'home',
-    component: HomeComponent,
-    pathMatch: 'full'
-  },
+  // ADMIN ROUTES
   {
     path: 'admin',
     component: DashboardComponent,
     canActivate: [AdminGuard],
     children: [
-      {
-        path: '',
-        component: HomeComponent,
-        data: { animation: 'WelcomePage' }
-      },
       {
         path: 'profile',
         component: ProfileComponent,
@@ -96,19 +94,21 @@ const routes: Routes = [
         component: AddQuestionComponent,
         data: { animation: 'editQuestion' }
       },
+      {
+        path: '',
+        component: AdminHomeComponent,
+        pathMatch: 'full'
+      },
 
     ]
   },
+  // NORMAL USER ROUTES
   {
     path: 'user-dashboard',
     component: UserDashboardComponent,
     canActivate: [NormalGuard],
     children: [
-      {
-        path: '',
-        component: HomeComponent,
-        data: { animation: 'WelcomePage' }
-      },
+
       {
         path: ':catId',
         component: LoadQuizComponent,
@@ -118,19 +118,20 @@ const routes: Routes = [
         path: 'instructions/:qId',
         component: InstructionsComponent,
         data: { animation: 'InstructionsPage' }
-      }
+      },
+      {
+        path: '',
+        component: UserHomeComponent,
+        pathMatch: 'full'
+      },
       
     ]
   },
-  {
-    path: '',
-    component: HomeComponent,
-    data: { animation: 'WelcomePage' }
-  },
+
   {
     path: 'start/:qId',
     component: StartComponent,
-    canActivate: [NormalGuard], // si quieres protegerla igual que el dashboard
+    canActivate: [NormalGuard], 
     data: { animation: 'StartQuizPage' }
   },
   {
