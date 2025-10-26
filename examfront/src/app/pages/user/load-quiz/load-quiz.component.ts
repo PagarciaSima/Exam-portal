@@ -89,7 +89,10 @@ export class LoadQuizComponent implements OnInit {
    *
    * @param page The page number to navigate to.
    */
-  goToPage(page: number): void {
+  goToPage(page: number) {
+    if (page < 0 || page >= this.totalPages) {
+      return;
+    }
     this.page = page;
     this.loadQuizzes();
   }

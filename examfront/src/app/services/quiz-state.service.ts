@@ -32,16 +32,24 @@ export class QuizStateService {
    * Get the last quiz attempts for the user.
    * @returns An observable of the last quiz attempt DTO.
    */
-  getLastAttempts(): Observable<QuizAttemptDTO> {
+  getLastAttempts(): Observable<QuizAttemptDTO>  {
     const userId = this.getUserId();
     if (!userId) throw new Error('Usuario no autenticado');
     return this.http.get<QuizAttemptDTO>(`${this.baseUrl}/quiz-attempts/last/${userId}`);
   }
 
+  /**
+   * Get the top quizzes by number of attempts.
+   * @returns An observable of an array of popular quiz stats DTOs.
+   */
   getTopQuizzesByAttempts() {
     return this.http.get<PopularQuizStatsDTO[]>(`${this.baseUrl}/quiz-attempts/top-attempts`);
   }
 
+  /**
+   * Get the top quizzes by average score.
+   * @returns An observable of an array of popular quiz stats DTOs.
+   */
   getTopQuizzesByAverage() {
     return this.http.get<PopularQuizStatsDTO[]>(`${this.baseUrl}/quiz-attempts/top-average`);
   }

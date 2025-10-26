@@ -139,7 +139,7 @@ export class AddQuizComponent implements OnInit {
       },
       error: (error) => {
         this.loadingService.hide();
-        this.notificationService.success(
+        this.notificationService.error(
           this.translate.instant('QUIZ_ADD_ERROR'),
           this.translate.instant('ERROR')
         );

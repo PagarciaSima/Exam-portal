@@ -12,6 +12,7 @@ import { QuizService } from 'src/app/services/quiz.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('AddQuizComponent', () => {
   let component: AddQuizComponent;
@@ -59,7 +60,8 @@ describe('AddQuizComponent', () => {
         TranslateModule.forRoot(),
         FormsModule,
         RouterTestingModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatDialogModule
       ],
       providers: [
         { provide: CategoryService, useValue: categoryServiceSpy },

@@ -11,6 +11,5 @@ export interface Quiz {
   numberOfQuestions: number;
   active: boolean;
   category?: Category;
-  // questions is optional, as it's usually not sent from backend in list endpoints
   questions?: any[];
 }

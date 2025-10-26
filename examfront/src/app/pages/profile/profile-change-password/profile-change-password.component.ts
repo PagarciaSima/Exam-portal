@@ -28,7 +28,7 @@ export class ProfileChangePasswordComponent implements OnInit {
    */
   save() {
     if (this.newPassword && this.newPassword === this.confirmPassword) {
-      this.dialogRef.close(this.newPassword); // returns new password to the caller
+      this.dialogRef.close(this.newPassword); 
     }
   }
 

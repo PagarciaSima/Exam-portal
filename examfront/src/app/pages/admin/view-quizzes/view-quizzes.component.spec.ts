@@ -79,7 +79,7 @@ describe('ViewQuizzesComponent', () => {
   });
 
   it('should load quizzes on init', () => {
-    expect(quizService.getQuizzesPaged).toHaveBeenCalledWith(0, 5, '');
+    expect(quizService.getQuizzesPaged).toHaveBeenCalledWith(0, 6, '');
   });
 
   it('should call deleteQuiz method', () => {

@@ -15,7 +15,7 @@ export class QuestionGenModalComponentComponent {
   ) {}
 
   submit(form: any) {
-    if (form.valid) {
+    if (form && form.valid) {
       this.dialogRef.close(this.data);
     }
   }
