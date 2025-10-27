@@ -7,6 +7,10 @@ public class PopularQuizStatsDTO {
 	private Long totalAttempts;
 	private Double averageMarks;
 
+	public PopularQuizStatsDTO() {
+		super();
+	}
+
 	public PopularQuizStatsDTO(Long quizId, String quizTitle, Long totalAttempts, Double averageMarks) {
 		this.quizId = quizId;
 		this.quizTitle = quizTitle;
