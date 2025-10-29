@@ -1,4 +1,4 @@
-{"properties": [
+ {"properties": [
   {
     "name": "openapi.server.description",
     "type": "java.lang.String",
@@ -8,5 +8,10 @@
     "name": "openapi.server.url",
     "type": "java.lang.String",
     "description": "A description for 'openapi.server.url'"
+  },
+  {
+    "name": "gemini.api.key",
+    "type": "java.lang.String",
+    "description": "A description for 'gemini.api.key'"
   }
 ]}
