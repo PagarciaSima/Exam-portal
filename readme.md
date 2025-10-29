@@ -17,6 +17,16 @@ Key highlights:
 
 ---
 
+## 🎥 Live Demo
+
+Watch a short demo of the app in action:
+
+[![Exam Portal Demo](./img/demo_thumbnail.png)](https://www.youtube.com/watch?v=TU_VIDEO_ID)
+
+> 🔗 Click the image or the link to view on YouTube.
+
+---
+
 ## 📘 Documentation
 
 ### 🔹 Backend (Spring Boot)
@@ -227,6 +237,8 @@ Focused on the exam-taking experience and performance tracking:
 - **RDS MySQL** - Configured and connected remote database instance
 - **Security Groups** - Implemented proper network security configurations
 
+--- 
+
 ## Interfaces 🖥️
 
 ### 🔐 Authentication
@@ -278,3 +290,25 @@ Focused on the exam-taking experience and performance tracking:
 
 - **Edit Question**  
   ![admin_question_edit](img/admin_question_edit.png)
+
+### 🙋‍♂️ User Experience
+- **User Home Dashboard**  
+  ![user_home](img/user_home.png)
+
+- **Available Quizzes**  
+  ![user_available_quizzes](img/user_available_quizzes.png)
+
+- **Quiz Instructions**  
+  ![user_quiz_instructions](img/user_quiz_instructions.png)
+
+- **Active Quiz Session**  
+  ![user_quiz](img/user_quiz.png)
+
+- **Quiz Results**  
+  ![user_quiz_result](img/user_quiz_result.png)
+
+- **Printable Result Report**  
+  ![user_quiz_result_print](img/user_quiz_result_print.png)
+
+- **Review Quiz Attempt**  
+  ![user_review_quiz](img/user_review_quiz.png)

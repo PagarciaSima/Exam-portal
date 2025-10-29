@@ -3,6 +3,7 @@
   width: 100%;
   min-height: 200px;
   perspective: 1000px;
+  overflow: hidden; /* Añadido */
 }
 
 mat-card.mat-mdc-card.mdc-card.flip-card-back {
@@ -18,6 +19,10 @@ mat-card.mat-mdc-card.mdc-card.flip-card-back {
   transform-style: preserve-3d;
 }
 
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
 .truncate-description {
   display: -webkit-box;
   -webkit-line-clamp: 3; 
@@ -29,16 +34,13 @@ mat-card.mat-mdc-card.mdc-card.flip-card-back {
   max-width: 100%;
 }
 
-.flip-card.flipped .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-
 .flip-card-front, .flip-card-back {
   position: absolute;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
+  top: 0;
+  left: 0;
 }
 
 .flip-card-front {
@@ -47,4 +49,5 @@ mat-card.mat-mdc-card.mdc-card.flip-card-back {
 
 .flip-card-back {
   transform: rotateY(180deg);
+  z-index: 3; /* Añadido */
 }
