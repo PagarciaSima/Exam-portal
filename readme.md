@@ -31,11 +31,14 @@ Key highlights:
   Open the [index.html](./examfront/documentation/index.html) file for the complete component, service, and module reference.
 
 #### 📄 Visual Samples
-- **OpenAPI Docs:**  
+- **OpenAPI Docs:**
+  
   ![Open API Docs](./img/OpenAPiDoc.png)
-- **JavaDocs:**  
+- **JavaDocs:**
+  
   ![JavaDocs](./img/JavaDocs.png)
-- **TS Docs:**  
+- **TS Docs:**
+  
   ![TS docs](./img/TsDocs.png)
 
 ---
