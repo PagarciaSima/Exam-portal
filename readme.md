@@ -8,7 +8,9 @@ This application simulates a real-world exam management system, featuring secure
 Key highlights:
 - 🔐 Role-based functionality (Admin & User)
 - ⚙️ Full CRUD with **search & pagination** for categories, quizzes, and questions
-- 🤖 Integration with **Gemini API** for automatic question generation
+- 🤖 **AI-Powered Question Generation** - Two-step process using Gemini API:
+  - **Step 1**: Generate JSON with quiz-related questions via "Generate" button
+  - **Step 2**: Import questions by uploading the downloaded JSON file or pasting JSON text
 - 📊 Interactive dashboards with **Chart.js**
 - 🌍 Internationalization (i18n) support
 - 🧪 Comprehensive testing with **JUnit**, **Jasmine**, and **Karma**
@@ -94,12 +96,19 @@ Comprehensive management of the platform's exam ecosystem, including:
 - **Enhanced search functionality** with pagination
 
 #### ⚡ Mass Question Generation (Gemini API)
-Automatic generation of up to 20 quiz questions in two steps:
+**Two-step AI-powered question generation process:**
 
-1. **Connect with Google Gemini API** to generate content
-2. **Import questions** via:
-   - Direct JSON paste
-   - File upload directly to the platform
+1. **Generate Questions via Gemini API**
+   - Click "Generate" button in the first accordion item
+   - Automatically creates a JSON file with questions tailored to the edited quiz
+   - Connects to Google Gemini API for intelligent content generation
+
+2. **Import Generated Questions**
+   - Expand the second accordion item to load the generated questions
+   - **Two import methods available:**
+     - Upload the downloaded JSON file directly
+     - Paste JSON text directly into the textarea
+   - Seamlessly integrates questions into the quiz
 
 #### 📊 Analytics Dashboard (Chart.js)
 Visual analytics dashboard with key metrics:
