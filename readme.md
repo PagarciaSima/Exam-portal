@@ -17,15 +17,34 @@ Key highlights:
 - ☁️ Backend deployed on **AWS EC2**
 - 🧱 Fully documented with **OpenAPI**, **Javadoc**, and coverage reports
 
----
+## 🎥 Demo Videos
 
-## 🎥 Live Demo
+### 👑 Administrator Role Demo
+**📺 Watch here:** https://www.youtube.com/watch?v=GMzUMhRNuaM
 
-Watch a short demo of the app in action:
+*This video showcases the complete administrator experience:*
+- 🔐 Admin login and dashboard overview
+- 🧩 Complete category management (CRUD with search & pagination)
+- 📝 Quiz creation and configuration (duration, difficulty, categories)
+- 🤖 **AI-powered question generation** - Two-step process:
+  - Generate JSON with quiz-related questions via Gemini API
+  - Import questions by uploading JSON file or pasting JSON text
+- ❓ Manual question management (add, edit, delete)
+- 📊 Analytics dashboard with Chart.js visualizations
+- 👤 Profile management and photo updates
 
-[![Exam Portal Demo](./img/demo_thumbnail.png)](https://www.youtube.com/watch?v=TU_VIDEO_ID)
+### 🙋‍♂️ User Role Demo
+**📺 Watch here:** https://www.youtube.com/watch?v=a1JO6ZoN5Qw
 
-> 🔗 Click the image or the link to view on YouTube.
+*This video showcases the complete user exam experience:*
+- 🏠 User dashboard with personal performance charts
+- 🔍 Browsing available quizzes with category filters and search
+- 📋 Quiz instructions and details before starting
+- ⏱️ **Timed quiz execution** with auto-submission when time expires
+- 📝 Real-time quiz taking with question navigation
+- 📊 Immediate results with score and performance analysis
+- 🧾 Attempt history with detailed review of answers
+- 🖨️ Printable result reports for offline reference
 
 ---
 
